@@ -1,0 +1,100 @@
+<div class="tl-box">
+
+<h2 class="tl-title">
+📚 CẬP NHẬT TƯ LIỆU
+</h2>
+
+<div class="tl-row">
+<label>Loại tư liệu</label>
+<select id="tl-type" class="gt-input">
+<option>Văn bản</option>
+<option>Sách</option>
+<option>Tài liệu nghiên cứu</option>
+<option>Bản đồ</option>
+<option>Hình ảnh</option>
+<option>Clip</option>
+</select>
+</div>
+
+<div class="tl-row">
+<label>Ảnh đại diện</label>
+<input id="tl-image-file" type="file" accept="image/*">
+<br><br>
+<img id="tl-preview">
+</div>
+
+<div class="tl-row">
+<label>Tiêu đề</label>
+<input id="tl-title-input" class="gt-input">
+</div>
+
+<div class="tl-row">
+<label>Mô tả ngắn</label>
+<div id="tl-editor"></div>
+</div>
+
+<div class="tl-row">
+<label>Link Google Drive / Youtube</label>
+<input id="tl-link" class="gt-input">
+</div>
+
+<div class="tl-row">
+<label>Tác giả</label>
+<input id="tl-author" class="gt-input">
+</div>
+
+<div class="tl-row">
+<label>Nguồn</label>
+<input id="tl-source" class="gt-input">
+</div>
+
+<div class="tl-row">
+<label>Ngày đăng</label>
+<input id="tl-date" type="date" class="gt-input">
+</div>
+
+<div class="gt-btn-area">
+<button id="btn-tl-save" class="gt-btn gt-btn-save">
+💾 Lưu
+</button>
+</div>
+
+<hr>
+
+<h3>Danh sách tư liệu</h3>
+
+<table class="ls-table">
+
+<thead>
+
+<tr>
+
+<th width="60">STT</th>
+
+<th width="140">Loại</th>
+
+<th width="120">Tiêu đề</th>
+
+<th width="60">Mô tả</th>
+
+<th width="130">Tác giả</th>
+
+<th width="80">Ảnh</th>
+
+<th width="90">Link</th>
+
+<th width="180">Nguồn - Ngày</th>
+
+<th width="170">Hành động</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tl-body">
+
+</tbody>
+
+</table>
+
+</div>

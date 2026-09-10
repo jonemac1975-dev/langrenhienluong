@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Admin - Hiền Lương</title>
+
+<link
+rel="stylesheet"
+href="../css/admin.css">
+
+</head>
+<body>
+
+<div class="ad-page">
+
+    <!--==========================
+    HEADER
+    ===========================-->
+
+    <header class="ad-header">
+        <div class="ad-header-title">
+            ⚙️ TRANG QUẢN TRỊ
+        </div>
+        <div class="ad-header-right">
+            <button
+                id="btn-change">
+                🔑 Đổi pass
+            </button>
+            <button
+                id="btn-home">
+                🏠 Home
+            </button>
+        </div>
+    </header>
+
+    <!--==========================
+    MAIN
+    ===========================-->
+
+    <div class="ad-main">
+        <aside class="ad-left">
+
+<button class="ad-menu" data-page="gioithieu">
+📖 Giới thiệu
+</button>
+
+<button class="ad-menu" data-page="lichsu">
+🏛 Lịch sử
+</button>
+
+<button class="ad-menu" data-page="danhthang">
+🏞 Danh lam thắng cảnh
+</button>
+
+<button class="ad-menu" data-page="amthuc">
+🍜 Ẩm thực
+</button>
+
+<button class="ad-menu" data-page="diadanh">
+📍 Địa danh
+</button>
+
+<button class="ad-menu" data-page="hotoc">
+👨‍👩‍👧 Họ tộc
+</button>
+
+<button class="ad-menu" data-page="tulieu">
+📚 Tư liệu
+</button>
+
+<button class="ad-menu" data-page="duyethoso">
+📚 Duyệt hồ sơ thành viên
+</button>
+
+</aside>
+
+        <!--======================
+        RIGHT
+        ======================-->
+
+        <main
+            id="admin-content"
+            class="ad-content">
+
+            <div class="ad-welcome">
+
+                <h2>
+
+                    Chào mừng đến Trang Quản trị
+
+                </h2>
+
+                <p>
+
+                    Chọn danh mục bên trái để bắt đầu cập nhật dữ liệu.
+
+                </p>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+<script type="module" src="scripts/firebaseConfig.js"> </script>
+<script type="module" src="scripts/firebaseService.js"> </script>
+<script type="module" src="scripts/contentService.js"> </script>
+<script type="module" src="scripts/router.js"> </script>
+
+<script type="module" src="../js/admin.js"></script>
+
+
+
+</body>
+
+</html>

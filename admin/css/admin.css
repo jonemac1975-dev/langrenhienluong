@@ -1,0 +1,1194 @@
+/*======================================================
+HIENLUONG WEBSITE
+Folder : /admin/css
+File   : admin.css
+======================================================*/
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#F5F5F5;
+color:#333;
+}
+
+/*==========================
+PAGE
+==========================*/
+
+.ad-page{
+width:100%;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/*==========================
+HEADER
+==========================*/
+
+.ad-header{
+height:65px;
+background:#6E3A26;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+color:#FFF;
+box-shadow:0 2px 10px rgba(0,0,0,.2);
+}
+
+.ad-header-title{
+font-size:26px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.ad-header-right{
+display:flex;
+gap:12px;
+
+}
+
+/*==========================
+BUTTON
+==========================*/
+
+.ad-header button{
+padding:10px 18px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+background:#FFF;
+font-weight:bold;
+transition:.25s;
+}
+
+.ad-header button:hover{
+background:#FFD54F;
+}
+
+/*==========================
+MAIN
+==========================*/
+.ad-main{
+flex:1;
+display:flex;
+}
+
+/*==========================
+LEFT
+==========================*/
+
+.ad-left{
+width:30%;
+max-width:320px;
+background:#FFFFFF;
+border-right:1px solid #DDD;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+/*==========================
+MENU
+==========================*/
+
+.ad-menu{
+width:100%;
+padding:14px;
+border:none;
+border-radius:8px;
+background:#EFEFEF;
+text-align:left;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+}
+
+.ad-menu:hover{
+background:#8B3E2F;
+color:#FFF;
+transform:translateX(4px);
+}
+
+.ad-menu.active{
+background:#1976D2;
+color:#FFF;
+}
+
+/*==========================
+RIGHT
+==========================*/
+
+.ad-content{
+flex:1;
+padding:25px;
+background:#FAFAFA;
+overflow:auto;
+}
+
+/*==========================
+WELCOME
+==========================*/
+
+.ad-welcome{
+background:#FFF;
+padding:40px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.ad-welcome h2{
+margin-bottom:15px;
+color:#6E3A26;
+}
+
+.ad-welcome p{
+font-size:16px;
+line-height:1.8;
+}
+
+/*==========================
+FORM
+==========================*/
+
+.ad-block{
+background:#FFF;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.ad-input,
+.ad-select,
+.ad-textarea{
+width:100%;
+padding:10px 12px;
+border:1px solid #CCC;
+border-radius:6px;
+font-size:15px;
+margin-top:5px;
+}
+
+.ad-textarea{
+min-height:180px;
+resize:vertical;
+}
+
+.ad-label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+/*==========================
+TABLE
+==========================*/
+
+.ad-table{
+width:100%;
+border-collapse:collapse;
+background:#FFF;
+}
+
+.ad-table th{
+background:#1976D2;
+color:#FFF;
+padding:12px;
+
+}
+
+.ad-table td{
+padding:12px;
+border-bottom:1px solid #EEE;
+}
+
+.ad-table tr:hover{
+background:#F7F7F7;
+}
+
+/*======================================================
+CỘT MÔ TẢ
+======================================================*/
+
+.tb-content{
+max-width:320px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+/*==========================
+ACTION BUTTON
+==========================*/
+
+.ad-btn{
+padding:8px 16px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+margin-right:6px;
+}
+
+.ad-btn-add{
+background:#43A047;
+color:#FFF;
+}
+
+.ad-btn-save{
+background:#1976D2;
+color:#FFF;
+}
+
+.ad-btn-edit{
+background:#FB8C00;
+color:#FFF;
+}
+
+.ad-btn-view{
+background:#6A1B9A;
+color:#FFF;
+}
+
+.ad-btn-delete{
+background:#D32F2F;
+color:#FFF;
+}
+
+.ad-btn:hover{
+opacity:.9;
+}
+
+/*==========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:900px){
+
+.ad-main{
+flex-direction:column;
+}
+.ad-left{
+width:100%;
+max-width:none;
+border-right:none;
+border-bottom:1px solid #DDD;
+}
+}
+
+
+
+/*======================================================
+ADMIN LOGIN
+======================================================*/
+
+.adm-login-page{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    linear-gradient(
+        135deg,
+        #3e2723 0%,
+        #6d4c41 40%,
+        #8d6e63 100%
+    );
+
+    position:relative;
+    overflow:hidden;
+}
+
+.adm-login-page::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:700px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    top:-250px;
+    left:-250px;
+}
+
+.adm-login-page::after{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    right:-180px;
+    bottom:-180px;
+
+}
+
+.adm-login-box{
+    width:430px;
+    background:#ffffff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.35);
+    position:relative;
+    z-index:2;
+}
+
+.adm-login-header{
+    background:#5d4037;
+    color:#fff;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    padding:22px;
+    letter-spacing:1px;
+}
+
+.adm-login-body{
+    padding:30px;
+}
+
+.adm-form-group{
+    margin-bottom:25px;
+}
+
+.adm-form-group label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:bold;
+    color:#444;
+}
+
+.adm-input{
+    width:100%;
+    padding:13px 15px;
+    font-size:16px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    transition:.25s;
+}
+
+.adm-input:focus{
+    outline:none;
+    border-color:#795548;
+    box-shadow:
+    0 0 8px rgba(121,85,72,.35);
+}
+
+.adm-login-footer{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    padding:0 30px 30px;
+
+}
+
+.adm-login-footer .adm-btn{
+    min-width:130px;
+    font-size:16px;
+    padding:11px 0;
+    border-radius:8px;
+}
+
+.adm-login-note{
+    text-align:center;
+    color:#888;
+    font-size:13px;
+    margin-top:18px;
+}
+
+/*======================================================
+ EDITOR TOOLBAR
+======================================================*/
+
+.ed-toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:12px;
+    background:#f1f5f9;
+    border:1px solid #cbd5e1;
+    border-radius:8px 8px 0 0;
+}
+
+
+/* BUTTON */
+
+.ed-toolbar button{
+    min-width:42px;
+    height:25px;
+    padding:0 12px;
+    border:none;
+    border-radius:6px;
+    background:#2563eb;
+    color:white;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+
+.ed-toolbar button:hover{
+    background:#1d4ed8;
+    transform:translateY(-1px);
+}
+
+
+/* Nút đặc biệt */
+
+#ed-clear{
+    background:#dc2626;
+}
+
+#ed-clear:hover{
+    background:#b91c1c;
+}
+
+
+#ed-html{
+    background:#7c3aed;
+}
+
+#ed-html:hover{
+    background:#6d28d9;
+}
+
+
+#ed-preview{
+    background:#059669;
+}
+
+#ed-preview:hover{
+    background:#047857;
+}
+
+
+/*======================================================
+ EDITOR CONTENT
+======================================================*/
+
+.ed-content{
+    min-height:350px;
+    padding:18px;
+    border:1px solid #cbd5e1;
+    border-top:none;
+    background:white;
+    border-radius:0 0 8px 8px;
+    font-size:17px;
+    line-height:1.7;
+    outline:none;
+}
+
+
+.ed-content:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 2px rgba(37,99,235,0.15);
+}
+
+
+/*======================================================
+ IMAGE TRONG EDITOR
+======================================================*/
+
+.ed-content img{
+    max-width:70%;
+    height:auto;
+    border-radius:6px;
+display:block;
+margin:15px auto;
+}
+
+
+/*======================================================
+ LINK
+======================================================*/
+
+.ed-content a{
+    color:#2563eb;
+    text-decoration:underline;
+}
+
+
+/*======================================================
+ MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+.ed-toolbar button{
+    min-width:38px;
+    height:34px;
+    font-size:14px;
+    padding:0 8px;
+}
+
+.ed-content{
+    min-height:250px;
+    font-size:16px;
+}
+
+}
+
+
+
+
+/*======================================================
+FORM ADMIN
+======================================================*/
+
+.gt-box,.ls-box{
+max-width:1100px;
+margin:auto;
+background:#fff;
+border-radius:12px;
+padding:25px;
+box-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+.gt-title,.ls-title{
+margin:0 0 25px;
+padding-bottom:12px;
+font-size:26px;
+font-weight:700;
+color:#1565c0;
+border-bottom:3px solid #1565c0;
+}
+
+.gt-form-group,.ls-row{
+margin-bottom:18px;
+}
+
+.gt-form-group label,
+.ls-row label{
+display:block;
+margin-bottom:8px;
+font-weight:600;
+color:#444;
+}
+
+.gt-input,
+.ls-input{
+width:100%;
+padding:12px 14px;
+border:1px solid #cfd8dc;
+border-radius:6px;
+font-size:15px;
+transition:.25s;
+box-sizing:border-box;
+}
+
+.gt-input:focus,
+.ls-input:focus{
+border-color:#1976d2;
+outline:none;
+box-shadow:0 0 6px rgba(25,118,210,.25);
+}
+
+.gt-image-area,
+.ls-row img{
+margin-top:10px;
+text-align:center;
+}
+
+#gt-preview,
+#ls-preview{
+display:none;
+max-width:320px;
+max-height:220px;
+border-radius:8px;
+border:1px solid #ddd;
+padding:4px;
+background:#fff;
+box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+.gt-btn-area,
+.ls-btns{
+margin-top:25px;
+text-align:center;
+}
+
+.gt-btn{
+padding:8px 28px;
+border:none;
+border-radius:6px;
+background:#1976d2;
+color:#fff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.25s;
+}
+
+.gt-btn:hover{
+background:#125ea9;
+transform:translateY(-1px);
+}
+
+.gt-btn:active{
+transform:translateY(0);
+}
+
+/*======================================================
+TABLE
+======================================================*/
+
+.ls-table{
+width:100%;
+margin-top:25px;
+border-collapse:collapse;
+background:#fff;
+overflow:hidden;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.ls-table th{
+background:#1976d2;
+color:#fff;
+padding:6px;
+font-size:15px;
+}
+
+.ls-table td{
+padding:6px;
+border-bottom:1px solid #eceff1;
+}
+
+.ls-table tr:nth-child(even){
+background:#fafafa;
+}
+
+.ls-table tr:hover{
+background:#e3f2fd;
+}
+
+.ls-table button{
+padding:6px 12px;
+margin:2px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:13px;
+font-weight:600;
+}
+
+.ls-table button:first-child{
+background:#ff9800;
+color:#fff;
+}
+
+.ls-table button:last-child{
+background:#e53935;
+color:#fff;
+}
+
+.ls-table button:hover{
+opacity:.9;
+}
+
+/*======================================================
+  ẨM THỰC - ẢNH ĐẠI DIỆN PREVIEW
+======================================================*/
+
+#at-preview {
+    width: 150px;
+    height: 100px;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+}
+
+#dt-preview {
+    width: 180px;
+    height: 120px;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+}
+
+#dd-preview {
+    width: 150px;
+    height: 100px;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+}
+
+#ht-preview {
+    width: 150px;
+    height: 100px;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+}
+
+#tl-preview {
+    width: 150px;
+    height: 100px;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+    margin-top: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+
+}
+
+/* ======================================================
+   HIỀN LƯƠNG
+   MODULE : DUYỆT HỒ SƠ THÀNH VIÊN
+   ====================================================== */
+
+
+/* ======================================================
+   KHỐI CHÍNH
+   ====================================================== */
+
+.duyet-hoso-page {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.duyet-hoso-box {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/* ======================================================
+   TIÊU ĐỀ
+   ====================================================== */
+
+.duyet-hoso-title {
+    margin: 0 0 18px 0;
+    padding-bottom: 10px;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    border-bottom: 2px solid #ddd;
+}
+
+
+/* ======================================================
+   DANH SÁCH
+   ====================================================== */
+
+.duyet-hoso-list {
+    width: 100%;
+    overflow-x: auto;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    background: #fff;
+}
+
+
+/* ======================================================
+   TABLE
+   ====================================================== */
+
+.duyet-hoso-table {
+    width: 100%;
+    min-width: 1050px;
+
+    border-collapse: collapse;
+
+    font-size: 14px;
+}
+
+
+/* HEADER */
+
+.duyet-hoso-table thead th {
+    padding: 11px 10px;
+
+    background: #f3f4f6;
+
+    border-bottom: 2px solid #ddd;
+
+    text-align: center;
+    white-space: nowrap;
+
+    font-weight: 700;
+}
+
+
+/* BODY */
+
+.duyet-hoso-table tbody td {
+    padding: 10px;
+
+    border-bottom: 1px solid #eee;
+
+    vertical-align: middle;
+}
+
+
+/* ======================================================
+   HOVER
+   ====================================================== */
+
+.duyet-hoso-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* ======================================================
+   CỘT STT
+   ====================================================== */
+
+.duyet-hoso-table th:first-child,
+.duyet-hoso-table td:first-child {
+    width: 55px;
+    text-align: center;
+}
+
+
+/* ======================================================
+   CỘT ID
+   ====================================================== */
+
+.duyet-hoso-table td:nth-child(2) {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+
+/* ======================================================
+   TRẠNG THÁI
+   ====================================================== */
+
+.duyet-status {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.duyet-status-pending {
+    background: #fff4cc;
+    color: #8a6500;
+}
+
+
+.duyet-status-approved {
+    background: #dff5e5;
+    color: #19733a;
+}
+
+
+.duyet-status-rejected {
+    background: #fde2e2;
+    color: #a52222;
+}
+
+
+/* ======================================================
+   NÚT XEM HỒ SƠ
+   ====================================================== */
+
+.duyet-view {
+    padding: 7px 11px;
+
+    border: 1px solid #bbb;
+    border-radius: 6px;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+.duyet-view:hover {
+    background: #f1f5f9;
+}
+
+
+/* ======================================================
+   CHECKBOX DUYỆT
+   ====================================================== */
+
+.duyet-check {
+    width: 19px;
+    height: 19px;
+
+    cursor: pointer;
+
+    vertical-align: middle;
+}
+
+
+.duyet-approved {
+    display: inline-block;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* ======================================================
+   CHI TIẾT HỒ SƠ
+   ====================================================== */
+
+.duyet-hoso-detail {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 22px;
+    padding: 20px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+
+/* ======================================================
+   HEADER CHI TIẾT
+   ====================================================== */
+
+.duyet-detail-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+
+.duyet-detail-header h3 {
+    margin: 0;
+
+    font-size: 19px;
+}
+
+
+/* ======================================================
+   NÚT ĐÓNG
+   ====================================================== */
+
+#btn-close-duyet-detail {
+    padding: 7px 13px;
+
+    border: 1px solid #bbb;
+    border-radius: 6px;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+#btn-close-duyet-detail:hover {
+    background: #f1f5f9;
+}
+
+
+/* ======================================================
+   NỘI DUNG CHI TIẾT
+   ====================================================== */
+
+.duyet-detail-content {
+    display: flex;
+
+    gap: 25px;
+
+    align-items: flex-start;
+}
+
+
+/* ======================================================
+   AVATAR
+   ====================================================== */
+
+.duyet-detail-avatar {
+    width: 140px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+#dh-avatar {
+    width: 120px;
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 3px solid #ddd;
+
+    background: #f5f5f5;
+}
+
+
+/* ======================================================
+   GRID HỒ SƠ
+   ====================================================== */
+
+.duyet-detail-grid {
+    flex: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* ======================================================
+   LABEL
+   ====================================================== */
+
+.duyet-detail-grid > div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.duyet-detail-grid label {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #555;
+}
+
+
+/* ======================================================
+   INPUT
+   ====================================================== */
+
+.duyet-detail-grid input,
+.duyet-detail-grid textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 9px 10px;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    background: #f8f8f8;
+
+    color: #333;
+
+    font-size: 14px;
+}
+
+
+.duyet-detail-grid textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+
+/* ======================================================
+   GIỚI THIỆU
+   ====================================================== */
+
+#dh-gioithieu {
+    min-height: 110px;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+   ====================================================== */
+
+@media (max-width: 850px) {
+
+    .duyet-detail-content {
+        flex-direction: column;
+    }
+
+    .duyet-detail-avatar {
+        width: 100%;
+    }
+
+    .duyet-detail-grid {
+        width: 100%;
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .duyet-hoso-page {
+        padding: 8px;
+    }
+
+    .duyet-hoso-title {
+        font-size: 19px;
+    }
+
+    .duyet-hoso-detail {
+        padding: 12px;
+    }
+
+    .duyet-detail-header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+}

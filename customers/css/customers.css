@@ -1,0 +1,2416 @@
+/*======================================================
+HIENLUONG WEBSITE
+Folder : /customers/css
+File   : customers.css
+======================================================*/
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Arial,Helvetica,sans-serif;
+
+background:#F5F5F5;
+
+color:#333;
+
+}
+
+/*==========================
+PAGE
+==========================*/
+
+.cus-page{
+
+width:100%;
+
+min-height:100vh;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+/*==========================
+HEADER
+==========================*/
+
+.cus-header{
+
+height:65px;
+
+background:#6E3A26;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 25px;
+
+color:#FFF;
+
+box-shadow:0 2px 10px rgba(0,0,0,.2);
+
+}
+
+.cus-header-title{
+
+font-size:26px;
+
+font-weight:bold;
+
+letter-spacing:1px;
+
+}
+
+.cus-header-right{
+
+display:flex;
+
+gap:12px;
+
+}
+
+/*==========================
+HEADER BUTTON
+==========================*/
+
+.cus-header button{
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+background:#FFF;
+
+font-weight:bold;
+
+transition:.25s;
+
+}
+
+.cus-header button:hover{
+
+background:#FFD54F;
+
+}
+
+/*==========================
+MAIN
+==========================*/
+
+.cus-main{
+
+flex:1;
+
+display:flex;
+
+}
+
+/*==========================
+LEFT MENU
+==========================*/
+
+.cus-left{
+
+width:30%;
+
+max-width:320px;
+
+background:#FFF;
+
+border-right:1px solid #DDD;
+
+padding:20px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+/*==========================
+MENU BUTTON
+==========================*/
+
+.cus-menu{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:8px;
+
+background:#EFEFEF;
+
+text-align:left;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.cus-menu:hover{
+
+background:#8B3E2F;
+
+color:#FFF;
+
+transform:translateX(4px);
+
+}
+
+.cus-menu.active{
+
+background:#1976D2;
+
+color:#FFF;
+
+}
+
+.cus-menu-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/*==========================
+RIGHT CONTENT
+==========================*/
+
+.cus-content{
+
+flex:1;
+
+padding:25px;
+
+background:#FAFAFA;
+
+overflow:auto;
+
+}
+
+/*==========================
+WELCOME
+==========================*/
+
+.cus-welcome{
+
+background:#FFF;
+
+padding:40px;
+
+border-radius:10px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.cus-welcome h2{
+
+margin-bottom:15px;
+
+color:#6E3A26;
+
+}
+
+.cus-welcome p{
+
+font-size:16px;
+
+line-height:1.8;
+
+}
+
+/*==========================
+FORM
+==========================*/
+
+.cus-block{
+
+background:#FFF;
+
+padding:20px;
+
+margin-bottom:20px;
+
+border-radius:10px;
+
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.cus-label{
+
+display:block;
+
+margin-top:15px;
+
+font-weight:bold;
+
+}
+
+.cus-input,
+
+.cus-select,
+
+.cus-textarea{
+
+width:100%;
+
+padding:10px 12px;
+
+margin-top:5px;
+
+border:1px solid #CCC;
+
+border-radius:6px;
+
+font-size:15px;
+
+}
+
+.cus-textarea{
+
+min-height:180px;
+
+resize:vertical;
+
+}
+
+/*==========================
+TABLE
+==========================*/
+
+.cus-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:#FFF;
+
+}
+
+.cus-table th{
+
+background:#1976D2;
+
+color:#FFF;
+
+padding:12px;
+
+}
+
+.cus-table td{
+
+padding:12px;
+
+border-bottom:1px solid #EEE;
+
+}
+
+.cus-table tr:hover{
+
+background:#F8F8F8;
+
+}
+
+/*==========================
+BUTTON
+==========================*/
+
+.cus-btn{
+
+padding:8px 16px;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+margin-right:6px;
+
+transition:.2s;
+
+}
+
+.cus-btn-add{
+
+background:#43A047;
+
+color:#FFF;
+
+}
+
+.cus-btn-save{
+
+background:#1976D2;
+
+color:#FFF;
+
+}
+
+.cus-btn-edit{
+
+background:#FB8C00;
+
+color:#FFF;
+
+}
+
+.cus-btn-view{
+
+background:#7B1FA2;
+
+color:#FFF;
+
+}
+
+.cus-btn-delete{
+
+background:#D32F2F;
+
+color:#FFF;
+
+}
+
+.cus-btn:hover{
+
+opacity:.9;
+
+}
+
+/*==========================
+SMALL BUTTON
+==========================*/
+
+.cus-btn-small{
+
+padding:6px 12px;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-size:13px;
+
+margin-right:4px;
+
+}
+
+/*==========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:900px){
+
+.cus-main{
+
+flex-direction:column;
+
+}
+
+.cus-left{
+
+width:100%;
+
+max-width:none;
+
+border-right:none;
+
+border-bottom:1px solid #DDD;
+
+}
+
+}
+
+/* =================================
+   USER LOGIN / REGISTER
+   ================================= */
+
+
+.cus-login-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+
+
+/* BOX */
+
+.cus-login-box{
+
+    width:380px;
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+    0 8px 30px
+
+    rgba(0,0,0,.15);
+
+}
+
+
+
+/* TITLE */
+
+.cus-login-header{
+
+    padding:22px;
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#fff;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #1565c0,
+        #42a5f5
+    );
+
+}
+
+
+
+/* FORM AREA */
+
+.cus-login-body{
+
+    padding:25px;
+
+}
+
+
+
+.cus-form-group{
+
+    margin-bottom:18px;
+
+}
+
+
+
+.cus-form-group label{
+
+    display:block;
+
+    margin-bottom:7px;
+
+    font-weight:600;
+
+    color:#444;
+
+}
+
+
+
+.cus-input{
+
+    width:100%;
+
+    height:42px;
+
+    padding:0 12px;
+
+    border:
+
+    1px solid #ddd;
+
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    outline:none;
+
+}
+
+
+
+.cus-input:focus{
+
+    border-color:#1976d2;
+
+    box-shadow:
+
+    0 0 0 3px
+
+    rgba(25,118,210,.15);
+
+}
+
+
+
+/* BUTTON AREA */
+
+.cus-login-footer{
+
+    padding:
+
+    0 25px 25px;
+
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+}
+
+
+
+.cus-btn{
+
+    min-width:100px;
+
+    padding:
+
+    10px 22px;
+
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+
+
+.cus-btn-success{
+
+    background:#2e7d32;
+
+    color:#fff;
+
+}
+
+
+
+.cus-btn-success:hover{
+
+    background:#1b5e20;
+
+}
+
+
+
+.cus-btn-secondary{
+
+    background:#eeeeee;
+
+    color:#555;
+
+}
+
+
+
+.cus-btn-secondary:hover{
+
+    background:#ddd;
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+    .cus-login-box{
+
+        width:100%;
+
+    }
+
+
+    .cus-login-footer{
+
+        flex-direction:column;
+
+    }
+
+
+    .cus-btn{
+
+        width:100%;
+
+    }
+
+}
+
+/*======================================================
+HỒ SƠ THÀNH VIÊN
+======================================================*/
+
+.hoso-page{
+width:100%;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+padding:40px 20px;
+box-sizing:border-box;
+}
+
+.hoso-box{
+width:100%;
+max-width:650px;
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 25px rgba(0,0,0,.15);
+box-sizing:border-box;
+}
+
+.hoso-box h1{
+margin:0 0 30px;
+text-align:center;
+color:#0B5E55;
+font-size:28px;
+}
+
+.hoso-form{
+width:100%;
+}
+
+.hoso-group{
+margin-bottom:18px;
+}
+
+.hoso-group label{
+display:block;
+margin-bottom:7px;
+font-weight:700;
+color:#333;
+}
+
+.hoso-group input[type="text"],
+.hoso-group input[type="email"],
+.hoso-group input[type="tel"]{
+width:100%;
+height:42px;
+padding:0 12px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:15px;
+box-sizing:border-box;
+outline:none;
+}
+
+.hoso-group input:focus{
+border-color:#0B5E55;
+box-shadow:0 0 0 2px rgba(11,94,85,.1);
+}
+
+.hoso-group input:disabled{
+background:#f1f1f1;
+color:#666;
+cursor:not-allowed;
+}
+
+.hoso-gender{
+display:flex;
+align-items:center;
+gap:30px;
+height:42px;
+}
+
+.hoso-gender label{
+display:flex;
+align-items:center;
+gap:7px;
+margin:0;
+font-weight:500;
+cursor:pointer;
+}
+
+.hoso-gender input{
+cursor:pointer;
+}
+
+.hoso-buttons{
+display:flex;
+justify-content:center;
+gap:12px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+
+.hoso-buttons button{
+border:none;
+padding:11px 20px;
+border-radius:6px;
+font-size:15px;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
+}
+
+#btn-save{
+background:#0B5E55;
+color:#fff;
+}
+
+#btn-my-page{
+background:#8B4513;
+color:#fff;
+}
+
+#btn-home{
+background:#555;
+color:#fff;
+}
+
+.hoso-buttons button:hover{
+transform:translateY(-1px);
+box-shadow:0 3px 10px rgba(0,0,0,.18);
+}
+
+@media(max-width:600px){
+
+.hoso-page{
+padding:20px 12px;
+}
+
+.hoso-box{
+padding:22px 18px;
+}
+
+.hoso-box h1{
+font-size:24px;
+margin-bottom:24px;
+}
+
+.hoso-buttons{
+flex-direction:column;
+}
+
+.hoso-buttons button{
+width:100%;
+}
+
+}
+
+#hoso-preview{
+    display:none;
+
+    width:120px;
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:3px solid #0b6b61;
+
+    background:#f1f1f1;
+}
+
+/*======================================================
+  TRẠNG THÁI HỒ SƠ
+======================================================*/
+
+.hoso-status{
+    margin: 15px 0 25px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.hoso-status-pending{
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffe69c;
+}
+
+.hoso-status-approved{
+    background: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #a3cfbb;
+}
+/*======================================================
+  XEM HỒ SƠ THÀNH VIÊN
+======================================================*/
+
+.hosoview-page{
+    width:100%;
+    padding:30px 20px;
+    box-sizing:border-box;
+}
+
+.hosoview-box{
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 25px rgba(0,0,0,.12);
+    box-sizing:border-box;
+}
+
+.hosoview-box h1{
+    margin:0 0 28px;
+    text-align:center;
+    color:#0B5E55;
+    font-size:27px;
+}
+
+/*======================================================
+  AVATAR
+======================================================*/
+
+.hosoview-avatar{
+    display:flex;
+    justify-content:center;
+    margin-bottom:28px;
+}
+
+.hosoview-avatar img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid #0B5E55;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+/*======================================================
+  FORM
+======================================================*/
+
+.hosoview-group{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:15px;
+    align-items:center;
+    min-height:44px;
+    margin-bottom:10px;
+    padding-bottom:10px;
+    border-bottom:1px solid #eee;
+}
+
+.hosoview-group label{
+    font-weight:700;
+    color:#555;
+}
+
+.hosoview-value{
+    min-height:40px;
+    display:flex;
+    align-items:center;
+    padding:8px 12px;
+    box-sizing:border-box;
+    background:#f5f5f5;
+    border-radius:6px;
+    color:#333;
+    font-size:15px;
+    word-break:break-word;
+}
+
+/* ID */
+
+#view-id{
+    color:#8B4513;
+    font-weight:700;
+}
+
+/* USERNAME */
+
+#view-username{
+    color:#0B5E55;
+    font-weight:700;
+}
+
+.hosoview-status {
+    margin: 15px 0 25px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.hosoview-status-pending {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffe69c;
+}
+
+.hosoview-status-approved {
+    background: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #a3cfbb;
+}
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+    .hosoview-page{
+        padding:20px 12px;
+    }
+
+    .hosoview-box{
+        padding:22px 18px;
+    }
+
+    .hosoview-box h1{
+        font-size:24px;
+        margin-bottom:24px;
+    }
+
+    .hosoview-group{
+        grid-template-columns:1fr;
+        gap:5px;
+        margin-bottom:14px;
+    }
+
+    .hosoview-group label{
+        font-size:14px;
+    }
+
+    .hosoview-value{
+        width:100%;
+    }
+
+}
+
+/*======================================================
+  CHUYỆN HÀNG NGÀY
+======================================================*/
+
+.chuyenhangngay-page{
+    width:100%;
+    padding:25px 20px 40px;
+    box-sizing:border-box;
+}
+
+.chuyenhangngay-box{
+    width:100%;
+    max-width:1100px;
+    margin:0 auto;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 25px rgba(0,0,0,.10);
+    box-sizing:border-box;
+}
+
+.chuyenhangngay-box h1{
+    margin:0 0 28px;
+    text-align:center;
+    color:#0B5E55;
+    font-size:27px;
+}
+
+.chuyenhangngay-box h2{
+    margin:30px 0 15px;
+    color:#0B5E55;
+    font-size:21px;
+}
+
+
+/*======================================================
+  FORM
+======================================================*/
+
+.chuyenhangngay-group{
+    margin-bottom:18px;
+}
+
+.chuyenhangngay-group > label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:700;
+    color:#555;
+}
+
+.chuyenhangngay-group input[type="text"],
+.chuyenhangngay-group input[type="date"]{
+    width:100%;
+    height:42px;
+    padding:8px 12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    box-sizing:border-box;
+    font-size:15px;
+    outline:none;
+}
+
+.chuyenhangngay-group input[type="text"]:focus,
+.chuyenhangngay-group input[type="date"]:focus{
+    border-color:#0B5E55;
+    box-shadow:0 0 0 2px rgba(11,94,85,.10);
+}
+
+
+/*======================================================
+  FILE
+======================================================*/
+
+#chn-image{
+    width:100%;
+    padding:8px 0;
+    box-sizing:border-box;
+}
+
+
+/*======================================================
+  IMAGE PREVIEW
+======================================================*/
+
+.chn-image-preview{
+    margin-top:10px;
+    min-height:0;
+}
+
+.chn-image-preview img{
+    display:block;
+    max-width:220px;
+    max-height:160px;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid #ddd;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+/*======================================================
+  ACTION
+======================================================*/
+
+.chuyenhangngay-actions{
+    display:flex;
+    gap:10px;
+    margin-top:22px;
+}
+
+.chuyenhangngay-actions button{
+    border:0;
+    border-radius:6px;
+    padding:10px 22px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+#btn-chn-save{
+    background:#0B5E55;
+    color:#fff;
+}
+
+#btn-chn-save:hover{
+    opacity:.9;
+}
+
+#btn-chn-cancel{
+    background:#eee;
+    color:#555;
+}
+
+#btn-chn-cancel:hover{
+    background:#ddd;
+}
+
+
+/*======================================================
+  TABLE
+======================================================*/
+
+.chuyenhangngay-table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+.chuyenhangngay-table-wrap table{
+    width:100%;
+    min-width:850px;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+.chuyenhangngay-table-wrap th,
+.chuyenhangngay-table-wrap td{
+    padding:10px 9px;
+    border:1px solid #ddd;
+    text-align:left;
+    vertical-align:middle;
+}
+
+.chuyenhangngay-table-wrap th{
+    background:#0B5E55;
+    color:#fff;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.chuyenhangngay-table-wrap tbody tr:hover{
+    background:#f7f7f7;
+}
+
+.chn-list-image{
+    margin-top:10px;
+    min-height:0;
+}
+
+.chn-list-image{
+    display:block;
+    max-width:220px;
+    max-height:40px;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid #ddd;
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+
+
+.chn-list-content{
+    max-width:280px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/*======================================================
+  EMPTY
+======================================================*/
+
+.chn-empty{
+    text-align:center !important;
+    color:#999;
+    padding:20px !important;
+}
+
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media(max-width:700px){
+
+    .chuyenhangngay-page{
+        padding:15px 10px 30px;
+    }
+
+    .chuyenhangngay-box{
+        padding:20px 15px;
+    }
+
+    .chuyenhangngay-box h1{
+        font-size:23px;
+    }
+
+    .chuyenhangngay-actions{
+        flex-direction:column;
+    }
+
+    .chuyenhangngay-actions button{
+        width:100%;
+    }
+
+}
+
+/*======================================================
+  EDITOR - CHUYỆN HÀNG NGÀY
+======================================================*/
+
+#chn-editor{
+    width:100%;
+    box-sizing:border-box;
+}
+
+
+/*======================================================
+  TOOLBAR
+======================================================*/
+
+#chn-editor button{
+    min-width:30px;
+    height:30px;
+
+    padding:3px 7px;
+
+    margin:0 3px 0 0;
+
+    border:1px solid #b8b8b8;
+    border-radius:5px;
+
+    background:#f7f7f7;
+
+    color:#333;
+
+    font-size:14px;
+    font-weight:600;
+
+    line-height:1;
+
+    cursor:pointer;
+
+    box-sizing:border-box;
+
+    transition:
+        background .15s ease,
+        border-color .15s ease;
+}
+
+#chn-editor button:hover{
+    background:#e8f2f0;
+    border-color:#0B5E55;
+}
+
+#chn-editor button:active{
+    background:#d8e9e6;
+}
+
+
+/*======================================================
+  VÙNG SOẠN THẢO
+======================================================*/
+
+/* editor.js thường tạo div contenteditable */
+
+#chn-editor [contenteditable="true"]{
+
+    width:100% !important;
+
+    min-height:320px !important;
+
+    height:auto !important;
+
+    padding:12px !important;
+
+    margin:0 !important;
+
+    box-sizing:border-box;
+
+    border:1px solid #bdbdbd;
+
+    border-radius:6px;
+
+    background:#fff;
+
+    color:#222;
+
+    font-size:15px;
+
+    line-height:1.6;
+
+    outline:none;
+
+    overflow-y:auto;
+
+}
+
+
+/*======================================================
+  KHI CLICK VÀO VÙNG SOẠN THẢO
+======================================================*/
+
+#chn-editor [contenteditable="true"]:focus{
+
+    border-color:#0B5E55;
+
+    box-shadow:
+        0 0 0 2px rgba(11,94,85,.10);
+
+}
+
+
+/*======================================================
+  ĐOẠN VĂN TRONG EDITOR
+======================================================*/
+
+#chn-editor [contenteditable="true"] p{
+
+    margin:0 0 10px;
+
+}
+
+#chn-editor [contenteditable="true"] h1,
+#chn-editor [contenteditable="true"] h2,
+#chn-editor [contenteditable="true"] h3{
+
+    margin-top:10px;
+    margin-bottom:10px;
+
+}
+
+
+/*======================================================
+  TOOLBAR KHÔNG BỊ TRÀN
+======================================================*/
+
+#chn-editor > div:first-child{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    align-items:center;
+
+    gap:3px;
+
+    padding:5px;
+
+    background:#f5f5f5;
+
+    border:1px solid #ccc;
+
+    border-bottom:0;
+
+    border-radius:6px 6px 0 0;
+
+}
+
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media(max-width:700px){
+
+    #chn-editor [contenteditable="true"]{
+
+        min-height:260px !important;
+
+        font-size:15px;
+
+    }
+
+    #chn-editor button{
+
+        min-width:29px;
+        height:29px;
+
+        padding:3px 6px;
+
+    }
+
+}
+
+/*======================================================
+  BÀI VIẾT - CREATE POST
+======================================================*/
+
+.baiviet-create{
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:18px;
+    box-sizing:border-box;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:
+        0 3px 14px rgba(0,0,0,.10);
+}
+
+
+/*======================================================
+  HEADER
+======================================================*/
+
+.baiviet-create-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+}
+
+
+/*======================================================
+  AVATAR
+======================================================*/
+
+.baiviet-avatar{
+    width:48px;
+    height:48px;
+    flex:0 0 48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:50%;
+    background:#e8f1ef;
+    border:2px solid #0b6b61;
+    box-sizing:border-box;
+}
+
+
+/*
+   Ảnh thật
+*/
+
+.baiviet-avatar img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50%;
+}
+
+
+/*
+   Nếu ảnh bị lỗi
+*/
+
+.baiviet-avatar img:not([src]),
+.baiviet-avatar img[src=""]{
+    display:none;
+}
+
+
+/*======================================================
+  TÊN
+======================================================*/
+
+.baiviet-create-title{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:2px;
+}
+
+.baiviet-create-title strong{
+    color:#222;
+    font-size:16px;
+    line-height:20px;
+}
+
+.baiviet-create-title span{
+    color:#888;
+    font-size:13px;
+    line-height:18px;
+}
+
+/*======================================================
+  BÀI VIẾT - CAPTION
+======================================================*/
+
+.baiviet-caption {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.bv-caption-input {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    padding: 10px 14px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    outline: none;
+
+    background: #fff;
+}
+
+.bv-caption-input:focus {
+    border-color: #999;
+}
+
+.bv-caption-input::placeholder {
+    font-weight: 400;
+    opacity: 0.65;
+}
+/*======================================================
+  EDITOR CONTAINER
+======================================================*/
+
+.baiviet-editor{
+    width:100%;
+    margin-top:2px;
+}
+
+
+/*======================================================
+  EDITOR DO PROJECT TẠO
+======================================================*/
+
+#bv-editor{
+    width:100%;
+    box-sizing:border-box;
+}
+
+
+/*
+  Toolbar
+*/
+
+#bv-editor > .editor-toolbar{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:3px;
+    padding:6px 8px;
+    background:#f5f6f7;
+    border:1px solid #d5d5d5;
+    border-bottom:0;
+    border-radius:10px 10px 0 0;
+}
+
+
+/*
+  Các nút toolbar
+*/
+
+#bv-editor > .editor-toolbar button{
+    min-width:30px;
+    height:30px;
+    padding:3px 7px;
+    border:1px solid #c9c9c9;
+    border-radius:5px;
+    background:#fff;
+    color:#333;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#bv-editor > .editor-toolbar button:hover{
+    background:#e8f2f0;
+    border-color:#0b6b61;
+    color:#07574f;
+}
+
+
+/*
+  Vùng nhập thật
+*/
+
+#bv-editor [contenteditable="true"]{
+    width:100%;
+    min-height:145px;
+    max-height:420px;
+    padding:12px 14px;
+    box-sizing:border-box;
+    border:1px solid #d5d5d5;
+    border-radius:0 0 10px 10px;
+    background:#f7f8f8;
+    color:#222;
+    font-size:16px;
+    line-height:1.65;
+    outline:none;
+    overflow-y:auto;
+}
+
+
+/*
+  Khi click vào vùng nhập
+*/
+
+#bv-editor [contenteditable="true"]:focus{
+    background:#fff;
+    border-color:#0b6b61;
+    box-shadow:
+        0 0 0 2px rgba(11,107,97,.08);
+}
+
+
+/*======================================================
+  THANH NGĂN
+======================================================*/
+
+.baiviet-tools{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid #e8e8e8;
+}
+
+
+/*======================================================
+  NÚT ẢNH / CLIP / XÓA
+======================================================*/
+
+.bv-tool{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-width:80px;
+    height:35px;
+    padding:3px 10px;
+    border:1px solid #d8d8d8;
+    border-radius:8px;
+    background:brown;
+    color:White;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    box-sizing:border-box;
+    transition:
+        background .15s ease,
+        border-color .15s ease,
+        transform .1s ease;
+}
+
+.bv-tool:hover{
+    background:#eaf4f2;
+    border-color:#0b6b61;
+    color:#07574f;
+}
+
+.bv-tool:active{
+    transform:scale(.97);
+}
+
+/*======================================================
+  NÚT SỬA / XÓA
+======================================================*/
+
+.baiviet-card-actions{
+    display:flex;
+
+    gap:10px;
+
+    margin-top:15px;
+    padding-top:12px;
+
+    border-top:1px solid #eee;
+}
+
+
+
+
+/*======================================================
+  NÚT SỬA / XÓA
+======================================================*/
+
+.baiviet-card-actions{
+    display:flex;
+   width:30%;
+    gap:10px;
+    margin-top:15px;
+    padding-top:12px;
+
+    border-top:1px solid #eee;
+}
+
+
+/*======================================================
+  NÚT CHUNG
+======================================================*/
+
+.baiviet-card-actions button{
+    flex:1;
+    min-height:38px;
+    border-radius:7px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:
+        background .15s ease,
+        transform .1s ease;
+}
+
+
+/*======================================================
+  SỬA
+======================================================*/
+
+.baiviet-card-actions .bv-edit{
+    border:1px solid #2f80a0;
+    background:#eaf5f9;
+    color:#17627d;
+}
+
+.baiviet-card-actions .bv-edit:hover{
+    background:#d7edf4;
+    color:#0f5068;
+}
+
+.baiviet-card-actions .bv-edit:active{
+    transform:scale(.97);
+}
+
+
+/*======================================================
+  XÓA
+======================================================*/
+
+.baiviet-card-actions .bv-delete{
+    border:1px solid #d66a6a;
+    background:#fff0f0;
+    color:#b33131;
+}
+
+.baiviet-card-actions .bv-delete:hover{
+    background:#ffe0e0;
+    color:#922424;
+}
+
+.baiviet-card-actions .bv-delete:active{
+    transform:scale(.97);
+}
+/*======================================================
+  NÚT ĐĂNG
+======================================================*/
+
+.baiviet-post-button{
+    width:40%;
+    height:44px;
+    margin-top:15px;
+    border:0;
+    border-radius:8px;
+    background:#0b6b61;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.2px;
+    cursor:pointer;
+    transition:
+        background .15s ease,
+        transform .1s ease;
+}
+
+.baiviet-post-button:hover{
+    background:#095c53;
+}
+
+.baiviet-post-button:active{
+    transform:scale(.99);
+}
+
+
+/*======================================================
+  PREVIEW ẢNH
+======================================================*/
+
+.baiviet-image-preview{
+    display:none;
+    margin-top:12px;
+    position:relative;
+    overflow:hidden;
+    border-radius:9px;
+}
+
+.baiviet-image-preview.active{
+    display:block;
+}
+
+.baiviet-image-preview img{
+    display:block;
+    width:30%;
+    max-height:200px;
+    object-fit:cover;
+    border-radius:9px;
+}
+
+/*======================================================
+  ẢNH BÀI VIẾT
+======================================================*/
+
+.baiviet-card-image{
+    width:100%;
+    margin-top:14px;
+    display:flex;
+    justify-content:center;
+}
+
+.baiviet-card-image img{
+    display:block;
+    width:360px;
+    height:240px;
+    max-width:100%;
+    object-fit:cover;
+    border-radius:9px;
+    border:1px solid #ddd;
+}
+/*======================================================
+  CLIP
+======================================================*/
+
+.baiviet-clip-input{
+    display:none;
+    margin-top:12px;
+}
+
+.baiviet-clip-input.active{
+    display:block;
+}
+
+.baiviet-clip-input input{
+    width:100%;
+    height:42px;
+    padding:8px 12px;
+    box-sizing:border-box;
+    border:1px solid #d2d2d2;
+    border-radius:8px;
+    outline:none;
+    font-size:14px;
+    background:#fafafa;
+}
+
+.baiviet-clip-input input:focus{
+    background:#fff;
+    border-color:#0b6b61;
+    box-shadow:
+        0 0 0 2px rgba(11,107,97,.08);
+}
+
+
+/*======================================================
+  TIÊU ĐỀ FEED
+======================================================*/
+
+.baiviet-feed{
+    margin-top:26px;
+}
+
+.baiviet-feed-title{
+    margin:0 0 14px;
+    color:#0b6b61;
+    font-size:21px;
+    font-weight:700;
+}
+
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+    .baiviet-page{
+        padding:10px 7px 35px;
+    }
+
+    .baiviet-create{
+        padding:14px;
+
+        border-radius:11px;
+    }
+
+    .baiviet-create-header{
+        margin-bottom:10px;
+    }
+
+    .baiviet-avatar{
+        width:44px;
+        height:44px;
+
+        flex-basis:44px;
+    }
+
+    .bv-editor{
+        min-height:135px;
+
+        font-size:15px;
+    }
+
+    .baiviet-tools{
+        gap:6px;
+    }
+
+    .bv-tool{
+        flex:1;
+
+        min-width:0;
+
+        padding:6px 8px;
+    }
+
+}
+
+
+
+
+
+/*======================================================
+  EDITOR - BÀI VIẾT
+======================================================*/
+
+#bv-editor{
+    width:100%;
+    box-sizing:border-box;
+}
+
+
+/*======================================================
+  TOOLBAR
+======================================================*/
+
+#bv-editor button{
+    min-width:30px;
+    height:30px;
+    padding:3px 7px;
+    margin:0 3px 0 0;
+    border:1px solid #b8b8b8;
+    border-radius:5px;
+    background:#f7f7f7;
+    color:#333;
+    font-size:14px;
+    font-weight:600;
+    line-height:1;
+    cursor:pointer;
+    box-sizing:border-box;
+    transition:
+        background .15s ease,
+        border-color .15s ease;
+}
+
+#bv-editor button:hover{
+    background:#e8f2f0;
+    border-color:#0B5E55;
+}
+
+#bv-editor button:active{
+    background:#d8e9e6;
+}
+
+
+/*======================================================
+  VÙNG SOẠN THẢO
+======================================================*/
+
+/* editor.js thường tạo div contenteditable */
+#bv-editor [contenteditable="true"]{
+    width:100% !important;
+    min-height:320px !important;
+    height:auto !important;
+    padding:12px !important;
+    margin:0 !important;
+    box-sizing:border-box;
+    border:1px solid #bdbdbd;
+    border-radius:6px;
+    background:#fff;
+    color:#222;
+    font-size:15px;
+    line-height:1.6;
+    outline:none;
+    overflow-y:auto;
+
+}
+
+
+/*======================================================
+  KHI CLICK VÀO VÙNG SOẠN THẢO
+======================================================*/
+
+#bv-editor [contenteditable="true"]:focus{
+    border-color:#0B5E55;
+    box-shadow:
+        0 0 0 2px rgba(11,94,85,.10);
+
+}
+
+
+/*======================================================
+  ĐOẠN VĂN TRONG EDITOR
+======================================================*/
+
+#bv-editor [contenteditable="true"] p{
+    margin:0 0 10px;
+
+}
+
+#bv-editor [contenteditable="true"] h1,
+#bv-editor [contenteditable="true"] h2,
+#bv-editor [contenteditable="true"] h3{
+
+    margin-top:10px;
+    margin-bottom:10px;
+
+}
+
+
+
+/*======================================================
+  FACEBOOK STYLE - POST
+======================================================*/
+
+.baiviet-card{
+    position:relative;
+
+    width:100%;
+    margin-bottom:18px;
+    padding:18px;
+
+    box-sizing:border-box;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 2px 12px rgba(0,0,0,.08);
+}
+
+
+/*======================================================
+  POST HEADER
+======================================================*/
+
+.baiviet-card-header{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:14px;
+}
+
+
+/*======================================================
+  AVATAR
+======================================================*/
+
+.baiviet-card-avatar{
+    width:44px;
+    height:44px;
+
+    flex:0 0 44px;
+
+    border-radius:50%;
+    overflow:hidden;
+
+    background:#e8f1ef;
+
+    border:2px solid #0b6b61;
+}
+
+.baiviet-card-avatar img{
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:50%;
+}
+
+
+/*======================================================
+  USER
+======================================================*/
+
+.baiviet-card-user{
+    flex:1;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:2px;
+}
+
+.baiviet-card-user strong{
+    color:#222;
+
+    font-size:15px;
+    line-height:19px;
+}
+
+.baiviet-card-date{
+    color:#777;
+
+    font-size:12px;
+}
+
+.baiviet-card-date::after{
+    content:"  •  🌐 Công khai";
+    color:#888;
+}
+
+
+/*======================================================
+  NÚT 3 CHẤM
+======================================================*/
+
+.baiviet-more{
+    width:34px;
+    height:34px;
+
+    border:0;
+    border-radius:50%;
+
+    background:transparent;
+
+    color:#666;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.baiviet-more:hover{
+    background:#f0f2f2;
+}
+
+
+/*======================================================
+  CONTENT
+======================================================*/
+
+.baiviet-card-content{
+    margin-top:4px;
+
+    color:#222;
+
+    font-size:16px;
+
+    line-height:1.65;
+
+    word-break:break-word;
+}
+
+.baiviet-card-content a{
+    color:#0b6b61;
+
+    font-weight:600;
+}
+
+.baiviet-card-content img{
+    max-width:100%;
+}
+
+
+/*======================================================
+  POST IMAGE
+======================================================*/
+
+.baiviet-card-image{
+    width:100%;
+    margin-top:14px;
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:9px;
+}
+
+.baiviet-card-image img{
+    display:block;
+    width:360px;
+    height:240px;
+    max-width:100%;
+    object-fit:cover;
+    border-radius:9px;
+    cursor:pointer;
+    transition:
+        transform .2s ease;
+}
+
+.baiviet-card-image img:hover{
+    transform:scale(1.015);
+}
+
+
+/*======================================================
+  CLIP
+======================================================*/
+
+.baiviet-card-clip{
+    margin-top:14px;
+}
+
+.baiviet-card-clip a{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 12px;
+
+    border-radius:8px;
+
+    background:#f0f6f5;
+
+    color:#0b6b61;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    cursor:pointer;
+}
+
+.baiviet-card-clip a:hover{
+    background:#e2efed;
+}
+
+
+/*======================================================
+  THANH TƯƠNG TÁC
+======================================================*/
+
+.baiviet-social-actions{
+    display:flex;
+
+    gap:5px;
+
+    margin-top:15px;
+
+    padding:7px 0;
+
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+}
+
+.baiviet-social-actions button{
+    flex:1;
+
+    height:38px;
+
+    border:0;
+
+    border-radius:7px;
+
+    background:transparent;
+
+    color:#666;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+.baiviet-social-actions button:hover{
+    background:#f2f5f4;
+
+    color:#0b6b61;
+}
+
+
+/*======================================================
+  SỬA / XÓA
+======================================================*/
+
+.baiviet-card-actions{
+    display:flex;
+
+    gap:10px;
+
+    margin-top:10px;
+}
+
+.baiviet-card-actions button{
+    flex:1;
+
+    min-height:36px;
+
+    border-radius:7px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.baiviet-card-actions .bv-edit{
+    border:1px solid #2f80a0;
+
+    background:#eaf5f9;
+
+    color:#17627d;
+}
+
+.baiviet-card-actions .bv-edit:hover{
+    background:#d7edf4;
+}
+
+.baiviet-card-actions .bv-delete{
+    border:1px solid #d66a6a;
+
+    background:#fff0f0;
+
+    color:#b33131;
+}
+
+.baiviet-card-actions .bv-delete:hover{
+    background:#ffe0e0;
+}
+
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+    .baiviet-card{
+        padding:14px;
+
+        border-radius:11px;
+    }
+
+    .baiviet-card-image img{
+        width:320px;
+        height:210px;
+    }
+
+    .baiviet-social-actions button{
+        font-size:13px;
+    }
+
+}
+

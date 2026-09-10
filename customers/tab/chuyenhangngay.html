@@ -1,0 +1,155 @@
+<!--======================================================
+    CHUYỆN HÀNG NGÀY
+=======================================================-->
+
+<div class="chuyenhangngay-page">
+
+    <div class="chuyenhangngay-box">
+
+        <h1>Nhật ký của tôi</h1>
+
+        <!--==================================================
+            FORM
+        ==================================================-->
+
+        <div class="chuyenhangngay-form">
+
+            <!-- TIÊU ĐỀ -->
+
+            <div class="chuyenhangngay-group">
+
+                <label for="chn-title">
+                    Tiêu đề
+                </label>
+
+                <input
+                    type="text"
+                    id="chn-title"
+                    placeholder="Nhập tiêu đề">
+
+            </div>
+
+
+            <!-- ẢNH -->
+
+            <div class="chuyenhangngay-group">
+
+                <label for="chn-image">
+                    Ảnh minh họa
+                </label>
+
+                <input
+                    type="file"
+                    id="chn-image"
+                    accept="image/*">
+
+                <div
+                    id="chn-image-preview"
+                    class="chn-image-preview">
+                </div>
+
+            </div>
+
+
+            <!-- NỘI DUNG -->
+
+            <div class="chuyenhangngay-group">
+
+                <label>
+                    Nội dung
+                </label>
+
+                <div
+    			id="chn-editor"
+   			class="chn-editor">
+		</div>
+
+            </div>
+
+
+            <!-- CLIP -->
+
+            <div class="chuyenhangngay-group">
+
+                <label for="chn-clip">
+                    Link Video
+                </label>
+
+                <input
+                    type="text"
+                    id="chn-clip"
+                    placeholder="Dán link vào đây">
+
+            </div>
+
+
+            <!-- NGÀY -->
+
+            <div class="chuyenhangngay-group">
+
+                <label for="chn-date">
+                    Ngày
+                </label>
+
+                <input
+                    type="date"
+                    id="chn-date">
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="chuyenhangngay-actions">
+
+                <button
+                    type="button"
+                    id="btn-chn-save">
+                    💾 Lưu
+                </button>
+
+                <button
+                    type="button"
+                    id="btn-chn-cancel">
+                    ↩ Hủy
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!--==================================================
+            DANH SÁCH
+        ==================================================-->
+
+        <div class="chuyenhangngay-list">
+            <h2>Danh sách nhật ký</h2>
+            <div class="chuyenhangngay-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ngày</th>
+                            <th>Tiêu đề</th>
+                            <th>Nội dung</th>
+                            <th>Ảnh</th>
+                            <th>Clip</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="chn-list">
+                        <tr>
+                            <td
+                                colspan="7"
+                                class="chn-empty">
+                                Chưa có chuyện nào.
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

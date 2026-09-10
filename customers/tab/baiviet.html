@@ -1,0 +1,168 @@
+<!--======================================================
+    BÀI VIẾT - PHONG CÁCH MẠNG XÃ HỘI
+=======================================================-->
+
+<div class="baiviet-page">
+
+    <!--==================================================
+        KHUNG ĐĂNG BÀI
+    ==================================================-->
+
+    <div class="baiviet-create">
+
+        <div class="baiviet-create-header">
+
+            <div class="baiviet-avatar">
+                <img
+                    id="bv-avatar"
+                    src=""
+                    alt="Ảnh đại diện">
+            </div>
+
+            <div class="baiviet-create-title">
+                <strong id="bv-username">
+                    Thành viên
+                </strong>
+
+                <span>
+                    Đăng bài viết
+                </span>
+            </div>
+
+        </div>
+
+<!--================================================
+    CAPTION
+================================================-->
+
+<div class="baiviet-caption">
+
+    <input
+        type="text"
+        id="bv-caption"
+        class="bv-caption-input"
+        placeholder="Bạn đang nghĩ gì?">
+
+</div>
+
+        <!--================================================
+            NỘI DUNG
+        =================================================-->
+
+        <div class="baiviet-editor">
+
+            <div
+    id="bv-editor"
+    class="bv-editor">
+</div>
+
+        </div>
+
+
+        <!--================================================
+            ẢNH XEM TRƯỚC
+        =================================================-->
+
+        <div
+            id="bv-image-preview"
+            class="baiviet-image-preview">
+        </div>
+
+
+        <!--================================================
+            CLIP
+        =================================================-->
+
+        <div class="baiviet-clip-input">
+
+            <input
+                type="text"
+                id="bv-clip"
+                placeholder="Dán link YouTube / Google Drive...">
+
+        </div>
+
+
+        <!--================================================
+            THANH CÔNG CỤ
+        =================================================-->
+
+        <div class="baiviet-tools">
+
+            <label
+                for="bv-image-file"
+                class="bv-tool">
+
+                🖼️
+                <span>Ảnh</span>
+
+            </label>
+
+            <input
+                type="file"
+                id="bv-image-file"
+                accept="image/*"
+                hidden>
+
+
+            <button
+                type="button"
+                id="bv-btn-clip"
+                class="bv-tool">
+
+                🎬
+                <span>Video</span>
+
+            </button>
+
+
+            <button
+                type="button"
+                id="bv-btn-clear"
+                class="bv-tool">
+
+                🗑️
+                <span>Hủy</span>
+
+            </button>
+
+        </div>
+
+
+        <!--================================================
+            ĐĂNG BÀI
+        =================================================-->
+
+        <button
+            type="button"
+            id="bv-btn-post"
+            class="baiviet-post-button">
+
+            ĐĂNG BÀI
+
+        </button>
+
+    </div>
+
+
+    <!--==================================================
+        DANH SÁCH BÀI VIẾT
+    ==================================================-->
+
+    <div class="baiviet-feed">
+
+        <h2 class="baiviet-feed-title">
+            Danh sách bài viết
+        </h2>
+
+        <div id="bv-list">
+
+            <div class="baiviet-empty">
+                Chưa có bài viết.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

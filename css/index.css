@@ -1,0 +1,1540 @@
+/*======================================================
+HIEN LUONG WEBSITE
+File : css/index.css
+======================================================*/
+
+/*=========================
+RESET
+=========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#F7F5F1;
+    color:#333;
+}
+
+/*=========================
+LINK
+=========================*/
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/*==============================
+HEADER
+==============================*/
+
+.hl-header{
+position:relative;
+height:150px;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+background:#6E3A26;
+}
+
+.hl-header-bg{
+position:absolute;
+left:0;
+top:10;
+width:100%;
+height:90%;
+object-fit:cover;
+filter:blur(2px) brightness(.65);
+transform:scale(1.08);
+}
+
+.hl-header-overlay{
+position:absolute;
+inset:0;
+background:
+linear-gradient(
+90deg,
+rgba(110,58,38,.92),
+rgba(110,58,38,.55),
+rgba(110,58,38,.25)
+);
+
+}
+
+.hl-header-left{
+position:relative;
+z-index:10;
+display:flex;
+align-items:center;
+gap:25px;
+
+}
+
+.hl-logo img{
+width:100px;
+height:100px;
+border-radius:50%;
+border:5px solid #fff;
+object-fit:cover;
+box-shadow:0 5px 20px rgba(0,0,0,.35);
+background:#fff;
+
+}
+
+.hl-title h1{
+margin:0;
+font-size:54px;
+font-weight:700;
+letter-spacing:2px;
+color:#fff;
+text-shadow:2px 2px 8px rgba(0,0,0,.5);
+
+}
+
+.hl-title h3{
+margin-top:6px;
+font-size:22px;
+font-style:italic;
+font-weight:bold;
+color:#FFD84D;
+text-shadow:1px 1px 6px rgba(0,0,0,.6);
+animation:blinkTitle 1.2s infinite;
+}
+
+@keyframes blinkTitle{
+0%{opacity:1;}
+50%{opacity:.35;}
+100%{opacity:1;}
+
+}
+
+.hl-user{
+    position:relative;
+    z-index:100;
+    margin-top:-20px;
+    padding-bottom:8px;
+}
+
+.hl-user-btn{
+    padding:8px 16px;
+    border:none;
+    border-radius:8px;
+    background:#fff;
+    font-weight:bold;
+    font-size:16px;
+    cursor:pointer;
+    color:Blue;
+    box-shadow:0 4px 15px rgba(0,0,0,.25);
+}
+
+.hl-user-menu{
+    display:none;
+    position:absolute;
+    right:0;
+    top:100%;
+    width:180px;
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+.hl-user:hover .hl-user-menu{
+    display:block;
+}
+
+.hl-user-menu a{
+    display:block;
+    padding:12px 15px;
+    text-decoration:none;
+    color:#333;
+    border-bottom:1px solid #eee;
+}
+
+.hl-user-menu a:last-child{
+    border-bottom:none;
+}
+
+.hl-user-menu a:hover{
+    background:#F5F5F5;
+}
+
+/*=========================
+MARQUEE
+=========================*/
+
+.hl-marquee{
+    width:100%;
+    height:42px;
+    background:#CFE8CF;
+    border-top:1px solid #B5DDB5;
+    border-bottom:1px solid #B5DDB5;
+    display:flex;
+    align-items:center;
+    color:#444;
+    font-size:16px;
+    font-weight:bold;
+}
+
+/*=========================
+MAIN
+=========================*/
+
+.hl-main{
+    width:100%;
+    min-height:calc(100vh - 260px);
+    display:grid;
+    grid-template-columns:17% 65% 18%;
+    gap:15px;
+    padding:15px;
+}
+
+/*=========================
+LEFT
+=========================*/
+
+.hl-left{
+    background:#FFF;
+    border-radius:10px;
+    padding:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+/*=========================
+CENTER
+=========================*/
+.hl-slide{
+    width:100%;
+    height:420px;
+    overflow:hidden;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.hl-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+
+/*=========================
+RIGHT
+=========================*/
+
+.hl-right{
+    background:#FFF;
+    border-radius:10px;
+    padding:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+/*=========================
+MENU
+=========================*/
+
+.hl-menu{
+margin-bottom:15px;
+background:#FFF;
+border:1px solid #DDD;
+border-radius:8px;
+overflow:hidden;
+cursor:pointer;
+transition:.25s;
+}
+
+.hl-menu:hover{
+transform:translateY(-2px);
+box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.hl-menu-title{
+padding:10px;
+font-size:16px;
+font-weight:bold;
+background:#CFE8CF;
+color:#8B3E2F;
+}
+
+.hl-thumb{
+width:100%;
+height:120px;
+background:#EEE;
+background-size:cover;
+background-position:center;
+}
+
+/*=========================
+LIST
+=========================*/
+
+.hl-item{
+display:flex;
+gap:10px;
+padding:10px;
+border-bottom:1px solid #EEE;
+cursor:pointer;
+transition:.25s;
+}
+
+.hl-item:hover{
+background:#F8F8F8;
+}
+
+.hl-item img{
+width:90px;
+height:70px;
+object-fit:cover;
+border-radius:6px;
+}
+
+.hl-item-title{
+font-weight:bold;
+margin-bottom:5px;
+}
+
+.hl-item-date{
+font-size:13px;
+color:#888;
+}
+
+/*=========================
+CONTENT
+=========================*/
+
+.hl-content-title{
+font-size:32px;
+margin-bottom:15px;
+color:#8B3E2F;
+}
+
+.hl-content-info{
+margin-bottom:20px;
+color:#666;
+font-size:14px;
+}
+
+.hl-content img{
+max-width:100%;
+margin:15px auto;
+display:block;
+border-radius:8px;
+}
+
+.hl-content iframe{
+display:block;
+margin:20px auto;
+max-width:100%;
+}
+
+/*=========================
+FOOTER
+=========================*/
+
+.hl-footer{
+margin-top:20px;
+padding:20px;
+background:#222;
+color:#EEE;
+text-align:center;
+line-height:32px;
+font-size:15px;
+
+}
+
+.hl-footer a{
+color:#FFD54F;
+font-weight:bold;
+}
+
+/*=========================
+RESPONSIVE
+=========================*/
+
+@media(max-width:1200px){
+.hl-header{
+grid-template-columns:150px 260px 1fr 150px;
+}
+.hl-main{
+grid-template-columns:22% 78%;
+}
+.hl-right{
+display:none;
+}
+}
+
+@media(max-width:900px){
+.hl-header{
+grid-template-columns:1fr;
+height:auto;
+}
+
+.hl-logo,
+.hl-title,
+.hl-banner,
+.hl-user{
+padding:10px;
+}
+
+.hl-banner{
+height:220px;
+}
+
+.hl-main{
+grid-template-columns:1fr;
+}
+
+.hl-left,
+.hl-right{
+display:none;
+}
+
+.hl-slide{
+height:260px;
+}
+}
+
+@media(max-width:600px){
+.hl-title h1{
+font-size:28px;
+}
+
+.hl-title h3{
+font-size:18px;
+}
+
+.hl-slide{
+height:180px;
+}
+
+.hl-content-title{
+font-size:24px;
+}
+
+.hl-user button{
+width:130px;
+font-size:14px;
+}
+}
+
+@keyframes blinkTitle{
+0%{
+opacity:1;
+}
+
+50%{
+opacity:.35;
+}
+
+100%{
+opacity:1;
+}
+
+}
+
+/*==========================================
+BACKGROUND SLIDESHOW
+==========================================*/
+#bg-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.hl-center{
+position:relative;
+overflow:hidden;
+background:#FFF;
+border-radius:10px;
+padding:20px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+min-height:560px;
+}
+
+.bg-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.bg-layer.active {
+    opacity: 1;
+}
+#hl-content{
+position:relative;
+z-index:2;
+width:100%;
+}
+
+/*------------------------------------------------------
+  KHỐI GIỚI THIỆU
+------------------------------------------------------*/
+
+.hl-gioithieu {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/*------------------------------------------------------
+  ẢNH ĐẠI DIỆN
+------------------------------------------------------*/
+
+.hl-gioithieu-image {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 20px;
+}
+
+.hl-gioithieu-image img {
+
+    width: 220px;
+    height: 150px;
+
+    max-width: 100%;
+
+    object-fit: cover;
+
+    display: inline-block;
+
+    border-radius: 10px;
+
+}
+
+
+/*------------------------------------------------------
+  BODY
+------------------------------------------------------*/
+
+.hl-gioithieu-body {
+    width: 100%;
+}
+
+
+/*------------------------------------------------------
+  TIÊU ĐỀ
+------------------------------------------------------*/
+
+.hl-gioithieu-title {
+    text-align: center;
+    margin: 10px 0 15px;
+}
+
+
+/*------------------------------------------------------
+  NỘI DUNG
+------------------------------------------------------*/
+
+.hl-gioithieu-content {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/*------------------------------------------------------
+  ẢNH TRONG NỘI DUNG
+------------------------------------------------------*/
+
+.hl-gioithieu-content img {
+
+    width: 50%;
+    max-width: 50%;
+
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 15px auto;
+
+    border-radius: 9px;
+
+}
+
+/*======================================================
+LỊCH SỬ MENU
+======================================================*/
+
+.hl-history-menu{
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+.hl-history-row{
+display:flex;
+align-items:center;
+gap:0px;
+padding:4px 5px;
+border-top:1px solid #eee;
+cursor:pointer;
+transition:.2s;
+}
+
+.hl-history-row:hover{
+background:#f6f6f6;
+}
+
+.hl-history-row.active{
+background:#e8f4ff;
+}
+
+/* Năm */
+.hl-history-row-year{
+flex:0 0 55px;
+font-weight:600;
+color:#8B3E2F;
+white-space:nowrap;
+}
+
+/* Tiêu đề */
+.hl-history-row-title {
+flex:1;
+color:#0B5E55;
+font-weight:500;
+
+overflow:hidden;
+white-space:nowrap;
+text-overflow:ellipsis;
+}
+/*======================================================
+  INDEX - LỊCH SỬ - MAIN
+======================================================*/
+
+.hl-lichsu {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*------------------------------------------------------
+  NĂM
+------------------------------------------------------*/
+
+.hl-lichsu-year {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #8B3E2F;
+    margin: 5px 0 4px;
+}
+
+/*------------------------------------------------------
+  TIÊU ĐỀ
+------------------------------------------------------*/
+
+.hl-lichsu-title {
+    text-align: center;
+    color: #0B5E55;
+    margin: 5px 0 12px;
+}
+
+
+/*------------------------------------------------------
+  ẢNH ĐẠI DIỆN
+------------------------------------------------------*/
+
+.hl-lichsu-image {
+    width: 100%;
+    text-align: center;
+    margin: 8px 0 15px;
+}
+
+.hl-lichsu-image img {
+    width: 220px;
+    height: 150px;
+    max-width: 100%;
+    object-fit: cover;
+    display: inline-block;
+    border-radius: 9px;
+}
+
+
+/*------------------------------------------------------
+  NGUỒN TƯ LIỆU
+------------------------------------------------------*/
+
+.hl-lichsu-source {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0 12px;
+}
+
+/*------------------------------------------------------
+  NỘI DUNG
+------------------------------------------------------*/
+
+.hl-lichsu-content {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+
+/*------------------------------------------------------
+  ẢNH TRONG NỘI DUNG
+------------------------------------------------------*/
+
+.hl-lichsu-content img {
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 12px auto;
+    border-radius: 9px;
+}
+
+/*======================================================
+DANH THẮNG
+======================================================*/
+
+.hl-danhthang-menu{
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+.hl-danhthang-row{
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 10px;
+border-top:1px solid #eee;
+cursor:pointer;
+transition:.2s;
+}
+
+.hl-danhthang-row:hover{
+background:#f6f6f6;
+}
+
+.hl-danhthang-row.active{
+background:#e8f4ff;
+}
+
+.hl-danhthang-row-icon{
+flex:0 0 24px;
+font-size:18px;
+}
+
+.hl-danhthang-row-title{
+flex:1;
+color:#0B5E55;
+font-weight:700;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+/*======================================================
+CHI TIẾT DANH THẮNG
+======================================================*/
+
+.hl-danhthang-title,
+.hl-gioithieu-title{
+font-size:32px;
+margin-bottom:20px;
+color:#0B5E55;
+}
+
+.hl-danhthang-image img{
+display:block;
+max-width:100%;
+margin:20px auto;
+border-radius:10px;
+}
+
+.hl-danhthang-address{
+margin:15px 0;
+font-size:16px;
+}
+
+.hl-danhthang-map,
+.hl-danhthang-video{
+margin:12px 0;
+}
+
+.hl-danhthang-map a,
+.hl-danhthang-video a{
+color:#0B5E55;
+font-weight:700;
+text-decoration:none;
+}
+
+.hl-danhthang-map a:hover,
+.hl-danhthang-video a:hover{
+text-decoration:underline;
+}
+
+.hl-danhthang-content{
+margin-top:20px;
+line-height:1.8;
+text-align:justify;
+}
+
+/*======================================================
+CHI TIẾT ẨM THỰC
+======================================================*/
+.hl-amthuc-menu{
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+.hl-amthuc-row{
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 10px;
+border-top:1px solid #eee;
+cursor:pointer;
+transition:.2s;
+}
+
+.hl-amthuc-row:hover{
+background:#f6f6f6;
+}
+
+.hl-amthuc-row.active{
+background:#e8f4ff;
+}
+
+.hl-amthuc-row-icon{
+flex:0 0 24px;
+font-size:18px;
+}
+
+.hl-amthuc-row-title{
+flex:1;
+color:#0B5E55;
+font-weight:700;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.hl-amthuc-title{
+font-size:32px;
+margin-bottom:20px;
+color:brown;
+}
+
+.hl-amthuc-image {
+    width:100%;
+    text-align:center;
+}
+
+.hl-amthuc-image img {
+    width:220px;
+    height:150px;
+    max-width:100%;
+    object-fit:cover;
+    display:inline-block;
+    margin:10px auto 18px;
+    border-radius:10px;
+}
+
+.hl-amthuc-address{
+margin:15px 0;
+font-size:16px;
+}
+
+.hl-amthuc-map,
+.hl-amthuc-video{
+margin:12px 0;
+}
+
+.hl-amthuc-map a,
+.hl-amthuc-video a{
+color:#0B5E55;
+font-weight:700;
+text-decoration:none;
+}
+
+.hl-amthuc-map a:hover,
+.hl-amthuc-video a:hover{
+text-decoration:underline;
+}
+
+.hl-amthuc-content{
+margin-top:20px;
+line-height:1.8;
+text-align:justify;
+}
+
+/*======================================================
+CHI TIẾT ĐỊA DANH
+======================================================*/
+.hl-diadanh-menu{
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+.hl-diadanh-row{
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 10px;
+border-top:1px solid #eee;
+cursor:pointer;
+transition:.2s;
+}
+
+.hl-diadanh-row:hover{
+background:#f6f6f6;
+}
+
+.hl-diadanh-row.active{
+background:#e8f4ff;
+}
+
+.hl-diadanh-row-icon{
+flex:0 0 24px;
+font-size:18px;
+}
+
+.hl-diadanh-row-title{
+flex:1;
+color:#0B5E55;
+font-weight:700;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.hl-diadanh-title{
+font-size:32px;
+margin-bottom:20px;
+color:brown;
+}
+
+.hl-diadanh-image img{
+display:block;
+max-width:100%;
+margin:20px auto;
+border-radius:10px;
+}
+
+.hl-diadanh-address{
+margin:15px 0;
+font-size:16px;
+}
+
+.hl-diadanh-map,
+.hl-amthuc-video{
+margin:12px 0;
+}
+
+.hl-diadanh-map a,
+.hl-diadanh-video a{
+color:#0B5E55;
+font-weight:700;
+text-decoration:none;
+}
+
+.hl-diadanh-map a:hover,
+.hl-diadanh-video a:hover{
+text-decoration:underline;
+}
+
+.hl-diadanh-content{
+margin-top:20px;
+line-height:1.8;
+text-align:justify;
+}
+
+/*======================================================
+CHI TIẾT HỌ TỘC
+======================================================*/
+.hl-hotoc-menu{
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+.hl-hotoc-row{
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 10px;
+border-top:1px solid #eee;
+cursor:pointer;
+transition:.2s;
+}
+
+.hl-hotoc-row:hover{
+background:#f6f6f6;
+}
+
+.hl-hotoc-row.active{
+background:#e8f4ff;
+}
+
+.hl-hotoc-row-icon{
+flex:0 0 24px;
+font-size:18px;
+}
+
+.hl-hotoc-row-title{
+flex:1;
+color:#0B5E55;
+font-weight:700;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.hl-hotoc-title{
+font-size:32px;
+margin-bottom:20px;
+color:brown;
+}
+
+.hl-hotoc-image img{
+display:block;
+max-width:100%;
+margin:20px auto;
+border-radius:10px;
+}
+
+.hl-hotoc-address{
+margin:15px 0;
+font-size:16px;
+}
+
+.hl-hotoc-map,
+.hl-amthuc-video{
+margin:12px 0;
+}
+
+.hl-hotoc-map a,
+.hl-hotoc-video a{
+color:#0B5E55;
+font-weight:700;
+text-decoration:none;
+}
+
+.hl-hotoc-map a:hover,
+.hl-hotoc-web,
+.hl-hotoc-video a:hover{
+color:#0B5E55;
+text-decoration:underline;
+}
+
+.hl-hotoc-content{
+margin-top:20px;
+line-height:1.8;
+text-align:justify;
+}
+
+/*======================================================
+CHI TIẾT TƯ LIỆU
+======================================================*/
+.hl-tulieu-menu{
+background:#fff;
+border-top:1px solid #ddd;
+}
+
+.hl-tulieu-row{
+display:flex;
+align-items:center;
+gap:8px;
+padding:8px 10px;
+border-top:1px solid #eee;
+cursor:pointer;
+transition:.2s;
+}
+
+.hl-tulieu-row:hover{
+background:#f6f6f6;
+}
+
+.hl-tulieu-row.active{
+background:#e8f4ff;
+}
+
+.hl-tulieu-row-icon{
+flex:0 0 24px;
+font-size:18px;
+}
+
+.hl-tulieu-row-title{
+flex:1;
+color:#0B5E55;
+font-weight:700;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.hl-tulieu-title{
+font-size:32px;
+margin-bottom:20px;
+color:brown;
+}
+
+.hl-tulieu-image img{
+display:block;
+max-width:100%;
+margin:20px auto;
+border-radius:10px;
+}
+
+.hl-tulieu-map,
+.hl-tulieu-video{
+margin:12px 0;
+}
+
+.hl-tulieu-link{
+color:#0B5E55;
+font-weight:700;
+text-decoration:none;
+}
+
+.hl-tulieu-link,
+.hl-tulieu-web
+.hl-tulieu-video a:hover{
+color:#0B5E55;
+text-decoration:underline;
+}
+
+.hl-tulieu-content{
+margin-top:20px;
+line-height:1.8;
+text-align:justify;
+}
+
+
+
+/*======================================================
+  CHUYỆN HÀNG NGÀY
+  Thumbnail riêng cho ô bên phải
+======================================================*/
+.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.08);
+}
+/* Ảnh thumbnail */
+.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Khi chưa có ảnh */
+.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb:empty {
+    display: none;
+}
+
+/*======================================================
+  CHUYỆN HÀNG NGÀY
+  ẢNH ĐẠI DIỆN TRONG DANH SÁCH
+======================================================*/
+.hl-center .chn-list .chn-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+/* Ảnh đại diện */
+
+.hl-center .chn-list .chn-list-image {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hình ảnh */
+.hl-center .chn-list .chn-list-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/* Trường hợp không có ảnh */
+.hl-center .chn-list .chn-no-image {
+    background: rgba(0,0,0,0.08);
+    font-size: 24px;
+}
+
+/* Nội dung bên phải ảnh */
+.hl-center .chn-list .chn-list-info {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Tiêu đề */
+.hl-center .chn-list .chn-title {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    line-height: 1.3;
+color:Brown;
+text-decoration:underline;
+}
+
+/* Người viết */
+.hl-center .chn-list .chn-author {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Ngày */
+.hl-center .chn-list .chn-date {
+    font-size: 12px;
+    line-height: 1.3;
+    opacity: 0.75;
+}
+
+/*======================================================
+  INDEX - BÀI VIẾT CÁ NHÂN
+======================================================*/
+.hl-right .hl-menu[data-page="baiviet"] .hl-thumb {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hl-right .hl-menu[data-page="baiviet"] .hl-thumb img {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    object-fit: cover;
+}
+
+/*======================================================
+  DANH SÁCH
+======================================================*/
+.bv-index-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.bv-index-avatar {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bv-index-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 50%;
+}
+.bv-index-info {
+    flex: 1;
+    min-width: 0;
+}
+.bv-index-caption {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+.bv-index-author {
+    margin-top: 4px;
+    font-size: 14px;
+}
+.bv-index-date {
+    margin-top: 3px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/*======================================================
+  CHI TIẾT
+======================================================*/
+.bv-index-post {
+    margin-top: 20px;
+    padding: 20px;
+}
+.bv-index-post-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.bv-index-post-meta {
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+.bv-index-post-content {
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.bv-index-post-image {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* ẢNH TRONG NỘI DUNG BÀI VIẾT */
+.bv-index-post-content {
+    font-size: 14px;
+    line-height: 1.45;
+    padding: 5px 0;
+
+}
+.bv-index-post-content p {
+    margin: 2px 0;
+}
+/*======================================================
+  ẢNH BÀI VIẾT - INDEX
+======================================================*/
+.bv-index-post-image img {
+   width:360px;
+    height:240px;
+    max-width:100%;
+    object-fit:cover;
+    border-radius:9px;
+    cursor:pointer;
+    transition:
+        transform .2s ease;
+}
+.bv-index-post-clip {
+    margin-top: 15px;
+}
+.bv-index-post-clip a {
+    text-decoration: none;
+}
+.bv-index-no-image {
+    font-size: 24px;
+}
+
+/*======================================================
+  INDEX - BÀI VIẾT
+  NÚT QUAY LẠI DANH SÁCH
+======================================================*/
+.bv-index-back {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color : Brown;
+}
+.bv-index-back:hover {
+    text-decoration: underline;
+}
+
+/*======================================================
+  BÀI VIẾT INDEX
+  YOUTUBE FLOATING PLAYER
+======================================================*/
+#bv-floating-player {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 360px;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    z-index: 99999;
+}
+
+
+/* HEADER */
+.bv-floating-header {
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    background: #222;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* NÚT ĐÓNG */
+#bv-close-player {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+
+/* VIDEO */
+.bv-floating-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+
+.bv-floating-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+
+
+body {
+    margin: 0 !important;
+}
+
+.hl-footer {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    display: block !important;
+}
+
+
+
+/*======================================================
+  DANH SÁCH THÀNH VIÊN
+======================================================*/
+.tv-thumb-text{
+color:Brown;
+font-weight:700;
+background: #e8f4ff;
+}
+.thanhvien-page{
+    width:100%;
+}
+
+.thanhvien-box{
+    width:100%;
+}
+
+.thanhvien-box h2{
+    margin:0 0 25px;
+    text-align:center;
+}
+
+.thanhvien-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.thanhvien-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+
+    /* Không tạo cảm giác đây là link */
+    cursor:default;
+}
+
+.thanhvien-avatar{
+    width:65px;
+    height:65px;
+
+    flex-shrink:0;
+
+    overflow:hidden;
+
+    border-radius:50%;
+}
+
+.thanhvien-avatar img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+.thanhvien-name{
+    font-size:17px;
+    font-weight:600;
+}
+
+.thanhvien-empty{
+    padding:30px;
+    text-align:center;
+}
+
+.thanhvien-loading{
+    padding:30px;
+    text-align:center;
+}
+
+.thanhvien-error{
+    padding:30px;
+    text-align:center;
+}
+
+.thanhvien-info{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.thanhvien-name{
+    font-size:17px;
+    font-weight:600;
+}
+
+.thanhvien-nationality{
+    font-size:14px;
+    opacity:0.75;
+}

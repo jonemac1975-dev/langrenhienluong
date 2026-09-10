@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Blog cá nhân</title>
+
+<link
+rel="stylesheet"
+href="../css/customers.css">
+
+</head>
+<body>
+<div class="cus-page">
+
+    <!--==========================
+    HEADER
+    ==========================-->
+    <header class="cus-header">
+        <div class="cus-header-title">
+            👤 BLOG CÁ NHÂN
+        </div>
+        <div class="cus-header-right">
+            <button
+                id="btn-account">
+                🔑 Cập nhật tài khoản
+            </button>
+            <button
+                id="btn-profile">
+                🪪 Cập nhật hồ sơ
+            </button>
+
+            <button
+                id="btn-home">
+                🏠 Home
+            </button>
+        </div>
+    </header>
+
+    <!--==========================
+    MAIN
+    ==========================-->
+
+    <div class="cus-main">
+
+        <!--======================
+        LEFT
+        ======================-->
+
+        <aside class="cus-left">
+            <button
+                class="cus-menu"
+                data-page="hosoview.html">
+                👤 Hồ sơ
+            </button>
+
+            <button
+                class="cus-menu"
+                data-page="chuyenhangngay.html">
+                🏛 Nhật ký
+            </button>
+
+            <button
+                class="cus-menu"
+                data-page="baiviet.html">
+                📝 Bài viết
+            </button>
+            
+        </aside>
+
+        <!--======================
+        RIGHT
+        ======================-->
+
+        <main
+            id="customers-content"
+            class="cus-content">
+
+            <div class="cus-welcome">
+                <h2>
+                    Xin chào !
+                </h2>
+                <p>
+                    Chọn chức năng bên trái để bắt đầu.
+                </p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script type="module" src="scripts/firebaseConfig.js"> </script>
+<script type="module" src="scripts/firebaseService.js"> </script>
+<script type="module" src="scripts/contentService.js"> </script>
+<script type="module" src="scripts/router.js"> </script>
+
+<script type="module" src="../js/customers.js"> </script>
+</body>
+</html>
