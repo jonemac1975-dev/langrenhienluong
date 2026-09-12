@@ -30,9 +30,7 @@ document.addEventListener("DOMContentLoaded",init);
 //======================================================
 
 export async function init(){
-    console.log("🚀 BÀI VIẾT INIT");
     CUSTOMER_UID = localStorage.getItem("customer_uid");
-    console.log("🆔 CUSTOMER UID =",CUSTOMER_UID);
     if(!CUSTOMER_UID){
         console.warn("⚠️ Không tìm thấy customer_uid");
         return;
@@ -47,25 +45,22 @@ export async function init(){
 
     // Form đăng bài
     renderCreate();
-renderPost();
-bindEvents();
+    renderPost();
+    bindEvents();
 
 document
 .getElementById("bv-btn-post")
 ?.addEventListener(
     "click",
     () => {
-
         if(CURRENT){
             updatePost();
         }
         else{
             saveData();
         }
-
     }
 );
-    console.log("📚 BÀI VIẾT =",LIST);
 }
 
 
@@ -97,7 +92,7 @@ async function loadData(){
                 }
             );
 
-        console.log("📥 LOAD BÀI VIẾT:",LIST );
+        
     }
     catch(err){
         console.error("❌ Không load được bài viết:", err);
@@ -259,27 +254,13 @@ function bindEvents(){
     document.getElementById("bv-btn-clear")?.addEventListener("click",clearCreateForm);
 }
 
-//======================================================
-// CLEAR FORM
-//======================================================
 
 function clearCreateForm(){
-//==================================================
-// CAPTION
-//==================================================
 
 const caption = document.getElementById("bv-caption");
 if(caption){ caption.value = "";
 }
-    //==================================================
-    // EDITOR
-    //==================================================
     setHtml("bv-editor","");
-
-    //==================================================
-    // ẢNH
-    //==================================================
-
     imageBase64 = "";
     const image = document.getElementById("bv-image-file");
     if(image){image.value = "";
@@ -291,10 +272,7 @@ if(caption){ caption.value = "";
             "active"
         );
     }
-
-    //==================================================
-    // CLIP
-    //==================================================
+    
     const clip =document.getElementById("bv-clip");
     if(clip){
         clip.value = "";
@@ -306,17 +284,10 @@ if(caption){ caption.value = "";
             "active"
         );
     }
-
-    //==================================================
-    // CURRENT
-    //==================================================
+    
     CURRENT = null;
-    console.log("🧹 ĐÃ XÓA FORM BÀI VIẾT");
-}
+    }
 
-//======================================================
-// SAVE DATA
-//======================================================
 
 async function saveData(){
     if(!CUSTOMER_UID){
@@ -324,9 +295,6 @@ async function saveData(){
         return;
     }
 
-    //==================================================
-    // LẤY DỮ LIỆU
-    //==================================================
     const caption = document.getElementById("bv-caption")?.value.trim() || "";
     const content = getHtml("bv-editor");
     const clip = document.getElementById("bv-clip")?.value.trim() || "";
@@ -337,10 +305,8 @@ async function saveData(){
     temp.innerHTML = content || "";
     const text = temp.textContent.replace(/\s+/g," ").trim();
     if(!caption && !text && !imageBase64 && !clip){alert("Hãy nhập caption, nội dung, chọn ảnh hoặc thêm clip.");
-
     return;
 }
-
 
     //==================================================
     // ID BÀI VIẾT
@@ -361,15 +327,7 @@ async function saveData(){
             ...data
         });
         sortData();
-
-        //================================================
-        // FORM TRẮNG
-        //================================================
         clearCreateForm();
-
-        //================================================
-        // RENDER
-        //================================================
         renderPost();
         alert("Đã đăng bài thành công.");
     }
@@ -378,34 +336,20 @@ async function saveData(){
     }
 }
 
-//======================================================
-// RENDER POST
-//======================================================
+
 function renderPost(){
     const box = document.getElementById("bv-list");
     if(!box){
         return;
     }
 
-    //==================================================
-    // KHÔNG CÓ BÀI
-    //==================================================
     if(!LIST.length){
         box.innerHTML = `<div class="baiviet-empty"> Chưa có bài viết. </div>`;
         return;
     }
-
-    //==================================================
-    // AVATAR
-    //==================================================
     const avatar =localStorage.getItem("customer_avatar") ||"../../images/avatar-default.png";
-    //==================================================
-    // USERNAME
-    //==================================================
     const username = localStorage.getItem("customer_username") ||"Thành viên";
-    //==================================================
-    // RENDER
-    //==================================================
+    
     box.innerHTML = LIST.map(item => {
 	const date = formatDate( item.created_at);
                 return `
@@ -443,9 +387,7 @@ ${
     ? `
     <div
         class="baiviet-card-caption">
-
         ${escapeHtml(item.caption)}
-
     </div>
     `
     : ""
@@ -459,11 +401,9 @@ ${
     ? `
     <div
         class="baiviet-card-content">
-
         ${item.content}
-
     </div>
-    `
+   `
     : ""
 }
 
@@ -502,19 +442,19 @@ ${
         type="button"
         class="bv-like"
         data-id="${item.id}">
-        ❤️ Thích
+        ❤️ Like
     </button>
     <button
         type="button"
         class="bv-comment"
         data-id="${item.id}">
-        💬 Bình luận
+        💬 Comment
     </button>
     <button
         type="button"
         class="bv-share"
         data-id="${item.id}">
-        ↗ Chia sẻ
+        ↗ Share
     </button>
 </div>
                     <!-- ACTION -->
@@ -541,13 +481,8 @@ ${
     bindPostEvents();
 }
 
-//======================================================
-// BIND POST EVENTS
-//======================================================
+
 function bindPostEvents(){
-    //==================================================
-    // SỬA
-    //==================================================
     document.querySelectorAll(".bv-edit").forEach( btn => {
             btn.onclick =() => {
             editPost(btn.dataset.id
@@ -556,9 +491,6 @@ function bindPostEvents(){
         }
     );
 
-    //==================================================
-    // XÓA
-    //==================================================
     document.querySelectorAll(".bv-delete").forEach(
         btn => {
             btn.onclick =
@@ -584,20 +516,10 @@ function editPost(id){
     }
     CURRENT = item;
 
-//==================================================
-// CAPTION
-//==================================================
 const caption = document.getElementById("bv-caption");
 if(caption){caption.value = item.caption || "";
 }
-    //==================================================
-    // CONTENT
-    //==================================================
     setHtml("bv-editor",item.content || "");
-
-    //==================================================
-    // IMAGE
-    //==================================================
     imageBase64 = item.image || "";
     const preview = document.getElementById( "bv-image-preview");
     if(preview){
@@ -619,9 +541,6 @@ if(caption){caption.value = item.caption || "";
         }
     }
 
-    //==================================================
-    // CLIP
-    //==================================================
     const clip = document.getElementById("bv-clip");
     const clipBox = document.querySelector(".baiviet-clip-input");
     if(clip){
@@ -656,9 +575,7 @@ if(caption){caption.value = item.caption || "";
 
     document.querySelector(".baiviet-create")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
-//======================================================
-// UPDATE POST
-//======================================================
+
 async function updatePost(){
     if(!CURRENT){
         saveData();
@@ -670,9 +587,6 @@ async function updatePost(){
     const data = {caption: caption || "",content: content || "",image: imageBase64 || "",clip: clip || "", created_at: CURRENT.created_at || Date.now(),updated_at: Date.now()};
     try{
         await writeData(`customers/${CUSTOMER_UID}/baiviet/${CURRENT.id}`,data);
-        //================================================
-        // CẬP NHẬT LIST
-        //================================================
         const index = LIST.findIndex(x =>x.id === CURRENT.id);
         if(index !== -1){
             LIST[index] = {
@@ -696,16 +610,9 @@ async function updatePost(){
         alert(
             "Đã cập nhật bài viết."
         );
-
-
     }
     catch(err){
-
-        console.error(
-            "❌ Cập nhật thất bại:",
-            err
-        );
-
+        console.error("❌ Cập nhật thất bại:",err);
         alert("Cập nhật bài viết thất bại.");
     }
 }

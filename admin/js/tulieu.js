@@ -97,20 +97,15 @@ updated_at:Date.now()
 };
 
 await writeData("admin/tulieu",DATA);
-
 alert("Đã lưu.");
-
 clearForm();
-
 await loadData();
 }
 
 window.editTuLieu=function(id){
 
 const r=DATA[id];
-
 if(!r)return;
-
 editId=id;
 imageBase64=r.image||"";
 
@@ -120,11 +115,8 @@ document.getElementById("tl-link").value=r.link||"";
 document.getElementById("tl-author").value=r.author||"";
 document.getElementById("tl-source").value=r.source||"";
 document.getElementById("tl-date").value=r.date||"";
-
 setHtml("tl-editor",r.content||"");
-
 const img=document.getElementById("tl-preview");
-
 if(imageBase64){
 img.src=imageBase64;
 img.style.display="block";
@@ -137,19 +129,14 @@ window.scrollTo({
 top:0,
 behavior:"smooth"
 });
-
 };
 
 window.deleteTuLieu=async function(id){
 
 if(!confirm("Xóa tư liệu này?"))return;
-
 delete DATA[id];
-
 await writeData("admin/tulieu",DATA);
-
 await loadData();
-
 };
 
 function clearForm(){
@@ -164,11 +151,8 @@ document.getElementById("tl-author").value="";
 document.getElementById("tl-source").value="";
 document.getElementById("tl-date").value="";
 document.getElementById("tl-image-file").value="";
-
 setHtml("tl-editor","");
-
 const img=document.getElementById("tl-preview");
 img.removeAttribute("src");
 img.style.display="none";
-
 }

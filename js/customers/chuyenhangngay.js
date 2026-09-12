@@ -6,7 +6,6 @@
 
 import {readData} from "../../scripts/firebaseService.js";
 import {renderVideo} from "../../scripts/services/videoService.js";
-console.log("📰 CHUYỆN HÀNG NGÀY MODULE LOADED");
 
 //======================================================
 // CONFIG
@@ -31,12 +30,9 @@ function getContentBox(){
 //======================================================
 
 async function loadData(){
-    console.log("📥 LOAD CHUYỆN HÀNG NGÀY");
-
     try{
         const customers = await readData(CUSTOMERS_PATH);
         if(!customers){
-            console.log("ℹ️ CUSTOMERS RỖNG");
             DATA = [];
             return DATA;
         }
@@ -120,7 +116,6 @@ async function loadData(){
             }
         );
         DATA = result;
-        console.log("✅ CHUYỆN HÀNG NGÀY:", DATA.length);
         return DATA;
     }
     catch(err){
@@ -209,7 +204,6 @@ function escapeHTML(value){
 //======================================================
 
 export async function initThumbnail(){
-    console.log( "🖼️ LOAD THUMBNAIL CHUYỆN HÀNG NGÀY");
     const menu = document.querySelector('.hl-right .hl-menu[data-page="chuyenhangngay"]');
     if(!menu){
         console.warn("⚠️ KHÔNG TÌM THẤY MENU CHUYỆN HÀNG NGÀY");
@@ -244,8 +238,7 @@ export async function initThumbnail(){
             alt="Chuyện hàng ngày"
             loading="lazy">
     `;
-    console.log("✅ THUMBNAIL:",latest.id);
-}
+    }
 
 //======================================================
 // RENDER MAIN
@@ -440,7 +433,7 @@ function renderDetail(item){
             <button
                 class="chn-back"
                 type="button">
-                ← Danh sách Chuyện hàng ngày
+                ← Quay lại
             </button>
             <div class="chn-detail-header">
                 <h2>

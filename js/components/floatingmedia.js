@@ -2,15 +2,10 @@
 // HIENLUONG WEBSITE
 // File : /js/components/floatingmedia.js
 //======================================================
-
-console.log("🎬 FLOATING MEDIA LOADED");
-
 //======================================================
 
 let PANEL = null;
-
 let BODY = null;
-
 let TITLE = null;
 
 //======================================================
@@ -66,9 +61,7 @@ class="hl-floating-body">
 `;
 
 document.body.appendChild(PANEL);
-
 BODY = document.getElementById("hl-floating-body");
-
 TITLE = document.getElementById("hl-floating-title");
 
 // Đóng
@@ -82,9 +75,7 @@ document
 document
 .getElementById("hl-floating-max")
 .onclick = ()=>{
-
 PANEL.classList.toggle("fullscreen");
-
 };
 
 hideMedia();
@@ -102,149 +93,86 @@ return;
 }
 
 const css = document.createElement("style");
-
 css.id = "floatingmedia-css";
-
 css.textContent = `
-
 #hl-floating-media{
-
 position:fixed;
-
 right:20px;
-
 bottom:20px;
-
 width:360px;
-
 height:220px;
-
 background:#fff;
-
 border-radius:10px;
-
 overflow:hidden;
-
 box-shadow:0 8px 30px rgba(0,0,0,.35);
-
 z-index:99999;
-
 display:none;
-
 }
 
 #hl-floating-media.fullscreen{
-
 right:20px;
-
 bottom:20px;
-
 width:720px;
-
 height:420px;
-
 }
 
 .hl-floating-header{
-
 height:40px;
-
 display:flex;
-
 align-items:center;
-
 justify-content:space-between;
-
 padding:0 10px;
-
 background:#0B5E55;
-
 color:#fff;
-
 font-weight:700;
-
 }
 
 .hl-floating-tools{
-
 display:flex;
-
 gap:8px;
-
 }
 
 .hl-floating-tools button{
-
 border:none;
-
 background:none;
-
 color:#fff;
-
 cursor:pointer;
-
 font-size:18px;
-
 }
 
 .hl-floating-body{
-
 width:100%;
-
 height:calc(100% - 40px);
-
 background:#000;
-
 }
 
 .hl-floating-body iframe{
-
 width:100%;
-
 height:100%;
-
 border:none;
-
 }
 
 @media(max-width:768px){
-
 #hl-floating-media{
-
 left:0;
-
 right:0;
-
 bottom:0;
-
 width:100%;
-
 height:240px;
-
 border-radius:12px 12px 0 0;
-
 }
 
 #hl-floating-media.fullscreen{
-
 left:0;
-
 right:0;
-
 bottom:0;
-
 width:100%;
-
 height:60vh;
-
 }
-
 }
-
 `;
 
 document.head.appendChild(css);
-
 }
 
 //======================================================
@@ -252,35 +180,22 @@ document.head.appendChild(css);
 //======================================================
 
 export function showVideo(url){
-
 if(!url){
-
 hideMedia();
-
 return;
-
 }
 
 TITLE.textContent = "🎬 Video";
-
 const embed = convertVideoUrl(url);
 
 BODY.innerHTML = `
-
 <iframe
-
 src="${embed}"
-
 allowfullscreen
-
 allow="autoplay; encrypted-media">
-
 </iframe>
-
 `;
-
 PANEL.style.display = "block";
-
 }
 
 //======================================================

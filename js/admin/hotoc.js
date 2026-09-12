@@ -5,7 +5,6 @@
 
 import { readData } from "../../scripts/firebaseService.js";
 import {showMap,hideMedia} from "../components/floatingmedia.js";
-console.log("👪 HỌ TỘC LOADED");
 
 //======================================================
 
@@ -18,17 +17,11 @@ let CURRENT = null;
 //======================================================
 
 export async function initThumbnail(){
-
-    console.log("🚀 HỌ TỘC INIT");
-
     await loadData();
-
     if(!LIST.length){
         return;
     }
-
     renderThumbnail();
-
 }
 
 //======================================================
@@ -60,9 +53,6 @@ async function loadData(){
         sortData();
 
         CURRENT = LIST[0];
-
-        console.log("👪 HỌ TỘC =",LIST);
-
     }
     catch(err){
 
@@ -107,31 +97,18 @@ function renderThumbnail(){
     }
 
     const thumb = menu.querySelector(".hl-thumb");
-
     if(!thumb){
         return;
     }
 
     thumb.innerHTML = "";
-
     thumb.style.backgroundImage = "";
-
     if(CURRENT.image){
-
         thumb.style.backgroundImage =
         `url("${CURRENT.image}")`;
 
     }
-
-    thumb.onclick = function(e){
-
-        e.stopPropagation();
-
-        toggleList();
-
-    };
-
-}
+    }
 
 //======================================================
 // TOGGLE LIST
@@ -152,46 +129,39 @@ function toggleList(){
     // Đang mở thì đóng
 
     if(list){
-
         list.remove();
-
         return;
-
     }
 
     // Tạo danh sách
 
     list = document.createElement("div");
-
     list.className = "hl-hotoc-menu";
-
     LIST.forEach(item=>{
-
         list.innerHTML += `
-
         <div
         class="hl-hotoc-row"
         data-id="${item.id}"
         title="${item.name || ""}">
-
             <div class="hl-hotoc-row-icon">
                 👪
             </div>
-
             <div class="hl-hotoc-row-title">
                 ${item.name || ""}
             </div>
-
         </div>
 
         `;
-
     });
-
     menu.appendChild(list);
-
     bindListEvent();
+}
 
+//======================================================
+// menuClick
+//======================================================
+export function menuClick(){
+    toggleList();
 }
 
 //======================================================

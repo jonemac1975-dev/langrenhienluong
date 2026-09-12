@@ -1,5 +1,3 @@
-console.log("🎬 videoService.js loaded");
-
 function getYoutubeId(url){
     try{
         const value=String(url||"").trim();

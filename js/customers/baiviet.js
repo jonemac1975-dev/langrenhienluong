@@ -20,9 +20,6 @@ let LOADED = false;
 //======================================================
 
 export async function initThumbnail(){
-
-    console.log("🖼️ BÀI VIẾT - LOAD THUMBNAIL");
-
     const thumb =
         document.querySelector(
             '.hl-right .hl-menu[data-page="baiviet"] .hl-thumb'
@@ -66,12 +63,6 @@ export async function initThumbnail(){
         }
 
         LOADED = true;
-
-        console.log(
-            "✅ BÀI VIẾT THUMBNAIL:",
-            latest
-        );
-
     }
     catch(err){
 
@@ -192,12 +183,7 @@ async function loadData(){
 
         sortData();
 
-        console.log(
-            "📚 INDEX BÀI VIẾT:",
-            LIST
-        );
-
-    }
+            }
     catch(err){
 
         console.error(

@@ -6,8 +6,6 @@
 import { readData } from "../../scripts/firebaseService.js";
 import{showVideo,showMap,hideMedia}from "../components/floatingmedia.js";
 
-console.log("🏞 ĐỊA DANH LOADED");
-
 //======================================================
 
 let LIST = [];
@@ -18,7 +16,6 @@ let CURRENT = null;
 //======================================================
 
 export async function initThumbnail(){
-    console.log("🚀 DIA DANH INIT");
     await loadData();
     if(!LIST.length){
         return;
@@ -45,8 +42,7 @@ async function loadData(){
         }));
         sortData();
         CURRENT = LIST[0];
-        console.log("🏞 ĐỊA DANH =",LIST);
-    }
+        }
     catch(err){
         console.error(err);
         LIST = [];
@@ -87,12 +83,7 @@ function renderThumbnail(){
         thumb.style.backgroundImage =
         `url("${CURRENT.image}")`;
     }
-
-    thumb.onclick = function(e){
-        e.stopPropagation();
-        toggleList();
-    };
-}
+    }
 
 //======================================================
 // TOGGLE LIST
@@ -151,6 +142,12 @@ function toggleList(){
 
 }
 
+//======================================================
+// menuClick
+//======================================================
+export function menuClick(){
+    toggleList();
+}
 
 //======================================================
 // RENDER MAIN

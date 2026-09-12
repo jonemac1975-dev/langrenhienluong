@@ -6,8 +6,6 @@
 import { readData } from "../../scripts/firebaseService.js";
 import { renderVideo } from "../../scripts/services/videoService.js";
 
-console.log("📖 LỊCH SỬ LOADED");
-
 //======================================================
 
 let LIST = [];
@@ -18,15 +16,10 @@ let CURRENT = null;
 //======================================================
 
 export async function initThumbnail(){
-
-    console.log("🚀 LỊCH SỬ INIT");
-
     await loadData();
-
     if(!LIST.length){
         return;
     }
-
     renderThumbnail();
 }
 
@@ -38,39 +31,18 @@ async function loadData(){
 
     LIST = [];
     CURRENT = null;
-
     try{
-
-        const data =
-            await readData("admin/lichsu");
-
+        const data = await readData("admin/lichsu");
         if(!data){
             return;
         }
 
-        LIST =
-            Object.entries(data).map(
-                ([id,item])=>({
-
-                    id,
-
-                    ...item
-                })
-            );
-
+        LIST = Object.entries(data).map(([id,item])=>({id,...item}));
         sortData();
-
         CURRENT = LIST[0];
-
-        console.log(
-            "📚 LỊCH SỬ =",
-            LIST
-        );
     }
     catch(err){
-
         console.error(err);
-
         LIST = [];
         CURRENT = null;
     }
@@ -81,15 +53,9 @@ async function loadData(){
 //======================================================
 
 function sortData(){
-
     LIST.sort((a,b)=>{
-
-        const ay =
-            Number(a.year)||0;
-
-        const by =
-            Number(b.year)||0;
-
+        const ay = Number(a.year)||0;
+        const by = Number(b.year)||0;
         if(by!==ay){
             return by-ay;
         }
@@ -107,38 +73,20 @@ function sortData(){
 
 function renderThumbnail(){
 
-    const menu =
-        document.querySelector(
-            '.hl-menu[data-page="lichsu"]'
-        );
-
+    const menu = document.querySelector('.hl-menu[data-page="lichsu"]');
     if(!menu || !CURRENT){
         return;
     }
-
-    const thumb =
-        menu.querySelector(".hl-thumb");
-
+    const thumb = menu.querySelector(".hl-thumb");
     if(!thumb){
         return;
     }
-
     thumb.innerHTML = "";
-
     thumb.style.backgroundImage = "";
-
     if(CURRENT.image){
-
-        thumb.style.backgroundImage =
-            `url("${CURRENT.image}")`;
+        thumb.style.backgroundImage = `url("${CURRENT.image}")`;
     }
-
-    thumb.onclick = function(e){
-
-        e.stopPropagation();
-
-        toggleList();
-    };
+    
 }
 
 //======================================================
@@ -147,28 +95,18 @@ function renderThumbnail(){
 
 function toggleList(){
 
-    const menu =
-        document.querySelector(
-            '.hl-menu[data-page="lichsu"]'
-        );
-
+    const menu = document.querySelector('.hl-menu[data-page="lichsu"]');
     if(!menu){
         return;
     }
-
-    let list =
-        menu.querySelector(
-            ".hl-history-menu"
-        );
+    let list = menu.querySelector(".hl-history-menu");
 
     //==================================================
     // ĐANG MỞ → ĐÓNG
     //==================================================
 
     if(list){
-
         list.remove();
-
         return;
     }
 
@@ -176,22 +114,15 @@ function toggleList(){
     // TẠO DANH SÁCH
     //==================================================
 
-    list =
-        document.createElement("div");
-
-    list.className =
-        "hl-history-menu";
-
+    list = document.createElement("div");
+    list.className = "hl-history-menu";
     LIST.forEach(item=>{
-
         list.innerHTML += `
-
             <div
                 class="hl-history-row"
                 data-id="${item.id}"
                 title="${item.year || ""} - ${item.title || ""}"
             >
-
                 <div class="hl-history-row-year">
                     ${item.year || ""}
                 </div>
@@ -201,13 +132,18 @@ function toggleList(){
                 </div>
 
             </div>
-
         `;
     });
 
     menu.appendChild(list);
-
     bindListEvent();
+}
+
+//======================================================
+// menuClick
+//======================================================
+export function menuClick(){
+    toggleList();
 }
 
 //======================================================
@@ -216,32 +152,21 @@ function toggleList(){
 
 export function renderMain(){
 
-    const box =
-        document.getElementById(
-            "hl-content"
-        );
-
+    const box = document.getElementById("hl-content");
     if(!box){
         return;
     }
-
-    const bg =
-        document.getElementById(
-            "bg-main"
-        );
-
+    const bg = document.getElementById("bg-main");
     if(bg){
         bg.style.display = "none";
     }
 
     if(!CURRENT){
-
         box.innerHTML = `
             <div class="hl-empty">
                 Chưa có dữ liệu lịch sử.
             </div>
         `;
-
         return;
     }
 
@@ -257,9 +182,7 @@ export function renderMain(){
         "";
 
     box.innerHTML = `
-
         <div class="hl-lichsu">
-
             <div class="hl-lichsu-year">
                 ${CURRENT.year || ""}
             </div>
@@ -297,11 +220,9 @@ export function renderMain(){
                 :
                 ""
             }
-
             <div class="hl-lichsu-content">
                 ${CURRENT.content || ""}
             </div>
-
         </div>
 
     `;
@@ -316,20 +237,10 @@ function bindListEvent(){
     document
         .querySelectorAll(".hl-history-row")
         .forEach(row=>{
-
             row.onclick = function(e){
-
                 e.stopPropagation();
-
-                const id =
-                    this.dataset.id;
-
-                CURRENT =
-                    LIST.find(
-                        item =>
-                            item.id === id
-                    );
-
+                const id = this.dataset.id;
+                CURRENT = LIST.find(item =>item.id === id);
                 document
                     .querySelectorAll(
                         ".hl-history-row"
@@ -339,9 +250,7 @@ function bindListEvent(){
                             "active"
                         )
                     );
-
                 this.classList.add("active");
-
                 renderMain();
             };
         });

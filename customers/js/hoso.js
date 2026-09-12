@@ -1,9 +1,4 @@
-import {
-    readData,
-    writeData
-} from "../../scripts/firebaseService.js";
-
-console.log("👤 hoso.js loaded");
+import {readData,writeData} from "../../scripts/firebaseService.js";
 
 //======================================================
 // USER
@@ -24,11 +19,8 @@ document.addEventListener("DOMContentLoaded", init);
 //======================================================
 
 export async function init(){
-    console.log("🚀 HỒ SƠ INIT");
+   
     CUSTOMER_UID = localStorage.getItem("customer_uid");
-
-    console.log("🆔 CUSTOMER UID =",CUSTOMER_UID);
-
     if(!CUSTOMER_UID){
         alert("Không tìm thấy thông tin thành viên.");
         return;
@@ -46,7 +38,6 @@ export async function init(){
 async function loadProfile(){
 
     try{
-
         PROFILE = await readData(`customers/${CUSTOMER_UID}/profile`);
         if(!PROFILE){
             PROFILE = {};
@@ -57,9 +48,7 @@ async function loadProfile(){
         //================================================
 
         AVATAR_BASE64 = PROFILE.avatar || "";
-        console.log("👤 PROFILE =",PROFILE);
-        console.log("🖼 AVATAR =",AVATAR_BASE64 ? "Có ảnh" : "Chưa có ảnh");
-    }
+        }
     catch(err){
         console.error("❌ LOAD PROFILE ERROR:", err);
         PROFILE = {};
@@ -73,31 +62,19 @@ async function loadProfile(){
 
 function renderStatus(){
 
-    const statusBox =
-        document.getElementById("hoso-status");
+    const statusBox = document.getElementById("hoso-status");
 
     if(!statusBox){
         return;
     }
 
-    const status =
-        PROFILE?.status || "pending";
-
+    const status = PROFILE?.status || "pending";
     if(status === "approved"){
-
-        statusBox.textContent =
-            "✅ Thành viên chính thức";
-
-        statusBox.className =
-            "hoso-status hoso-status-approved";
-
+        statusBox.textContent = "✅ Thành viên chính thức";
+        statusBox.className = "hoso-status hoso-status-approved";
     }else{
-
-        statusBox.textContent =
-            "⏳ Đang chờ xét duyệt";
-
-        statusBox.className =
-            "hoso-status hoso-status-pending";
+        statusBox.textContent = "⏳ Đang chờ xét duyệt";
+        statusBox.className = "hoso-status hoso-status-pending";
     }
 }
 
@@ -109,24 +86,11 @@ function renderProfile(){
 renderStatus();
     const idBox = document.getElementById("hoso-id");
     const usernameBox = document.getElementById("hoso-username");
-    console.log("🆔 ID BOX =",idBox);
-    console.log("👤 USERNAME BOX =",usernameBox);
-    console.log("🆔 CUSTOMER UID =", CUSTOMER_UID);
-    console.log("👤 PROFILE =", PROFILE);
-
-    //==================================================
-    // ID
-    //==================================================
-
+    
     if(idBox){
         idBox.value = String(CUSTOMER_UID);
         idBox.disabled = true;
     }
-
-
-    //==================================================
-    // USERNAME
-    //==================================================
 
     if(usernameBox){
         usernameBox.value = PROFILE.username || "";
@@ -239,7 +203,6 @@ function handleAvatar(e){
 
     const reader = new FileReader();
     reader.onload = function(){AVATAR_BASE64 = reader.result;
-    console.log("🖼 AVATAR PREVIEW OK");
     showAvatar(AVATAR_BASE64);
         };
 
@@ -247,7 +210,6 @@ function handleAvatar(e){
     console.error("❌ Không đọc được ảnh.");
     alert( "Không đọc được ảnh.");
         };
-
     reader.readAsDataURL(file);
 
 }
@@ -316,13 +278,11 @@ async function saveProfile(){
 // Giữ nguyên trạng thái xét duyệt
     status:
         PROFILE.status || "pending",
-
         updated_at:
             Date.now()
     };
 
     try{
-
         await writeData(`customers/${CUSTOMER_UID}/profile`, data);
         PROFILE = data;
 
@@ -333,7 +293,6 @@ async function saveProfile(){
 
         localStorage.setItem("customer_avatar", AVATAR_BASE64 || "");
         localStorage.setItem("customer_username", data.username || "");
-        console.log("✅ PROFILE SAVED",PROFILE);
         alert("Lưu hồ sơ thành công!");
     }
     catch(err){

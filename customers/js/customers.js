@@ -3,24 +3,14 @@
 // File : customers.js
 //======================================================
 
-import {
-readData
-} from "../../scripts/firebaseService.js";
-
-console.log("🔥 CUSTOMERS JS LOADED");
-
-document.addEventListener(
-"DOMContentLoaded",
-init
-);
+import {readData} from "../../scripts/firebaseService.js";
+document.addEventListener("DOMContentLoaded",init);
 
 //======================================================
 // INIT
 //======================================================
 
 async function init(){
-
-
 bindMenu();
 bindHeader();
 
@@ -39,63 +29,30 @@ loadPage("hosoview");
 
 async function checkMemberStatus(){
 
-
-const uid =
-    localStorage.getItem(
-        "customer_uid"
-    );
-
+const uid = localStorage.getItem("customer_uid");
 if(!uid){
-
-    console.warn(
-        "⚠️ Không tìm thấy customer_uid"
-    );
-
+    console.warn("⚠️ Không tìm thấy customer_uid");
     setMemberTabsDisabled(true);
-
     return;
 }
 
 try{
-
-    const profile =
-        await readData(
-            `customers/${uid}/profile`
-        );
-
-    const status =
-        profile?.status || "pending";
-
-    console.log(
-        "👤 MEMBER STATUS =",
-        status
-    );
-
-    if(status === "approved"){
-
+    const profile = await readData(`customers/${uid}/profile`);
+    const status = profile?.status || "pending";
+        if(status === "approved"){
         setMemberTabsDisabled(false);
-
     }
     else{
-
         setMemberTabsDisabled(true);
-
     }
-
 }
 catch(err){
-
-    console.error(
-        "❌ CHECK MEMBER STATUS ERROR:",
-        err
-    );
+    console.error("❌ CHECK MEMBER STATUS ERROR:",err);
 
     // Không đọc được trạng thái
     // → khóa để an toàn
     setMemberTabsDisabled(true);
 }
-
-
 }
 
 //======================================================
@@ -104,44 +61,27 @@ catch(err){
 
 function setMemberTabsDisabled(disabled){
 
-const pages = [
-    "chuyenhangngay.html",
-    "baiviet.html",
-    "anhclip.html"
-];
-
+const pages = ["chuyenhangngay.html","baiviet.html","anhclip.html"];
 document
 .querySelectorAll(".cus-menu")
 .forEach(btn=>{
-
     const page =
         btn.dataset.page;
-
     if(pages.includes(page)){
-
         btn.disabled = disabled;
-
         btn.classList.toggle(
             "cus-menu-disabled",
             disabled
         );
 
         if(disabled){
-
-            btn.title =
-                "⏳ Tài khoản đang chờ Admin xét duyệt";
-
+            btn.title = "⏳ Tài khoản đang chờ Admin xét duyệt";
         }
         else{
-
             btn.title = "";
-
         }
     }
-
 });
-
-
 }
 
 //======================================================
@@ -179,8 +119,6 @@ document
         loadPage("hoso");
     }
 );
-
-
 }
 
 //======================================================
@@ -192,16 +130,11 @@ function bindMenu(){
 document
 .querySelectorAll(".cus-menu")
 .forEach(btn=>{
-
     btn.onclick = ()=>{
 
         // Không cho mở tab bị khóa
         if(btn.disabled){
-
-            alert(
-                "⏳ Tài khoản của bạn đang chờ Admin xét duyệt."
-            );
-
+            alert("⏳ Tài khoản của bạn đang chờ Admin xét duyệt.");
             return;
         }
 
@@ -225,8 +158,6 @@ document
     };
 
 });
-
-
 }
 
 //======================================================
@@ -235,45 +166,21 @@ document
 
 async function loadPage(page){
 
-
-const container =
-    document.getElementById(
-        "customers-content"
-    );
-
+const container = document.getElementById("customers-content");
 if(!container){
     return;
 }
 
 try{
-
-    const html =
-        await fetch(
-            `${page}.html`
-        );
-
-    container.innerHTML =
-        await html.text();
-
-    const module =
-        await import(
-            `../js/${page}.js?t=${Date.now()}`
-        );
-
+    const html = await fetch(`${page}.html`);
+    container.innerHTML = await html.text();
+    const module = await import(`../js/${page}.js?t=${Date.now()}`);
     if(module.init){
-
         await module.init();
-
     }
-
 }
 catch(err){
-
     console.error(err);
-
-    container.innerHTML =
-        "<h3>Không tải được dữ liệu.</h3>";
+    container.innerHTML ="<h3>Không tải được dữ liệu.</h3>";
 }
-
-
 }

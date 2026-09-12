@@ -5,8 +5,6 @@ MODULE : DUYỆT HỒ SƠ THÀNH VIÊN
 ======================================================*/
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
-console.log("🔥 duyethoso.js loaded");
-
 //======================================================
 // BIẾN
 //======================================================
@@ -19,7 +17,6 @@ let CURRENT_UID = null;
 //======================================================
 
 export async function init(){
-console.log("🚀 DUYỆT HỒ SƠ INIT");
 await loadCustomers();
 renderList();
 bindEvents();
@@ -33,8 +30,7 @@ async function loadCustomers(){
 try{
     const data = await readData("customers");
     CUSTOMERS = data || {};
-    console.log("📥 CUSTOMERS =",CUSTOMERS);
-}
+    }
 catch(err){
     console.error("❌ LOAD CUSTOMERS ERROR:",err);
     CUSTOMERS = {};
@@ -116,14 +112,10 @@ body.innerHTML = entries.map(([uid, customer], index)=>{ const profile = custome
         ${status === "approved" ? "checked" : ""}
     >
 </td>
-
-            </tr>
-
+           </tr>
             `;
-
         }
     ).join("");
-
 bindListEvents();
 }
 
@@ -138,7 +130,6 @@ if(status === "approved"){
 if(status === "rejected"){
     return "❌ Không được duyệt";
 }
-
 return "⏳ Chờ Admin duyệt";
 }
 
@@ -147,36 +138,19 @@ return "⏳ Chờ Admin duyệt";
 //======================================================
 
 function bindListEvents(){
-document
-.querySelectorAll(".duyet-view")
-.forEach(button=>{
-    button.onclick = ()=>{
-        const uid =
-            button.dataset.id;
+document.querySelectorAll(".duyet-view").forEach(button=>{button.onclick = ()=>{const uid = button.dataset.id;
         showProfile(uid);
     };
 });
-
-document
-.querySelectorAll(".duyet-check")
-.forEach(check=>{
-
+document.querySelectorAll(".duyet-check").forEach(check=>{
     check.onchange = ()=>{
-
         const uid = check.dataset.id;
-
         if(check.checked){
-
             approveCustomer(uid);
-
         }else{
-
             unapproveCustomer(uid);
-
         }
-
     };
-
 });
 }
 
@@ -185,8 +159,7 @@ document
 //======================================================
 
 function showProfile(uid){
-const customer =
-    CUSTOMERS[uid];
+const customer = CUSTOMERS[uid];
 if(!customer){
     return;
 }
@@ -242,10 +215,7 @@ if(!customer){
     return;
 }
 const profile = customer.profile || {};
-const fullname =
-    profile.fullname ||
-    profile.username ||
-    uid;
+const fullname = profile.fullname || profile.username || uid;
 const ok = confirm(`Duyệt hồ sơ thành viên "${fullname}"?`);
 if(!ok){
     renderList();
@@ -256,7 +226,6 @@ try{
     await writeData(`customers/${uid}/profile/status`,"approved");
     await writeData(`customers/${uid}/profile/approved_at`,updatedAt);
     CUSTOMERS[uid].profile ={...profile,status:"approved",approved_at:updatedAt};
-    console.log("✅ ĐÃ DUYỆT:",uid);
     renderList();
     if(
         CURRENT_UID === uid
@@ -279,92 +248,45 @@ catch(err){
 async function unapproveCustomer(uid){
 
     const customer = CUSTOMERS[uid];
-
     if(!customer){
         return;
     }
-
     const profile = customer.profile || {};
-
-    const fullname =
-        profile.fullname ||
-        profile.username ||
-        uid;
-
-    const ok = confirm(
-        `Bỏ duyệt hồ sơ thành viên "${fullname}"?`
-    );
-
+    const fullname = profile.fullname ||profile.username ||uid;
+    const ok = confirm(`Bỏ duyệt hồ sơ thành viên "${fullname}"?`);
     if(!ok){
-
         renderList();
-
         if(CURRENT_UID === uid){
             showProfile(uid);
         }
-
         return;
     }
-
     try{
-
         const updatedAt = Date.now();
-
-        await writeData(
-            `customers/${uid}/profile/status`,
-            "pending"
-        );
-
-        await writeData(
-            `customers/${uid}/profile/updated_at`,
-            updatedAt
-        );
+        await writeData(`customers/${uid}/profile/status`,"pending");
+        await writeData(`customers/${uid}/profile/updated_at`,updatedAt);
 
         /*
          * Xóa thời điểm duyệt cũ
          */
-        await writeData(
-            `customers/${uid}/profile/approved_at`,
-            null
-        );
-
-        CUSTOMERS[uid].profile = {
-            ...profile,
-            status: "pending",
-            updated_at: updatedAt,
-            approved_at: null
-        };
-
-        console.log("↩️ ĐÃ BỎ DUYỆT:",uid);
-
+        await writeData(`customers/${uid}/profile/approved_at`,null);
+        CUSTOMERS[uid].profile = {...profile,status: "pending",updated_at: updatedAt,approved_at: null};
         renderList();
-
         if(CURRENT_UID === uid){
             showProfile(uid);
         }
-
         alert("⏳ Đã chuyển thành Chờ Admin duyệt.");
 
     }
     catch(err){
-
-        console.error(
-            "❌ BỎ DUYỆT THẤT BẠI:",
-            err
-        );
-
-        alert(
-            "Không thể bỏ duyệt hồ sơ."
-        );
-
+        console.error("❌ BỎ DUYỆT THẤT BẠI:",err);
+        alert("Không thể bỏ duyệt hồ sơ.");
         renderList();
 
         if(CURRENT_UID === uid){
             showProfile(uid);
         }
-
     }
-
 }
 
 //======================================================

@@ -1,3 +1,4 @@
+```css
 /*======================================================
 HIEN LUONG WEBSITE
 File : css/index.css
@@ -36,85 +37,88 @@ HEADER
 ==============================*/
 
 .hl-header{
-position:relative;
-height:150px;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 40px;
-background:#6E3A26;
+    position:relative;
+    height:150px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    background:#6E3A26;
 }
 
 .hl-header-bg{
-position:absolute;
-left:0;
-top:10;
-width:100%;
-height:90%;
-object-fit:cover;
-filter:blur(2px) brightness(.65);
-transform:scale(1.08);
+    position:absolute;
+    left:0;
+    top:10px;
+    width:100%;
+    height:90%;
+    object-fit:cover;
+    filter:blur(2px) brightness(.65);
+    transform:scale(1.08);
 }
 
 .hl-header-overlay{
-position:absolute;
-inset:0;
-background:
-linear-gradient(
-90deg,
-rgba(110,58,38,.92),
-rgba(110,58,38,.55),
-rgba(110,58,38,.25)
-);
-
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(
+        90deg,
+        rgba(110,58,38,.92),
+        rgba(110,58,38,.55),
+        rgba(110,58,38,.25)
+    );
 }
 
 .hl-header-left{
-position:relative;
-z-index:10;
-display:flex;
-align-items:center;
-gap:25px;
-
+    position:relative;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    gap:25px;
 }
 
 .hl-logo img{
-width:100px;
-height:100px;
-border-radius:50%;
-border:5px solid #fff;
-object-fit:cover;
-box-shadow:0 5px 20px rgba(0,0,0,.35);
-background:#fff;
-
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    border:5px solid #fff;
+    object-fit:cover;
+    box-shadow:0 5px 20px rgba(0,0,0,.35);
+    background:#fff;
 }
 
 .hl-title h1{
-margin:0;
-font-size:54px;
-font-weight:700;
-letter-spacing:2px;
-color:#fff;
-text-shadow:2px 2px 8px rgba(0,0,0,.5);
-
+    margin:0;
+    font-size:54px;
+    font-weight:700;
+    letter-spacing:2px;
+    color:#fff;
+    text-shadow:2px 2px 8px rgba(0,0,0,.5);
 }
 
 .hl-title h3{
-margin-top:6px;
-font-size:22px;
-font-style:italic;
-font-weight:bold;
-color:#FFD84D;
-text-shadow:1px 1px 6px rgba(0,0,0,.6);
-animation:blinkTitle 1.2s infinite;
+    margin-top:6px;
+    font-size:22px;
+    font-style:italic;
+    font-weight:bold;
+    color:#FFD84D;
+    text-shadow:1px 1px 6px rgba(0,0,0,.6);
+    animation:blinkTitle 1.2s infinite;
 }
 
 @keyframes blinkTitle{
-0%{opacity:1;}
-50%{opacity:.35;}
-100%{opacity:1;}
+    0%{
+        opacity:1;
+    }
 
+    50%{
+        opacity:.35;
+    }
+
+    100%{
+        opacity:1;
+    }
 }
 
 .hl-user{
@@ -212,6 +216,7 @@ LEFT
 /*=========================
 CENTER
 =========================*/
+
 .hl-slide{
     width:100%;
     height:420px;
@@ -225,7 +230,6 @@ CENTER
     height:100%;
     object-fit:cover;
 }
-
 
 /*=========================
 RIGHT
@@ -243,34 +247,34 @@ MENU
 =========================*/
 
 .hl-menu{
-margin-bottom:15px;
-background:#FFF;
-border:1px solid #DDD;
-border-radius:8px;
-overflow:hidden;
-cursor:pointer;
-transition:.25s;
+    margin-bottom:15px;
+    background:#FFF;
+    border:1px solid #DDD;
+    border-radius:8px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.25s;
 }
 
 .hl-menu:hover{
-transform:translateY(-2px);
-box-shadow:0 4px 12px rgba(0,0,0,.15);
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
 .hl-menu-title{
-padding:10px;
-font-size:16px;
-font-weight:bold;
-background:#CFE8CF;
-color:#8B3E2F;
+    padding:10px;
+    font-size:16px;
+    font-weight:bold;
+    background:#CFE8CF;
+    color:#8B3E2F;
 }
 
 .hl-thumb{
-width:100%;
-height:120px;
-background:#EEE;
-background-size:cover;
-background-position:center;
+    width:100%;
+    height:120px;
+    background:#EEE;
+    background-size:cover;
+    background-position:center;
 }
 
 /*=========================
@@ -278,33 +282,33 @@ LIST
 =========================*/
 
 .hl-item{
-display:flex;
-gap:10px;
-padding:10px;
-border-bottom:1px solid #EEE;
-cursor:pointer;
-transition:.25s;
+    display:flex;
+    gap:10px;
+    padding:10px;
+    border-bottom:1px solid #EEE;
+    cursor:pointer;
+    transition:.25s;
 }
 
 .hl-item:hover{
-background:#F8F8F8;
+    background:#F8F8F8;
 }
 
 .hl-item img{
-width:90px;
-height:70px;
-object-fit:cover;
-border-radius:6px;
+    width:90px;
+    height:70px;
+    object-fit:cover;
+    border-radius:6px;
 }
 
 .hl-item-title{
-font-weight:bold;
-margin-bottom:5px;
+    font-weight:bold;
+    margin-bottom:5px;
 }
 
 .hl-item-date{
-font-size:13px;
-color:#888;
+    font-size:13px;
+    color:#888;
 }
 
 /*=========================
@@ -312,133 +316,566 @@ CONTENT
 =========================*/
 
 .hl-content-title{
-font-size:32px;
-margin-bottom:15px;
-color:#8B3E2F;
+    font-size:32px;
+    margin-bottom:15px;
+    color:#8B3E2F;
 }
 
 .hl-content-info{
-margin-bottom:20px;
-color:#666;
-font-size:14px;
+    margin-bottom:20px;
+    color:#666;
+    font-size:14px;
 }
 
 .hl-content img{
-max-width:100%;
-margin:15px auto;
-display:block;
-border-radius:8px;
+    max-width:100%;
+    margin:15px auto;
+    display:block;
+    border-radius:8px;
 }
 
 .hl-content iframe{
-display:block;
-margin:20px auto;
-max-width:100%;
+    display:block;
+    margin:20px auto;
+    max-width:100%;
 }
 
-/*=========================
-FOOTER
-=========================*/
+/*======================================================
+FOOTER - FINAL
+======================================================*/
 
 .hl-footer{
-margin-top:20px;
-padding:20px;
-background:#222;
-color:#EEE;
-text-align:center;
-line-height:32px;
-font-size:15px;
+    width:100%;
+    box-sizing:border-box;
+
+    margin-top:20px;
+    padding:20px;
+
+    background:#222 !important;
+    color:#EEE !important;
+
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    grid-template-rows:auto !important;
+
+    gap:30px;
+
+    text-align:center;
+    line-height:32px;
+    font-size:15px;
+}
+
+
+/*======================================================
+CỘT THÔNG TIN
+======================================================*/
+
+.hl-footer-info{
+    grid-column:1 !important;
+    grid-row:1 !important;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+
+/*======================================================
+CỘT LIÊN HỆ
+======================================================*/
+
+.hl-footer-contact{
+    grid-column:2 !important;
+    grid-row:1 !important;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:left;
+}
+
+
+/*======================================================
+TIÊU ĐỀ LIÊN HỆ
+======================================================*/
+
+.hl-footer-contact-title{
+    margin-bottom:8px;
+
+    color:#FFD54F !important;
+    font-weight:bold;
+    font-size:16px;
+}
+
+
+/*======================================================
+CÁC LINK LIÊN HỆ
+======================================================*/
+
+.hl-footer-contact-item{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    min-width:140px;
+
+    color:#EEE !important;
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:0.2s;
+}
+
+.hl-footer-contact-item span:first-child{
+    width:25px;
+
+    text-align:center;
+}
+
+.hl-footer-contact-item:hover{
+    color:#FFD54F !important;
+    transform:translateX(3px);
+}
+
+
+/*======================================================
+ADMIN LOGIN
+======================================================*/
+
+.hl-footer-info a{
+    color:#FFD54F !important;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+
+/*======================================================
+MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+    .hl-footer{
+        display:grid !important;
+
+        grid-template-columns:1fr !important;
+        grid-template-rows:auto auto !important;
+
+        gap:15px;
+
+        padding:15px 8px;
+    }
+
+    .hl-footer-info{
+        grid-column:1 !important;
+        grid-row:1 !important;
+    }
+
+    .hl-footer-contact{
+        grid-column:1 !important;
+        grid-row:2 !important;
+
+        padding-top:10px;
+
+        border-top:1px solid #555;
+    }
 
 }
 
-.hl-footer a{
-color:#FFD54F;
-font-weight:bold;
-}
+
 
 /*=========================
 RESPONSIVE
 =========================*/
 
 @media(max-width:1200px){
-.hl-header{
-grid-template-columns:150px 260px 1fr 150px;
+    .hl-main{
+        grid-template-columns:22% 78%;
+    }
+
+    .hl-right{
+        display:block;
+    }
 }
-.hl-main{
-grid-template-columns:22% 78%;
-}
-.hl-right{
-display:none;
-}
-}
+
+
+/*======================================================
+MOBILE
+======================================================*/
 
 @media(max-width:900px){
-.hl-header{
-grid-template-columns:1fr;
-height:auto;
+
+    /*----------------------------------------------
+    HEADER
+    ----------------------------------------------*/
+
+    .hl-header{
+        height:120px;
+        padding:0 12px;
+    }
+
+    .hl-header-bg{
+        display:none;
+    }
+
+    .hl-header-overlay{
+        background:#6E3A26;
+    }
+
+    .hl-header-left{
+        width:100%;
+        gap:12px;
+        justify-content:center;
+    }
+
+    .hl-logo img{
+        width:70px;
+        height:70px;
+        border-width:3px;
+    }
+
+    .hl-title h1{
+        font-size:28px;
+        letter-spacing:1px;
+    }
+
+    .hl-title h3{
+        font-size:17px;
+        margin-top:4px;
+    }
+
+
+    /*----------------------------------------------
+    MARQUEE
+    ----------------------------------------------*/
+
+    .hl-marquee{
+        height:36px;
+        font-size:13px;
+    }
+
+
+    /*----------------------------------------------
+    MAIN
+    ----------------------------------------------*/
+
+    .hl-main{
+        width:100%;
+        min-height:calc(100vh - 156px);
+        display:grid;
+
+        /*
+        Hai cột song song:
+        LEFT 50%
+        RIGHT 50%
+        */
+
+        grid-template-columns:50% 50%;
+        grid-template-areas:
+            "left right"
+            "center center";
+        gap:6px;
+        padding:6px;
+        position:relative;
+    }
+
+
+    /*----------------------------------------------
+    LEFT
+    ----------------------------------------------*/
+
+    .hl-left{
+        grid-area:left;
+        display:block;
+        width:100%;
+        min-width:0;
+        padding:6px;
+        border-radius:8px;
+    }
+
+
+    /*----------------------------------------------
+    RIGHT
+    ----------------------------------------------*/
+
+    .hl-right{
+        grid-area:right;
+        display:block;
+        width:100%;
+        min-width:0;
+        padding:6px;
+        border-radius:8px;
+    }
+
+
+
+    /*----------------------------------------------
+    CENTER
+    ----------------------------------------------*/
+
+    .hl-center{
+        grid-area:center;
+        width:100%;
+        min-width:0;
+        min-height:260px;
+        position:relative;
+        overflow:hidden;
+        border-radius:8px;
+    }
+
+
+    /*----------------------------------------------
+MOBILE MENU
+----------------------------------------------*/
+
+.hl-menu{
+    width:100%;
+    margin-bottom:8px;
+    border-radius:7px;
+    display:flex;
+    flex-direction:row;
+    align-items:stretch;
+    overflow:hidden;
 }
 
-.hl-logo,
-.hl-title,
-.hl-banner,
-.hl-user{
-padding:10px;
+.hl-menu-title{
+    flex:1;
+    padding:9px 6px;
+    font-size:13px;
+    line-height:18px;
+    text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.hl-banner{
-height:220px;
+.hl-thumb{
+    width:72px;
+    min-width:72px;
+    height:72px;
+    overflow:hidden;
+    order:-1;
 }
 
-.hl-main{
-grid-template-columns:1fr;
+.hl-thumb img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
 }
 
-.hl-left,
-.hl-right{
-display:none;
+/*----------------------------------------------
+THUMB CỘT PHẢI
+----------------------------------------------*/
+
+.hl-right .hl-thumb{
+    width:44px !important;
+    min-width:44px !important;
+    height:44px !important;
 }
 
-.hl-slide{
-height:260px;
+.hl-right .hl-menu-title{
+    min-width:0;
+    overflow-wrap:break-word;
+    word-break:normal;
+    padding:8px 4px;
 }
+
+/*----------------------------------------------
+Ô DS THÀNH VIÊN
+----------------------------------------------*/
+
+.hl-right .hl-menu[data-page="thanhvien"] .hl-thumb{
+    width:100% !important;
+    min-width:44px !important;
+    height:44px !important;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
 }
+
+.hl-right .hl-menu[data-page="thanhvien"] .tv-thumb-text{
+    width:100%;
+    text-align:center;
+    font-size:11px;
+    line-height:15px;
+    white-space:normal;
+    overflow-wrap:break-word;
+}
+    /*----------------------------------------------
+    USER MENU
+    ----------------------------------------------*/
+
+    .hl-user{
+        width:100%;
+        margin-top:0;
+        margin-bottom:8px;
+        padding:0;
+    }
+
+    .hl-user-btn{
+        width:100%;
+        padding:9px 4px;
+        font-size:13px;
+    }
+
+    .hl-user-menu{
+        width:100%;
+        left:0;
+        right:auto;
+        z-index:500;
+    }
+
+
+    /*----------------------------------------------
+    SLIDESHOW
+    ----------------------------------------------*/
+
+    #bg-main{
+        display:none !important;
+    }
+
+    .hl-slide{
+        height:180px;
+    }
+
+
+    /*----------------------------------------------
+    CONTENT
+    ----------------------------------------------*/
+
+    .hl-content-title{
+        font-size:24px;
+    }
+
+    .hl-content{
+        width:100%;
+    }
+
+
+    /*----------------------------------------------
+    HIDDEN COLUMNS
+    ----------------------------------------------*/
+
+    .hl-main.mobile-columns-hidden{
+        grid-template-areas:
+            "center center";
+    }
+
+    .hl-main.mobile-columns-hidden .hl-left,
+    .hl-main.mobile-columns-hidden .hl-right{
+        display:none;
+    }
+
+
+    .hl-main.mobile-columns-hidden .hl-center{
+        min-height:calc(100vh - 165px);
+    }
+
+
+    /*----------------------------------------------
+    FOOTER
+    ----------------------------------------------*/
+
+    .hl-footer{
+        font-size:13px;
+        line-height:24px;
+        padding:15px 8px;
+    }
+}
+
+
+/*======================================================
+SMALL MOBILE
+======================================================*/
 
 @media(max-width:600px){
-.hl-title h1{
-font-size:28px;
+    .hl-header{
+        height:105px;
+    }
+
+    .hl-logo img{
+        width:58px;
+        height:58px;
+    }
+
+    .hl-title h1{
+        font-size:23px;
+    }
+
+    .hl-title h3{
+        font-size:15px;
+    }
+
+    .hl-main{
+        gap:4px;
+        padding:4px;
+    }
+
+    .hl-left,
+    .hl-right{
+        padding:4px;
+    }
+
+    .hl-menu{
+    margin-bottom:6px;
 }
 
-.hl-title h3{
-font-size:18px;
+.hl-menu-title{
+    font-size:12px;
+    padding:8px 3px;
 }
 
-.hl-slide{
-height:180px;
+.hl-thumb{
+    width:58px;
+    min-width:58px;
+    height:58px;
 }
 
-.hl-content-title{
-font-size:24px;
+.hl-right .hl-thumb{
+    width:38px !important;
+    min-width:38px !important;
+    height:38px !important;
 }
 
-.hl-user button{
-width:130px;
-font-size:14px;
-}
-}
-
-@keyframes blinkTitle{
-0%{
-opacity:1;
+.hl-right .hl-menu-title{
+    min-width:0;
+    padding:7px 3px;
+    font-size:12px;
+    line-height:17px;
 }
 
-50%{
-opacity:.35;
+    .hl-user-btn{
+        font-size:12px;
+        padding:8px 2px;
+    }
+
+    .hl-slide{
+        height:160px;
+    }
+
+    .hl-content-title{
+        font-size:21px;
+    }
 }
 
-100%{
-opacity:1;
+.hl-right .hl-menu[data-page="thanhvien"] .hl-thumb{
+    width:100% !important;
+    min-width:100% !important;
+    height:38px !important;
 }
 
+.hl-right .hl-menu[data-page="thanhvien"] .tv-thumb-text{
+    font-size:14px;
+    line-height:13px;
 }
 
 /*==========================================
@@ -501,7 +938,6 @@ width:100%;
 /*------------------------------------------------------
   ẢNH ĐẠI DIỆN
 ------------------------------------------------------*/
-
 .hl-gioithieu-image {
     width: 100%;
     text-align: center;
@@ -509,16 +945,11 @@ width:100%;
 }
 
 .hl-gioithieu-image img {
-
     width: 220px;
     height: 150px;
-
     max-width: 100%;
-
     object-fit: cover;
-
     display: inline-block;
-
     border-radius: 10px;
 
 }
@@ -527,11 +958,9 @@ width:100%;
 /*------------------------------------------------------
   BODY
 ------------------------------------------------------*/
-
 .hl-gioithieu-body {
     width: 100%;
 }
-
 
 /*------------------------------------------------------
   TIÊU ĐỀ
@@ -558,18 +987,12 @@ width:100%;
 ------------------------------------------------------*/
 
 .hl-gioithieu-content img {
-
     width: 50%;
     max-width: 50%;
-
     height: auto;
-
     object-fit: contain;
-
     display: block;
-
     margin: 15px auto;
-
     border-radius: 9px;
 
 }
@@ -1124,8 +1547,6 @@ line-height:1.8;
 text-align:justify;
 }
 
-
-
 /*======================================================
   CHUYỆN HÀNG NGÀY
   Thumbnail riêng cho ô bên phải
@@ -1230,7 +1651,6 @@ text-decoration:underline;
     width: 100%;
     height: 120px;
     overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1239,7 +1659,6 @@ text-decoration:underline;
     width: 100%;
     height: 100%;
     display: block;
-
     object-fit: cover;
 }
 
@@ -1386,7 +1805,6 @@ text-decoration:underline;
     z-index: 99999;
 }
 
-
 /* HEADER */
 .bv-floating-header {
     height: 38px;
@@ -1409,13 +1827,11 @@ text-decoration:underline;
     padding: 2px 6px;
 }
 
-
 /* VIDEO */
 .bv-floating-video {
     width: 100%;
     aspect-ratio: 16 / 9;
 }
-
 
 .bv-floating-video iframe {
     width: 100%;
@@ -1423,8 +1839,6 @@ text-decoration:underline;
     border: none;
     display: block;
 }
-
-
 
 body {
     margin: 0 !important;
@@ -1470,13 +1884,9 @@ background: #e8f4ff;
     display:flex;
     align-items:center;
     gap:15px;
-
     padding:10px 15px;
-
     border-radius:10px;
-
     background:#fff;
-
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
 
     /* Không tạo cảm giác đây là link */
@@ -1486,20 +1896,15 @@ background: #e8f4ff;
 .thanhvien-avatar{
     width:65px;
     height:65px;
-
     flex-shrink:0;
-
     overflow:hidden;
-
     border-radius:50%;
 }
 
 .thanhvien-avatar img{
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     display:block;
 }
 
@@ -1537,4 +1942,152 @@ background: #e8f4ff;
 .thanhvien-nationality{
     font-size:14px;
     opacity:0.75;
+}
+
+
+/*======================================================
+FIX FOOTER DESKTOP
+======================================================*/
+
+@media(min-width:901px){
+
+    .hl-main > .hl-footer{
+        grid-column:1 / -1 !important;
+        grid-row:auto !important;
+
+        width:100% !important;
+
+        display:grid !important;
+        grid-template-columns:1fr 1fr !important;
+        grid-template-rows:auto !important;
+    }
+
+    .hl-footer-info{
+        grid-column:1 !important;
+        grid-row:1 !important;
+    }
+
+    .hl-footer-contact{
+        grid-column:2 !important;
+        grid-row:1 !important;
+    }
+
+}
+
+/* ==================================================
+   FOOTER - CONTACT ICON
+================================================== */
+
+.hl-footer-contact-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    width:max-content;
+
+    margin:10px auto;
+
+    color:#EEE;
+    text-decoration:none;
+
+    font-size:15px;
+    font-weight:600;
+
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+.hl-contact-icon{
+    width:28px;
+    height:28px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    border-radius:7px;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+.hl-contact-icon svg{
+    width:21px;
+    height:21px;
+
+    display:block;
+
+    fill:currentColor;
+}
+
+/* Facebook */
+
+.facebook-icon{
+    color:#1877F2;
+}
+
+.hl-footer-contact-item:hover .facebook-icon{
+    transform:scale(1.18);
+    filter:brightness(1.25);
+}
+
+/* Zalo */
+
+.zalo-icon{
+    color:#008FE5;
+}
+
+.zalo-icon svg{
+    fill:currentColor;
+}
+
+.hl-footer-contact-item:hover .zalo-icon{
+    transform:scale(1.18);
+    filter:brightness(1.25);
+}
+
+/* Phone */
+
+.phone-icon{
+    color:#E53935;
+}
+
+.hl-footer-contact-item:hover .phone-icon{
+    transform:scale(1.18);
+    filter:brightness(1.25);
+}
+
+/* Text hover */
+
+.hl-footer-contact-item:hover{
+    color:#FFD54F;
+    transform:translateX(4px);
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media(max-width:900px){
+
+    .hl-footer-contact-item{
+        margin:9px auto;
+        font-size:14px;
+    }
+
+    .hl-contact-icon{
+        width:26px;
+        height:26px;
+    }
+
+    .hl-contact-icon svg{
+        width:20px;
+        height:20px;
+    }
+
 }

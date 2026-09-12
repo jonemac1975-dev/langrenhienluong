@@ -5,12 +5,9 @@
 
 import { readData } from "../../scripts/firebaseService.js";
 import{showVideo,showMap,hideMedia}from "../components/floatingmedia.js";
-console.log("📚 TƯ LIỆU LOADED");
-
 //======================================================
 
 let LIST = [];
-
 let CURRENT = null;
 
 //======================================================
@@ -18,17 +15,11 @@ let CURRENT = null;
 //======================================================
 
 export async function initThumbnail(){
-
-    console.log("🚀 TƯ LIỆU INIT");
-
     await loadData();
-
     if(!LIST.length){
         return;
     }
-
     renderThumbnail();
-
 }
 
 //======================================================
@@ -38,42 +29,25 @@ export async function initThumbnail(){
 async function loadData(){
 
     LIST = [];
-
     CURRENT = null;
-
     try{
-
         const data = await readData("admin/tulieu");
-
         if(!data){
             return;
         }
 
         LIST = Object.entries(data).map(([id,item])=>({
-
             id,
-
             ...item
-
         }));
-
         sortData();
-
         CURRENT = LIST[0];
-
-        console.log("📚 TƯ LIỆU =",LIST);
-
-    }
+            }
     catch(err){
-
         console.error(err);
-
         LIST = [];
-
         CURRENT = null;
-
     }
-
 }
 
 //======================================================
@@ -83,11 +57,8 @@ async function loadData(){
 function sortData(){
 
     LIST.sort((a,b)=>{
-
         return (b.updated_at || 0) - (a.updated_at || 0);
-
     });
-
 }
 
 //======================================================
@@ -115,21 +86,10 @@ function renderThumbnail(){
     thumb.style.backgroundImage = "";
 
     if(CURRENT.image){
-
         thumb.style.backgroundImage =
         `url("${CURRENT.image}")`;
-
     }
-
-    thumb.onclick = function(e){
-
-        e.stopPropagation();
-
-        toggleList();
-
-    };
-
-}
+    }
 
 //======================================================
 // TOGGLE LIST
@@ -150,23 +110,16 @@ function toggleList(){
     // Đang mở thì đóng
 
     if(list){
-
         list.remove();
-
         return;
-
     }
 
     // Tạo danh sách
 
     list = document.createElement("div");
-
     list.className = "hl-tulieu-menu";
-
     LIST.forEach(item=>{
-
         list.innerHTML += `
-
         <div
         class="hl-tulieu-row"
         data-id="${item.id}"
@@ -187,11 +140,15 @@ function toggleList(){
     });
 
     menu.appendChild(list);
-
     bindListEvent();
-
 }
 
+//======================================================
+// menuClick
+//======================================================
+export function menuClick(){
+    toggleList();
+}
 
 //======================================================
 // RENDER MAIN

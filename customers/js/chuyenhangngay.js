@@ -5,7 +5,6 @@
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
 import {createEditor,getHtml,setHtml} from "../../js/editor.js";
-console.log("📝 CHUYỆN HÀNG NGÀY JS LOADED");
 
 //======================================================
 // DATA
@@ -20,18 +19,8 @@ let CUSTOMER_UID = null;
 //======================================================
 
 export async function init(){
-
-    console.log("🚀 CHUYỆN HÀNG NGÀY INIT");
-
-    CUSTOMER_UID =
-        localStorage.getItem("customer_uid");
-
-    console.log(
-        "🆔 CUSTOMER UID =",
-        CUSTOMER_UID
-    );
-
-    if(!CUSTOMER_UID){
+    CUSTOMER_UID = localStorage.getItem("customer_uid");
+        if(!CUSTOMER_UID){
         console.warn("⚠️ Không tìm thấy customer_uid");
         return;
     }
@@ -58,16 +47,13 @@ async function loadData(){
 
         const result = await readData(`customers/${CUSTOMER_UID}/chuyenhangngay`);
         if(!result){
-            console.log("📝 Chưa có chuyện hàng ngày."
-            );
-            return;
+        return;
         }
 
         LIST = Object.entries(result).map(([id,item]) => ({id,...item}));
         sortData();
         CURRENT = LIST[0] || null;
-        console.log("📝 CHUYỆN HÀNG NGÀY =", LIST);
-    }
+            }
     catch(err){
         console.error("❌ LOAD CHUYỆN HÀNG NGÀY ERROR:",err);
         LIST = [];
@@ -317,7 +303,7 @@ function renderList(){
                     type="button"
                     class="chn-btn-edit"
                     data-id="${item.id}">
-                    ✏️ Sửa
+                    Sửa
                 </button>
 
                 <button
@@ -513,8 +499,6 @@ async function saveData(){
     };
     try{
         await writeData(`customers/${CUSTOMER_UID}/chuyenhangngay/${id}`,data);
-        console.log("✅ ĐÃ LƯU CHUYỆN HÀNG NGÀY",data);
-
         alert("Đã lưu thành công!");
 
         //================================================
@@ -545,11 +529,6 @@ async function deleteData(id){
         await writeData(
             `customers/${CUSTOMER_UID}/chuyenhangngay/${id}`,
             null
-        );
-
-        console.log(
-            "🗑 ĐÃ XÓA:",
-            id
         );
 
         await loadData();

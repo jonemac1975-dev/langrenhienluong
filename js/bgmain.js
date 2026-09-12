@@ -2,9 +2,6 @@
 // HIENLUONG WEBSITE
 // File : bgmain.js
 //======================================================
-
-console.log("🖼 BGMAIN LOADED");
-
 //======================================================
 // CẤU HÌNH
 //======================================================
@@ -122,13 +119,7 @@ async function buildImageList(){
 
     }
 
-    console.log(
-
-        "Ảnh slideshow:",
-
-        IMAGES
-
-    );
+    
 
 }
 

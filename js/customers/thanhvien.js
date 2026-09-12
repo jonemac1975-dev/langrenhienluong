@@ -6,40 +6,24 @@
 
 import {readData} from "../../scripts/firebaseService.js";
 
-console.log("👥 thanhvien.js loaded");
-
 //======================================================
 // THUMBNAIL
 //======================================================
 
 export async function initThumbnail(){
-
-    const menus =
-        document.querySelectorAll(
-            '.hl-menu[data-page="thanhvien"]'
-        );
-
+    const menus = document.querySelectorAll('.hl-menu[data-page="thanhvien"]');
     if(!menus.length){
         return;
     }
 
     menus.forEach(menu => {
-
-        const thumb =
-            menu.querySelector(".hl-thumb");
-
+        const thumb = menu.querySelector(".hl-thumb");
         if(!thumb){
             return;
         }
 
-        thumb.innerHTML = `
-            <div class="tv-thumb-text">
-                👥 DS thành viên
-            </div>
-        `;
-
+        thumb.innerHTML = `<div class="tv-thumb-text">👥 DS thành viên </div>`;
     });
-
 }
 
 
@@ -48,51 +32,24 @@ export async function initThumbnail(){
 //======================================================
 
 export async function renderMain(){
-
-    const box =
-        document.getElementById(
-            "hl-content"
-        );
-
+    const box = document.getElementById("hl-content");
     if(!box){
-        console.warn(
-            "⚠️ Không tìm thấy #hl-content"
-        );
+        console.warn("⚠️ Không tìm thấy #hl-content");
         return;
     }
-
-    box.innerHTML = `
-        <div class="thanhvien-loading">
-            Đang tải danh sách thành viên...
-        </div>
-    `;
-
+    box.innerHTML = `<div class="thanhvien-loading">Đang tải danh sách thành viên...</div>`;
     try{
-
-        const customers =
-            await readData("customers");
-
-        renderList(
-            box,
-            customers || {}
-        );
-
+        const customers = await readData("customers");
+        renderList(box,customers || {});
     }
-    catch(err){
-
-        console.error(
-            "❌ LOAD THÀNH VIÊN ERROR:",
-            err
-        );
+    catch(err){console.error("❌ LOAD THÀNH VIÊN ERROR:",err);
 
         box.innerHTML = `
             <div class="thanhvien-error">
                 Không thể tải danh sách thành viên.
             </div>
         `;
-
     }
-
 }
 
 
@@ -133,25 +90,18 @@ function renderList(box, customers){
     //==================================================
 
     if(!members.length){
-
         box.innerHTML = `
             <div class="thanhvien-page">
-
                 <div class="thanhvien-box">
-
                     <h2>
                         👥 DANH SÁCH THÀNH VIÊN
                     </h2>
-
                     <div class="thanhvien-empty">
                         Chưa có thành viên chính thức.
                     </div>
-
                 </div>
-
             </div>
         `;
-
         return;
     }
 
@@ -161,38 +111,23 @@ function renderList(box, customers){
     //==================================================
 
     box.innerHTML = `
-
         <div class="thanhvien-page">
-
             <div class="thanhvien-box">
-
                 <h2>
                     👥 DANH SÁCH THÀNH VIÊN
                 </h2>
-
                 <div class="thanhvien-list">
-
                     ${members.map(member => {
-
-                        const avatar =
-                            member.avatar
-                            ||
-                            "../../images/avatar-default.png";
-
+                        const avatar = member.avatar || "../../images/avatar-default.png";
                         return `
-
                             <div class="thanhvien-item">
-
                                 <div class="thanhvien-avatar">
-
                                     <img
                                         src="${avatar}"
                                         alt="Ảnh thành viên">
-
                                 </div>
 
                                 <div class="thanhvien-info">
-
     <div class="thanhvien-name">
         ${escapeHtml(member.fullname)}
     </div>
@@ -202,21 +137,13 @@ function renderList(box, customers){
     </div>
 
 </div>
-
-                            </div>
-
+                           </div>
                         `;
-
                     }).join("")}
-
                 </div>
-
             </div>
-
         </div>
-
     `;
-
 }
 
 
@@ -225,17 +152,10 @@ function renderList(box, customers){
 //======================================================
 
 function escapeHtml(value){
-
     return String(value || "")
-
         .replace(/&/g,"&amp;")
-
         .replace(/</g,"&lt;")
-
         .replace(/>/g,"&gt;")
-
         .replace(/"/g,"&quot;")
-
         .replace(/'/g,"&#039;");
-
 }

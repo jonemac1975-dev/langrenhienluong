@@ -6,8 +6,6 @@
 import { readData } from "../../scripts/firebaseService.js";
 import { renderVideo } from "../../scripts/services/videoService.js";
 
-console.log("📖 GIOITHIEU LOADED");
-
 //======================================================
 
 let DATA = null;
@@ -17,11 +15,7 @@ let DATA = null;
 //======================================================
 
 export async function initThumbnail(){
-
-    console.log("🚀 GIOITHIEU INIT");
-
-    await loadData();
-
+     await loadData();
     renderThumbnail();
 }
 
@@ -30,18 +24,10 @@ export async function initThumbnail(){
 //======================================================
 
 async function loadData(){
-
     try{
-
         DATA = await readData("admin/gioithieu");
-
-        console.log("DATA =", DATA);
-
-    }
-    catch(err){
-
-        console.error(err);
-
+            }
+    catch(err){console.error(err);
         DATA = null;
     }
 }

@@ -3,12 +3,7 @@
 // File : admin.js
 //======================================================
 
-console.log("🔥 ADMIN JS LOADED");
-
-console.log(sessionStorage.getItem("adminLogin"));
-
 if (sessionStorage.getItem("adminLogin") !== "1") {
-    console.log("👉 Redirect login");
     location.href = "adminlogin.html";
     throw new Error("Not Login");
 }
@@ -56,9 +51,6 @@ if(!container)return;
 try{
 
 const html=await fetch(`/admin/tab/${page}.html`);
-
-console.log("LOAD:",page);
-
 if(!html.ok){
 throw new Error(
 "Không tìm thấy: /admin/tab/"+page+".html"
@@ -66,20 +58,15 @@ throw new Error(
 }
 
 container.innerHTML=await html.text();
-
-const module=await import(
-`./${page}.js?t=${Date.now()}`
-);
+const module=await import(`./${page}.js?t=${Date.now()}`);
 
 if(module.init){
 module.init();
 }
-
 }
 
 catch(err){
 console.error(err);
 container.innerHTML="<h3>Không tải được dữ liệu.</h3>";
 }
-
 }

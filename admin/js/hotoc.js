@@ -84,35 +84,26 @@ updated_at:Date.now()
 };
 
 await writeData("admin/hotoc",DATA);
-
 alert("Đã lưu.");
-
 clearForm();
-
 await loadData();
 }
 
 window.editHoToc=function(id){
 
 const r=DATA[id];
-
 if(!r)return;
-
 editId=id;
-
 imageBase64=r.image||"";
-
 document.getElementById("ht-name").value=r.name||"";
 document.getElementById("ht-map").value=r.map||"";
 document.getElementById("ht-web").value=r.web||"";
-
 setHtml("ht-editor",r.content||"");
-
 const img=document.getElementById("ht-preview");
-
 if(imageBase64){
 img.src=imageBase64;
 img.style.display="block";
+
 }else{
 img.removeAttribute("src");
 img.style.display="none";
@@ -128,13 +119,9 @@ behavior:"smooth"
 window.deleteHoToc=async function(id){
 
 if(!confirm("Xóa họ tộc này?"))return;
-
 delete DATA[id];
-
 await writeData("admin/hotoc",DATA);
-
 await loadData();
-
 };
 
 function clearForm(){
@@ -146,12 +133,8 @@ document.getElementById("ht-name").value="";
 document.getElementById("ht-map").value="";
 document.getElementById("ht-web").value="";
 document.getElementById("ht-image-file").value="";
-
 setHtml("ht-editor","");
-
 const img=document.getElementById("ht-preview");
-
 img.removeAttribute("src");
 img.style.display="none";
-
 }

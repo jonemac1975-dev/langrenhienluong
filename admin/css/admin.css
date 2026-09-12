@@ -927,15 +927,12 @@ opacity:.9;
 
 .duyet-view {
     padding: 7px 11px;
-
     border: 1px solid #bbb;
     border-radius: 6px;
-
     background: #fff;
-
     cursor: pointer;
-
     font-size: 13px;
+color : Blue;
 }
 
 

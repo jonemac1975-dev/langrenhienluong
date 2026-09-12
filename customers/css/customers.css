@@ -1139,23 +1139,8 @@ width:100%;
 /*======================================================
   ACTION
 ======================================================*/
-
-.chuyenhangngay-actions{
-    display:flex;
-    gap:10px;
-    margin-top:22px;
-}
-
-.chuyenhangngay-actions button{
-    border:0;
-    border-radius:6px;
-    padding:10px 22px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-}
-
 #btn-chn-save{
+padding:4px 9px;
     background:#0B5E55;
     color:#fff;
 }
@@ -1165,6 +1150,7 @@ width:100%;
 }
 
 #btn-chn-cancel{
+padding:4px 9px;
     background:#eee;
     color:#555;
 }
@@ -1192,7 +1178,7 @@ width:100%;
 
 .chuyenhangngay-table-wrap th,
 .chuyenhangngay-table-wrap td{
-    padding:10px 9px;
+    padding:4px 9px;
     border:1px solid #ddd;
     text-align:left;
     vertical-align:middle;
@@ -1232,6 +1218,17 @@ width:100%;
     text-overflow:ellipsis;
 }
 
+.chn-btn-edit{
+padding:3px 4px;
+background:Blue;
+color:#FFF;
+}
+
+.chn-btn-delete{
+padding:3px 4px;
+background:red;
+color:#FFF;
+}
 /*======================================================
   EMPTY
 ======================================================*/
