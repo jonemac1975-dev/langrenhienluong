@@ -1,4 +1,5 @@
 import {readData,writeData} from "../../scripts/firebaseService.js";
+import {compressImage} from "../../scripts/compressImage.js";
 
 //======================================================
 // USER
@@ -177,40 +178,88 @@ function bindEvents(){
 
 //======================================================
 // HANDLE AVATAR
+// NÉN AVATAR TRƯỚC KHI LƯU FIREBASE
 //======================================================
 
-function handleAvatar(e){
-    const file = e.target.files?.[0];
+async function handleAvatar(e){
+
+    const file =
+        e.target.files?.[0];
+
     if(!file){
         return;
     }
-
 
     //==================================================
     // KIỂM TRA FILE
     //==================================================
 
-    if(!file.type.startsWith("image/")){
-        alert("Vui lòng chọn file hình ảnh.");
+    if(
+        !file.type.startsWith("image/")
+    ){
+
+        alert(
+            "Vui lòng chọn file hình ảnh."
+        );
+
         e.target.value = "";
+
         return;
     }
 
-
     //==================================================
-    // ĐỌC ẢNH
+    // NÉN AVATAR
     //==================================================
 
-    const reader = new FileReader();
-    reader.onload = function(){AVATAR_BASE64 = reader.result;
-    showAvatar(AVATAR_BASE64);
-        };
+    try{
 
-    reader.onerror = function(){
-    console.error("❌ Không đọc được ảnh.");
-    alert( "Không đọc được ảnh.");
-        };
-    reader.readAsDataURL(file);
+        const base64 =
+            await compressImage(
+                file,
+                "avatar"
+            );
+
+        //================================================
+        // LƯU AVATAR
+        //================================================
+
+        AVATAR_BASE64 =
+            base64;
+
+        //================================================
+        // PREVIEW
+        //================================================
+
+        showAvatar(
+            AVATAR_BASE64
+        );
+
+        //================================================
+        // LOG KIỂM TRA
+        //================================================
+
+        console.log(
+            "Avatar sau nén:",
+            AVATAR_BASE64.length,
+            "ký tự Base64"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ COMPRESS AVATAR ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Không thể xử lý avatar."
+        );
+
+        e.target.value = "";
+
+    }
 
 }
 

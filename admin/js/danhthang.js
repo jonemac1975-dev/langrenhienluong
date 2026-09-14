@@ -5,6 +5,7 @@
 
 import{readData,writeData}from "../../scripts/firebaseService.js";
 import{createEditor,getHtml,setHtml}from "../../js/editor.js";
+import{compressImage}from "../../scripts/compressImage.js";
 
 let DATA={};
 let editId="";
@@ -54,17 +55,35 @@ body.innerHTML+=`
 });
 }
 
-function loadImage(e){
+async function loadImage(e){
 const file=e.target.files[0];
 if(!file)return;
-const reader=new FileReader();
-reader.onload=()=>{
-imageBase64=reader.result;
+
+try{
+
+imageBase64=await compressImage(file,"image");
+
 const img=document.getElementById("dt-preview");
+
 img.src=imageBase64;
 img.style.display="block";
-};
-reader.readAsDataURL(file);
+
+console.log(
+"Ảnh danh thắng sau nén:",
+imageBase64.length,
+"ký tự Base64"
+);
+
+}catch(error){
+
+console.error(error);
+
+alert(
+error.message||
+"Không thể xử lý ảnh."
+);
+
+}
 }
 
 async function saveData(){

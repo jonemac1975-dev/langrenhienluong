@@ -6,7 +6,7 @@
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
 import {createEditor,getHtml,setHtml} from "../../js/editor.js";
-
+import {compressImage} from "../../scripts/compressImage.js";
 
 //======================================================
 // BIẾN
@@ -170,45 +170,103 @@ function renderCreate(){
 
 //======================================================
 // LOAD IMAGE
+// NÉN ẢNH TRƯỚC KHI LƯU FIREBASE
 //======================================================
 
-function loadImage(e){
-    const file =  e.target.files?.[0];
+async function loadImage(e){
+
+    const file =
+        e.target.files?.[0];
+
     if(!file){
         return;
     }
-
 
     //==================================================
     // KIỂM TRA FILE
     //==================================================
 
     if(
-        !file.type.startsWith("image/")){alert("Vui lòng chọn file hình ảnh!");
+        !file.type.startsWith("image/")
+    ){
+
+        alert(
+            "Vui lòng chọn file hình ảnh!"
+        );
+
         e.target.value = "";
+
         return;
     }
 
-
     //==================================================
-    // ĐỌC BASE64
+    // NÉN ẢNH
     //==================================================
 
-    const reader = new FileReader();
-    reader.onload = function(){
-        imageBase64 = reader.result;
-        const preview = document.getElementById("bv-image-preview");
+    try{
+
+        const base64 =
+            await compressImage(
+                file,
+                "image"
+            );
+
+        //================================================
+        // LƯU ẢNH
+        //================================================
+
+        imageBase64 =
+            base64;
+
+        //================================================
+        // PREVIEW
+        //================================================
+
+        const preview =
+            document.getElementById(
+                "bv-image-preview"
+            );
+
         if(preview){
-            preview.innerHTML = `<img src="${imageBase64}" alt="Ảnh bài viết">`;
-            preview.classList.add("active");
-        }
-    };
 
-    reader.onerror = function(){
-        console.error("❌ Không đọc được ảnh." );
-        alert("Không thể đọc hình ảnh!");
-    };
-    reader.readAsDataURL(file);
+            preview.innerHTML =
+                `<img
+                    src="${imageBase64}"
+                    alt="Ảnh bài viết">`;
+
+            preview.classList.add(
+                "active"
+            );
+
+        }
+
+        //================================================
+        // LOG KIỂM TRA
+        //================================================
+
+        console.log(
+            "Ảnh bài viết sau nén:",
+            imageBase64.length,
+            "ký tự Base64"
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ COMPRESS IMAGE ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Không thể xử lý hình ảnh!"
+        );
+
+        e.target.value = "";
+
+    }
+
 }
 
 

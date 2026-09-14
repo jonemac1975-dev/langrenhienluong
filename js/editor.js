@@ -2,6 +2,7 @@
 // HIENLUONG WEBSITE
 // File : editor.js
 //======================================================
+import{compressImage}from "../scripts/compressImage.js";
 
 export function createEditor(id){
 const box=document.getElementById(id);
@@ -34,23 +35,11 @@ const editor=box.querySelector(".ed-content");
 // COMMAND
 //======================================================
 
-box.querySelectorAll("[data-cmd]").forEach(btn=>{
-btn.onclick=()=>{
-document.execCommand(
-btn.dataset.cmd,
-false,
-null
-);
+box.querySelectorAll("[data-cmd]").forEach(btn=>{btn.onclick=()=>{document.execCommand(btn.dataset.cmd,false,null);
 editor.focus();
 };
 });
-box.querySelectorAll("[data-tag]").forEach(btn=>{
-btn.onclick=()=>{
-document.execCommand(
-"formatBlock",
-false,
-btn.dataset.tag
-);
+box.querySelectorAll("[data-tag]").forEach(btn=>{btn.onclick=()=>{document.execCommand("formatBlock",false,btn.dataset.tag);
 editor.focus();
 };
 });
@@ -59,33 +48,21 @@ editor.focus();
 // HTML View
 //======================================================
 let htmlMode=false;
-
 box.querySelector("#ed-html").onclick=()=>{
-
 const ed=box.querySelector(".ed-content");
-
 if(!htmlMode){
-
 ed.textContent=ed.innerHTML;
 htmlMode=true;
-
-}else{
-
-ed.innerHTML=ed.textContent;
+}else{ed.innerHTML=ed.textContent;
 htmlMode=false;
-
 }
-
 };
 
 //======================================================
 // PREVIEW
 //======================================================
 
-box.querySelector("#ed-preview").onclick=()=>{
-
-const win=window.open("","preview");
-
+box.querySelector("#ed-preview").onclick=()=>{const win=window.open("","preview");
 win.document.write(`
 <!DOCTYPE html>
 <html>
@@ -162,31 +139,19 @@ padding:8px;
 }
 
 </style>
-
 </head>
-
 <body>
-
 <div class="preview-header">
-
 <h3>👁 Xem trước nội dung</h3>
-
 <div>
-
 <button onclick="window.focus();window.close();">
 ❌ Đóng
 </button>
-
 </div>
-
 </div>
-
 <div class="preview-content">
-
 ${editor.innerHTML}
-
 </div>
-
 </body>
 </html>
 `);
@@ -212,51 +177,36 @@ url
 
 //======================================================
 // IMAGE FROM PC
+// NÉN ẢNH TRƯỚC KHI CHÈN VÀO NỘI DUNG
 //======================================================
 
 box.querySelector("#ed-image").onclick=()=>{
-
 const input=document.createElement("input");
-
 input.type="file";
 input.accept="image/*";
+input.onchange=async e=>{const file=e.target.files[0];
+if(!file)return;
+try{
 
-input.onchange=e=>{
-
-const file=e.target.files[0];
-
-if(!file) return;
-
-const reader=new FileReader();
-
-reader.onload=()=>{
-
+const imageBase64=await compressImage(file,"image");
 editor.focus();
 
-document.execCommand(
-"insertImage",
-false,
-reader.result
-);
+document.execCommand("insertImage",false,imageBase64);
+console.log("Ảnh trong nội dung sau nén:",imageBase64.length,"ký tự Base64");
+}catch(error){
+console.error(error);
 
+alert(error.message||"Không thể xử lý ảnh.");
+}
 };
-
-reader.readAsDataURL(file);
-
-};
-
 input.click();
-
 };
 
 //======================================================
 // CLEAR
 //======================================================
 
-box.querySelector("#ed-clear").onclick=()=>{
-document.execCommand(
-"removeFormat"
-);
+box.querySelector("#ed-clear").onclick=()=>{document.execCommand("removeFormat");
 };
 
 //======================================================
@@ -264,33 +214,20 @@ document.execCommand(
 //======================================================
 
 editor.addEventListener("paste",e=>{
-
 e.preventDefault();
-
 let html=e.clipboardData.getData("text/html");
-
-
 if(html){
-
 const temp=document.createElement("div");
-
 temp.innerHTML=html;
 
 
 // Xóa comment Word
 
-temp.innerHTML=temp.innerHTML.replace(
-/<!--[\s\S]*?-->/g,
-""
-);
-
+temp.innerHTML=temp.innerHTML.replace(/<!--[\s\S]*?-->/g,"");
 
 // Xóa tag rác Office
 
-temp.querySelectorAll(
-"meta,link,xml,style,script"
-)
-.forEach(el=>el.remove());
+temp.querySelectorAll("meta,link,xml,style,script").forEach(el=>el.remove());
 
 
 // Xóa thuộc tính không cần thiết
@@ -298,11 +235,9 @@ temp.querySelectorAll(
 
 temp.querySelectorAll("*")
 .forEach(el=>{
-
 el.removeAttribute("id");
 el.removeAttribute("lang");
 el.removeAttribute("xmlns");
-
 });
 
 
@@ -310,53 +245,27 @@ el.removeAttribute("xmlns");
 
 let clean=temp.innerHTML;
 
-
 // bỏ namespace Word
 
-clean=clean.replace(
-/<\/?o:[^>]*>/gi,
-""
-);
+clean=clean.replace(/<\/?o:[^>]*>/gi,"");
 
 
 // bỏ mso rác trong style
 // nhưng giữ màu, font, border
 
-clean=clean.replace(
-/mso-[^:;]+:[^;"]+;?/gi,
-""
-);
-
+clean=clean.replace(/mso-[^:;]+:[^;"]+;?/gi,"");
 
 // Chèn vào vị trí con trỏ
 
 editor.focus();
 
-document.execCommand(
-"insertHTML",
-false,
-clean
-);
-
-
+document.execCommand("insertHTML",false,clean);
 }
 else{
 
-
-const text=e.clipboardData.getData(
-"text/plain"
-);
-
-
-document.execCommand(
-"insertText",
-false,
-text
-);
-
-
+const text=e.clipboardData.getData("text/plain");
+document.execCommand("insertText",false,text);
 }
-
 });
 }
 //======================================================

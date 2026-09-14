@@ -1,5 +1,6 @@
 import{readData,writeData,removeData}from "../../scripts/firebaseService.js";
 import{createEditor,getHtml,setHtml}from "../../js/editor.js";
+import{compressImage}from "../../scripts/compressImage.js";
 
 let DATA={};
 let editId="";
@@ -44,21 +45,34 @@ body.innerHTML+=`
 });
 }
 
-function loadImage(e){
+async function loadImage(e){
 const file=e.target.files[0];
 if(!file)return;
 
-const reader=new FileReader();
+try{
 
-reader.onload=()=>{
-imageBase64=reader.result;
+imageBase64=await compressImage(file,"image");
+
 const img=document.getElementById("ls-preview");
+
 img.src=imageBase64;
 img.style.display="block";
-};
 
-reader.readAsDataURL(file);
+console.log("Ảnh sau nén:");
+console.log("Base64:",imageBase64.length,"ký tự");
+
+}catch(error){
+
+console.error(error);
+
+alert(
+error.message||
+"Không thể xử lý ảnh."
+);
+
 }
+}
+
 
 async function saveData(){
 const year=document.getElementById("ls-year").value.trim();

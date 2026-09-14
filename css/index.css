@@ -1,12 +1,25 @@
-```css
 /*======================================================
-HIEN LUONG WEBSITE
-File : css/index.css
+ HIEN LUONG WEBSITE
+ File : css/index.css
+
+ THEME SYSTEM
+ ------------------------------------------------------
+ green = Xanh quê hương
+ blue  = Xanh hiện đại
+ brown = Nâu hoài niệm
+ dark  = Dark mode
+
+ Đổi theme bằng:
+ document.documentElement.dataset.theme = "green";
+ document.documentElement.dataset.theme = "blue";
+ document.documentElement.dataset.theme = "brown";
+ document.documentElement.dataset.theme = "dark";
 ======================================================*/
 
-/*=========================
-RESET
-=========================*/
+
+/*======================================================
+ RESET
+======================================================*/
 
 *{
     margin:0;
@@ -17,24 +30,391 @@ RESET
 html,
 body{
     width:100%;
-    height:100%;
+    min-height:100%;
     font-family:Arial,Helvetica,sans-serif;
-    background:#F7F5F1;
-    color:#333;
 }
 
-/*=========================
-LINK
-=========================*/
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0 !important;
+    background:var(--hl-bg);
+    color:var(--hl-text);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+}
 
 a{
     text-decoration:none;
     color:inherit;
 }
 
-/*==============================
-HEADER
-==============================*/
+
+/*======================================================
+ THEME ENGINE
+======================================================*/
+
+:root{
+
+    /*------------------------------------------
+      THEME COLORS
+    ------------------------------------------*/
+
+    --hl-bg:#f4f7f4;
+    --hl-bg-soft:#edf3ee;
+
+    --hl-panel:rgba(255,255,255,.96);
+    --hl-panel-solid:#ffffff;
+
+    --hl-header:#1f6f43;
+    --hl-header-dark:#155634;
+
+    --hl-primary:#1f6f43;
+    --hl-primary-dark:#155634;
+    --hl-primary-light:#e8f4ed;
+
+    --hl-secondary:#8b3e2f;
+
+    --hl-text:#26332b;
+    --hl-text-soft:#405048;
+    --hl-muted:#718078;
+
+    --hl-border:rgba(31,111,67,.12);
+    --hl-border-soft:rgba(0,0,0,.07);
+
+    --hl-row-hover:#eef7f1;
+    --hl-row-active:#e4f2e9;
+
+    --hl-menu-gradient:
+        linear-gradient(
+            135deg,
+            #e8f4ed,
+            #dceee3
+        );
+
+    --hl-menu-gradient-hover:
+        linear-gradient(
+            135deg,
+            #dff1e6,
+            #d3e9db
+        );
+
+    --hl-thumb-bg:
+        linear-gradient(
+            135deg,
+            #edf1ee,
+            #e3e9e5
+        );
+
+    --hl-marquee-bg:#cfe8cf;
+    --hl-marquee-border:#b5ddb5;
+
+    --hl-footer-bg:
+        linear-gradient(
+            135deg,
+            #202a24,
+            #171d19
+        );
+
+    --hl-footer-text:#eeeeee;
+    --hl-footer-title:#ffd54f;
+
+    --hl-error-bg:#fff7f7;
+    --hl-error-border:rgba(180,60,60,.15);
+    --hl-error-text:#a33a3a;
+
+    --hl-shadow:
+        0 8px 28px rgba(35,55,44,.08);
+
+    --hl-shadow-hover:
+        0 12px 34px rgba(35,55,44,.14);
+
+    --hl-radius:14px;
+    --hl-radius-small:10px;
+
+    --hl-transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease,
+        background .22s ease,
+        color .22s ease;
+
+}
+
+
+/*======================================================
+ THEME - XANH QUE HUONG
+======================================================*/
+
+:root[data-theme="green"]{
+
+    --hl-bg:#f4f7f4;
+    --hl-bg-soft:#edf3ee;
+
+    --hl-panel:rgba(255,255,255,.96);
+    --hl-panel-solid:#ffffff;
+
+    --hl-header:#1f6f43;
+    --hl-header-dark:#155634;
+
+    --hl-primary:#1f6f43;
+    --hl-primary-dark:#155634;
+    --hl-primary-light:#e8f4ed;
+
+    --hl-secondary:#8b3e2f;
+
+    --hl-text:#26332b;
+    --hl-text-soft:#405048;
+    --hl-muted:#718078;
+
+    --hl-border:rgba(31,111,67,.12);
+    --hl-border-soft:rgba(0,0,0,.07);
+
+    --hl-row-hover:#eef7f1;
+    --hl-row-active:#e4f2e9;
+
+}
+
+
+/*======================================================
+ THEME - XANH HIEN DAI
+======================================================*/
+
+:root[data-theme="blue"]{
+
+    --hl-bg:#f2f6fb;
+    --hl-bg-soft:#e8f0f8;
+
+    --hl-panel:rgba(255,255,255,.97);
+    --hl-panel-solid:#ffffff;
+
+    --hl-header:#1769aa;
+    --hl-header-dark:#0d4775;
+
+    --hl-primary:#1769aa;
+    --hl-primary-dark:#0d4775;
+    --hl-primary-light:#e5f1fb;
+
+    --hl-secondary:#246b9c;
+
+    --hl-text:#263746;
+    --hl-text-soft:#405566;
+    --hl-muted:#718393;
+
+    --hl-border:rgba(23,105,170,.14);
+    --hl-border-soft:rgba(0,0,0,.07);
+
+    --hl-row-hover:#edf5fc;
+    --hl-row-active:#e3f0fb;
+
+    --hl-menu-gradient:
+        linear-gradient(
+            135deg,
+            #e7f2fb,
+            #d9eaf8
+        );
+
+    --hl-menu-gradient-hover:
+        linear-gradient(
+            135deg,
+            #dceefa,
+            #cfe4f5
+        );
+
+    --hl-thumb-bg:
+        linear-gradient(
+            135deg,
+            #edf4f9,
+            #e1ebf3
+        );
+
+    --hl-marquee-bg:#dcecf8;
+    --hl-marquee-border:#c2dceb;
+
+    --hl-footer-bg:
+        linear-gradient(
+            135deg,
+            #172b3b,
+            #10202d
+        );
+}
+
+
+/*======================================================
+ THEME - NAU HOAI NIEM
+======================================================*/
+
+:root[data-theme="brown"]{
+
+    --hl-bg:#f7f1e9;
+    --hl-bg-soft:#eee3d4;
+
+    --hl-panel:rgba(255,250,243,.97);
+    --hl-panel-solid:#fffaf3;
+
+    --hl-header:#6e3a26;
+    --hl-header-dark:#4f281b;
+
+    --hl-primary:#8b542f;
+    --hl-primary-dark:#66381f;
+    --hl-primary-light:#f1e4d5;
+
+    --hl-secondary:#7b3f25;
+
+    --hl-text:#403128;
+    --hl-text-soft:#5d4839;
+    --hl-muted:#867466;
+
+    --hl-border:rgba(110,58,38,.15);
+    --hl-border-soft:rgba(80,45,25,.10);
+
+    --hl-row-hover:#f4e9dc;
+    --hl-row-active:#ead9c6;
+
+    --hl-menu-gradient:
+        linear-gradient(
+            135deg,
+            #f1e5d8,
+            #e8d7c5
+        );
+
+    --hl-menu-gradient-hover:
+        linear-gradient(
+            135deg,
+            #eadaca,
+            #dfcbb5
+        );
+
+    --hl-thumb-bg:
+        linear-gradient(
+            135deg,
+            #f1e8de,
+            #e7dcd0
+        );
+
+    --hl-marquee-bg:#eadac7;
+    --hl-marquee-border:#d7c1a7;
+
+    --hl-footer-bg:
+        linear-gradient(
+            135deg,
+            #3a281e,
+            #281b15
+        );
+
+    --hl-footer-title:#f2c879;
+}
+
+
+/*======================================================
+ THEME - DARK
+======================================================*/
+
+:root[data-theme="dark"]{
+
+    --hl-bg:#111715;
+    --hl-bg-soft:#18211d;
+
+    --hl-panel:rgba(27,35,31,.97);
+    --hl-panel-solid:#1c2521;
+
+    --hl-header:#163e2a;
+    --hl-header-dark:#0d291c;
+
+    --hl-primary:#58b985;
+    --hl-primary-dark:#8bd4aa;
+    --hl-primary-light:#203d2e;
+
+    --hl-secondary:#d89a78;
+
+    --hl-text:#e7eee9;
+    --hl-text-soft:#c5d1c9;
+    --hl-muted:#9aa9a1;
+
+    --hl-border:rgba(100,190,140,.18);
+    --hl-border-soft:rgba(255,255,255,.09);
+
+    --hl-row-hover:#22332a;
+    --hl-row-active:#294234;
+
+    --hl-menu-gradient:
+        linear-gradient(
+            135deg,
+            #20362b,
+            #1b2d24
+        );
+
+    --hl-menu-gradient-hover:
+        linear-gradient(
+            135deg,
+            #284534,
+            #21392c
+        );
+
+    --hl-thumb-bg:
+        linear-gradient(
+            135deg,
+            #27332e,
+            #202a26
+        );
+
+    --hl-marquee-bg:#20372b;
+    --hl-marquee-border:#315541;
+
+    --hl-footer-bg:
+        linear-gradient(
+            135deg,
+            #0d1210,
+            #080b09
+        );
+
+    --hl-footer-text:#dce6df;
+    --hl-footer-title:#ffd875;
+
+    --hl-error-bg:#321f1f;
+    --hl-error-border:rgba(230,100,100,.25);
+    --hl-error-text:#ffaaaa;
+
+    --hl-shadow:
+        0 8px 28px rgba(0,0,0,.30);
+
+    --hl-shadow-hover:
+        0 12px 34px rgba(0,0,0,.45);
+}
+
+
+/*======================================================
+ THEME TRANSITION
+======================================================*/
+
+body,
+.hl-left,
+.hl-center,
+.hl-right,
+.hl-menu,
+.hl-menu-title,
+.hl-thumb,
+.hl-history-menu,
+.hl-danhthang-menu,
+.hl-amthuc-menu,
+.hl-diadanh-menu,
+.hl-hotoc-menu,
+.hl-tulieu-menu,
+.hl-item,
+.hl-footer{
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+/*======================================================
+ HEADER
+======================================================*/
 
 .hl-header{
     position:relative;
@@ -42,72 +422,209 @@ HEADER
     overflow:hidden;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    padding:0 40px;
-    background:#6E3A26;
+    justify-content:center;
+    isolation:isolate;
+    background:var(--hl-header);
+    border-bottom:1px solid rgba(255,255,255,.18);
+    box-shadow: 0 8px 28px rgba(0,0,0,.16);
 }
+
+/* Header background */
 
 .hl-header-bg{
     position:absolute;
-    left:0;
-    top:10px;
+    inset:0;
     width:100%;
-    height:90%;
+    height:100%;
     object-fit:cover;
-    filter:blur(2px) brightness(.65);
-    transform:scale(1.08);
+    object-position:center 48%;
+    z-index:-3;
+    filter:blur(0);
+    transform:scale(1.015);
 }
+
+
+/* Header overlay */
+
+.hl-header::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            90deg,
+            color-mix(
+                in srgb,
+                var(--hl-header-dark) 78%,
+                transparent
+            ),
+            color-mix(
+                in srgb,
+                var(--hl-header-dark) 48%,
+                transparent
+            ),
+            color-mix(
+                in srgb,
+                var(--hl-header-dark) 62%,
+                transparent
+            )
+        );
+    z-index:-2;
+}
+
+
+/* Header light */
+
+.hl-header::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255,255,255,.12),
+            transparent 52%
+        );
+    z-index:-1;
+    pointer-events:none;
+}
+
+
+/* Old overlay compatibility */
 
 .hl-header-overlay{
     position:absolute;
     inset:0;
-    background:
-    linear-gradient(
-        90deg,
-        rgba(110,58,38,.92),
-        rgba(110,58,38,.55),
-        rgba(110,58,38,.25)
-    );
+    background:transparent !important;
+    pointer-events:none;
 }
 
-.hl-header-left{
+
+/*======================================================
+ HEADER CONTENT
+======================================================*/
+
+.hl-header-content{
     position:relative;
-    z-index:10;
+    z-index:2;
     display:flex;
     align-items:center;
-    gap:25px;
+    justify-content:center;
+    gap:18px;
+    width:100%;
+    padding:12px 24px;
 }
 
+
+/* Header left */
+
+.hl-header-left{
+    position:absolute;
+    left:20px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+
+/*======================================================
+ HEADER LOGO
+======================================================*/
+
+.hl-header-logo,
+.hl-header img.hl-logo,
 .hl-logo img{
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    border:5px solid #fff;
+    width:92px;
+    height:92px;
     object-fit:cover;
-    box-shadow:0 5px 20px rgba(0,0,0,.35);
-    background:#fff;
+    flex:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.94);
+    padding:5px;
+    border:2px solid rgba(255,255,255,.72);
+    box-shadow:
+        0 6px 22px rgba(0,0,0,.25),
+        0 0 0 5px rgba(255,255,255,.10);
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
 }
 
-.hl-title h1{
-    margin:0;
-    font-size:54px;
-    font-weight:700;
-    letter-spacing:2px;
-    color:#fff;
-    text-shadow:2px 2px 8px rgba(0,0,0,.5);
+.hl-header:hover .hl-header-logo,
+.hl-header:hover img.hl-logo,
+.hl-header:hover .hl-logo img{
+    transform:scale(1.035);
+    box-shadow:
+        0 8px 28px rgba(0,0,0,.30),
+        0 0 0 6px rgba(255,255,255,.13);
 }
+
+
+/*======================================================
+ HEADER TITLE
+======================================================*/
+
+.hl-header-title,
+.hl-header-text{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    color:#fff;
+    text-shadow:
+        0 3px 12px rgba(0,0,0,.42);
+}
+
+.hl-title{
+    color:#fff;
+}
+
+.hl-header-title h1,
+.hl-header-text h1,
+.hl-title h1,
+.hl-header h1{
+    margin:0;
+    font-size:clamp(34px,4.2vw,54px);
+    line-height:1;
+    font-weight:800;
+    letter-spacing:3px;
+    color:#fff;
+}
+
+
+/* Subtitle */
+
+.hl-header-title p,
+.hl-header-title .subtitle,
+.hl-header-subtitle,
+.hl-header-text p,
+.hl-title h3{
+    margin:9px 0 0;
+    color:rgba(255,255,255,.94);
+    font-size:clamp(15px,1.7vw,21px);
+    line-height:1.2;
+    font-weight:500;
+    letter-spacing:2px;
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.35);
+}
+
+
+/* Old blinking title */
 
 .hl-title h3{
-    margin-top:6px;
-    font-size:22px;
-    font-style:italic;
     font-weight:bold;
-    color:#FFD84D;
-    text-shadow:1px 1px 6px rgba(0,0,0,.6);
+    color:#ffd84d;
     animation:blinkTitle 1.2s infinite;
 }
 
+.hl-header .blink{
+    animation-duration:3s;
+}
+
 @keyframes blinkTitle{
+
     0%{
         opacity:1;
     }
@@ -120,6 +637,11 @@ HEADER
         opacity:1;
     }
 }
+
+
+/*======================================================
+ USER MENU
+======================================================*/
 
 .hl-user{
     position:relative;
@@ -136,8 +658,9 @@ HEADER
     font-weight:bold;
     font-size:16px;
     cursor:pointer;
-    color:Blue;
-    box-shadow:0 4px 15px rgba(0,0,0,.25);
+    color:var(--hl-primary);
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.25);
 }
 
 .hl-user-menu{
@@ -146,10 +669,11 @@ HEADER
     right:0;
     top:100%;
     width:180px;
-    background:#fff;
     border-radius:10px;
     overflow:hidden;
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
+    background:var(--hl-panel-solid);
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
 }
 
 .hl-user:hover .hl-user-menu{
@@ -159,9 +683,10 @@ HEADER
 .hl-user-menu a{
     display:block;
     padding:12px 15px;
-    text-decoration:none;
-    color:#333;
-    border-bottom:1px solid #eee;
+    background:var(--hl-panel-solid);
+    color:var(--hl-text);
+    border-bottom:
+        1px solid var(--hl-border-soft);
 }
 
 .hl-user-menu a:last-child{
@@ -169,129 +694,228 @@ HEADER
 }
 
 .hl-user-menu a:hover{
-    background:#F5F5F5;
+    background:var(--hl-primary-light);
+    color:var(--hl-primary);
 }
 
-/*=========================
-MARQUEE
-=========================*/
+
+/*======================================================
+ MARQUEE
+======================================================*/
 
 .hl-marquee{
+
     width:100%;
     height:42px;
-    background:#CFE8CF;
-    border-top:1px solid #B5DDB5;
-    border-bottom:1px solid #B5DDB5;
+    background:var(--hl-marquee-bg);
+    border-top:
+        1px solid var(--hl-marquee-border);
+    border-bottom:
+        1px solid var(--hl-marquee-border);
     display:flex;
     align-items:center;
-    color:#444;
+    color:var(--hl-text);
     font-size:16px;
     font-weight:bold;
 }
 
-/*=========================
-MAIN
-=========================*/
+
+/*======================================================
+ MAIN LAYOUT
+======================================================*/
 
 .hl-main{
     width:100%;
-    min-height:calc(100vh - 260px);
+    min-height:
+        calc(100vh - 260px);
     display:grid;
-    grid-template-columns:17% 65% 18%;
-    gap:15px;
-    padding:15px;
+    grid-template-columns:
+        minmax(190px,17%)
+        minmax(0,65%)
+        minmax(200px,18%);
+    gap:18px;
+    padding:18px;
+    align-items:start;
 }
 
-/*=========================
-LEFT
-=========================*/
+
+/*======================================================
+ LEFT PANEL
+======================================================*/
 
 .hl-left{
-    background:#FFF;
-    border-radius:10px;
-    padding:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+    background:var(--hl-panel);
+    border:1px solid var(--hl-border);
+    border-radius:var(--hl-radius);
+    padding:12px;
+    box-shadow:var(--hl-shadow);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    transition:
+        box-shadow .25s ease,
+        transform .25s ease;
 }
 
-/*=========================
-CENTER
-=========================*/
+.hl-left:hover{
+    box-shadow:
+        var(--hl-shadow-hover);
+}
 
-.hl-slide{
+
+/*======================================================
+ CENTER PANEL
+======================================================*/
+
+.hl-center{
+    position:relative;
     width:100%;
-    height:420px;
+    min-width:0;
+    min-height:460px;
     overflow:hidden;
-    border-radius:10px;
-    margin-bottom:20px;
+    border-radius:var(--hl-radius);
+    padding:22px;
+    background:none !important;
+    background-color:transparent !important;
+
+    border:none !important;
+
+    box-shadow:none !important;
 }
 
-.hl-slide img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
 
-/*=========================
-RIGHT
-=========================*/
+/*======================================================
+ RIGHT PANEL
+======================================================*/
 
 .hl-right{
-    background:#FFF;
-    border-radius:10px;
-    padding:10px;
-    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    background:var(--hl-panel);
+    border: 1px solid var(--hl-border);
+    border-radius: var(--hl-radius);
+    padding:12px;
+    box-shadow:var(--hl-shadow);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    transition:
+        box-shadow .25s ease,
+        transform .25s ease;
 }
 
-/*=========================
-MENU
-=========================*/
+.hl-right:hover{
+    box-shadow:
+        var(--hl-shadow-hover);
+}
+
+
+/*======================================================
+ MENU CARD
+======================================================*/
 
 .hl-menu{
-    margin-bottom:15px;
-    background:#FFF;
-    border:1px solid #DDD;
-    border-radius:8px;
+    margin-bottom:12px;
+    background:var(--hl-panel-solid);
+    border:1px solid var(--hl-border-soft);
+    border-radius: var(--hl-radius-small);
     overflow:hidden;
     cursor:pointer;
-    transition:.25s;
+    box-shadow:0 2px 8px rgba(0,0,0,.045);
+    transition:var(--hl-transition);
+    contain:layout paint;
 }
 
 .hl-menu:hover{
     transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    border-color: var(--hl-border);
+    box-shadow: var(--hl-shadow-hover);
 }
+
+.hl-menu.active{
+    border-color:var(--hl-border);
+    box-shadow:
+        0 6px 20px
+        color-mix(
+            in srgb,
+            var(--hl-primary) 12%,
+            transparent
+        );
+}
+
+
+/*======================================================
+ MENU TITLE
+======================================================*/
 
 .hl-menu-title{
-    padding:10px;
-    font-size:16px;
-    font-weight:bold;
-    background:#CFE8CF;
-    color:#8B3E2F;
+    padding:11px 10px;
+    background:var(--hl-menu-gradient);
+    color:var(--hl-primary-dark);
+    font-size:15px;
+    font-weight:700;
+    line-height:1.35;
+    border-bottom:1px solid var(--hl-border);
+    transition:
+        background .22s ease,
+        color .22s ease;
 }
+
+.hl-menu:hover .hl-menu-title{
+    background:var(--hl-menu-gradient-hover);
+    color:var(--hl-primary);
+}
+
+
+/*======================================================
+ THUMBNAIL
+======================================================*/
 
 .hl-thumb{
-    width:100%;
-    height:120px;
-    background:#EEE;
-    background-size:cover;
-    background-position:center;
+    position:relative;
+    overflow:hidden;
+    background:var(--hl-thumb-bg);
+    max-width:100%;
 }
 
-/*=========================
-LIST
-=========================*/
+.hl-thumb img{
+    display:block;
+    width:100%;
+    max-width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    margin:0;
+    padding:0;
+    border:0;
+    vertical-align:middle;
+    font-size:0;
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+}
+
+.hl-menu:hover .hl-thumb img{
+    transform:scale(1.035);
+    filter:brightness(1.03);
+}
+
+
+/*======================================================
+ GENERAL LIST
+======================================================*/
 
 .hl-item{
     display:flex;
     gap:10px;
     padding:10px;
-    border-bottom:1px solid #EEE;
+    border-bottom: 1px solid var(--hl-border-soft);
+    border-radius:8px;
     cursor:pointer;
-    transition:.25s;
+    transition:
+        background .2s ease,
+        transform .2s ease;
 }
 
 .hl-item:hover{
-    background:#F8F8F8;
+    background:var(--hl-row-hover);
 }
 
 .hl-item img{
@@ -308,30 +932,38 @@ LIST
 
 .hl-item-date{
     font-size:13px;
-    color:#888;
+    color:var(--hl-muted);
 }
 
-/*=========================
-CONTENT
-=========================*/
+
+/*======================================================
+ CONTENT
+======================================================*/
 
 .hl-content-title{
     font-size:32px;
     margin-bottom:15px;
-    color:#8B3E2F;
+    color:var(--hl-primary-dark);
+    line-height:1.25;
+    letter-spacing:-.2px;
 }
 
 .hl-content-info{
     margin-bottom:20px;
-    color:#666;
+    color:var(--hl-muted);
     font-size:14px;
+}
+
+.hl-content{
+    line-height:1.75;
 }
 
 .hl-content img{
     max-width:100%;
     margin:15px auto;
     display:block;
-    border-radius:8px;
+    border-radius:12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.07);
 }
 
 .hl-content iframe{
@@ -340,137 +972,965 @@ CONTENT
     max-width:100%;
 }
 
+
 /*======================================================
-FOOTER - FINAL
+ MAIN BACKGROUND SLIDESHOW
+======================================================*/
+
+#bg-main{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+    height:100% !important;
+    margin-left:-.6cm;
+    margin-right:.3cm;
+    overflow:hidden;
+    z-index:0;
+    pointer-events:none;
+    border-radius:var(--hl-radius);
+}
+
+.bg-layer{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    opacity:0;
+    transition: opacity 1.2s ease;
+}
+
+.bg-layer.active{
+    opacity:1;
+}
+
+#hl-content{
+    position:relative;
+    z-index:2;
+    width:100%;
+    min-width:0;
+    background:transparent !important;
+    background-color:transparent !important;
+}
+
+
+/*======================================================
+ LOADING
+======================================================*/
+
+.hl-loading{
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--hl-muted);
+    font-size:15px;
+}
+
+
+/*======================================================
+ ERROR
+======================================================*/
+
+.hl-error{
+    margin:20px 0;
+    padding:18px;
+    border: 1px solid var(--hl-error-border);
+    border-radius:var(--hl-radius-small);
+    background:var(--hl-error-bg);
+    color:var(--hl-error-text);
+    text-align:center;
+}
+
+
+/*======================================================
+ COMMON LEFT LIST MENUS
+======================================================*/
+
+.hl-history-menu,
+.hl-danhthang-menu,
+.hl-amthuc-menu,
+.hl-diadanh-menu,
+.hl-hotoc-menu,
+.hl-tulieu-menu{
+    margin-top:2px;
+    border:1px solid var(--hl-border);
+    border-radius:8px;
+    overflow:hidden;
+    background:var(--hl-panel-solid);
+}
+
+
+/*======================================================
+ COMMON ROW
+======================================================*/
+
+.hl-history-row,
+.hl-danhthang-row,
+.hl-amthuc-row,
+.hl-diadanh-row,
+.hl-hotoc-row,
+.hl-tulieu-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 10px;
+    border-top: 1px solid var(--hl-border-soft);
+    cursor:pointer;
+    transition:
+        background .2s ease,
+        padding-left .2s ease;
+}
+
+.hl-history-row:hover,
+.hl-danhthang-row:hover,
+.hl-amthuc-row:hover,
+.hl-diadanh-row:hover,
+.hl-hotoc-row:hover,
+.hl-tulieu-row:hover{
+    background:var(--hl-row-hover);
+}
+
+.hl-history-row.active,
+.hl-danhthang-row.active,
+.hl-amthuc-row.active,
+.hl-diadanh-row.active,
+.hl-hotoc-row.active,
+.hl-tulieu-row.active{
+    background:var(--hl-row-active);
+}
+
+
+/*======================================================
+ HISTORY
+======================================================*/
+
+.hl-history-row-year{
+    flex:0 0 55px;
+    font-weight:600;
+    color:var(--hl-secondary);
+    white-space:nowrap;
+}
+
+.hl-history-row-title{
+    flex:1;
+    color:var(--hl-primary-dark);
+    font-weight:500;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.hl-lichsu{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.hl-lichsu-year{
+    text-align:center;
+    font-size:15px;
+    font-weight:600;
+    color:var(--hl-secondary);
+    margin:5px 0 4px;
+}
+
+.hl-lichsu-title{
+    text-align:center;
+    color:var(--hl-primary-dark);
+    margin:5px 0 12px;
+}
+
+.hl-lichsu-image{
+    width:100%;
+    text-align:center;
+    margin:8px 0 15px;
+}
+
+.hl-lichsu-image img{
+    width:220px;
+    height:150px;
+    max-width:100%;
+    object-fit:cover;
+    display:inline-block;
+    border-radius:9px;
+}
+
+.hl-lichsu-source{
+    font-size:14px;
+    color:var(--hl-muted);
+    margin:5px 0 12px;
+}
+
+.hl-lichsu-content{
+    width:100%;
+    box-sizing:border-box;
+    font-size:15px;
+    line-height:1.55;
+}
+
+.hl-lichsu-content img{
+    width:50%;
+    max-width:50%;
+    height:auto;
+    object-fit:contain;
+    display:block;
+    margin:12px auto;
+    border-radius:9px;
+}
+
+
+/*======================================================
+ DANH THANG / AM THUC / DIA DANH / HO TOC / TU LIEU
+======================================================*/
+
+.hl-danhthang-row-icon,
+.hl-amthuc-row-icon,
+.hl-diadanh-row-icon,
+.hl-hotoc-row-icon,
+.hl-tulieu-row-icon{
+    flex:0 0 24px;
+    font-size:18px;
+}
+
+.hl-danhthang-row-title,
+.hl-amthuc-row-title,
+.hl-diadanh-row-title,
+.hl-hotoc-row-title,
+.hl-tulieu-row-title{
+    flex:1;
+    color:var(--hl-primary-dark);
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+
+/*======================================================
+ DETAIL TITLES
+======================================================*/
+
+.hl-danhthang-title,
+.hl-gioithieu-title,
+.hl-amthuc-title,
+.hl-diadanh-title,
+.hl-hotoc-title,
+.hl-tulieu-title{
+    font-size:32px;
+    margin-bottom:20px;
+    color:var(--hl-primary-dark);
+}
+
+
+/*======================================================
+ DETAIL IMAGE
+======================================================*/
+
+.hl-danhthang-image img,
+.hl-diadanh-image img,
+.hl-hotoc-image img,
+.hl-tulieu-image img{
+    display:block;
+    max-width:100%;
+    margin:20px auto;
+    border-radius:10px;
+}
+
+.hl-amthuc-image{
+    width:100%;
+    text-align:center;
+}
+
+.hl-amthuc-image img{
+    width:220px;
+    height:150px;
+    max-width:100%;
+    object-fit:cover;
+    display:inline-block;
+    margin:10px auto 18px;
+    border-radius:10px;
+}
+
+
+/*======================================================
+ DETAIL INFO
+======================================================*/
+
+.hl-danhthang-address,
+.hl-amthuc-address,
+.hl-diadanh-address,
+.hl-hotoc-address{
+    margin:15px 0;
+    font-size:16px;
+}
+
+.hl-danhthang-map,
+.hl-danhthang-video,
+.hl-amthuc-map,
+.hl-amthuc-video,
+.hl-diadanh-map,
+.hl-diadanh-video,
+.hl-hotoc-map,
+.hl-hotoc-video,
+.hl-tulieu-map,
+.hl-tulieu-video{
+    margin:12px 0;
+}
+
+.hl-danhthang-map a,
+.hl-danhthang-video a,
+.hl-amthuc-map a,
+.hl-amthuc-video a,
+.hl-diadanh-map a,
+.hl-diadanh-video a,
+.hl-hotoc-map a,
+.hl-hotoc-video a,
+.hl-tulieu-link,
+.hl-tulieu-web,
+.hl-tulieu-video a{
+    color:var(--hl-primary-dark);
+    font-weight:700;
+    text-decoration:none;
+}
+
+.hl-danhthang-map a:hover,
+.hl-danhthang-video a:hover,
+.hl-amthuc-map a:hover,
+.hl-amthuc-video a:hover,
+.hl-diadanh-map a:hover,
+.hl-diadanh-video a:hover,
+.hl-hotoc-map a:hover,
+.hl-hotoc-video a:hover,
+.hl-tulieu-link:hover,
+.hl-tulieu-web:hover,
+.hl-tulieu-video a:hover{
+    color:var(--hl-primary);
+    text-decoration:underline;
+}
+
+
+/*======================================================
+ DETAIL CONTENT
+======================================================*/
+
+.hl-danhthang-content,
+.hl-amthuc-content,
+.hl-diadanh-content,
+.hl-hotoc-content,
+.hl-tulieu-content{
+    margin-top:20px;
+    line-height:1.8;
+    text-align:justify;
+}
+
+
+/*======================================================
+ GIOI THIEU
+======================================================*/
+
+.hl-gioithieu{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.hl-gioithieu-image{
+    width:100%;
+    text-align:center;
+    margin:10px 0 20px;
+}
+
+.hl-gioithieu-image img{
+    width:220px;
+    height:150px;
+    max-width:100%;
+    object-fit:cover;
+    display:inline-block;
+    border-radius:10px;
+}
+
+.hl-gioithieu-body{
+    width:100%;
+}
+
+.hl-gioithieu-title{
+    text-align:center;
+    margin:10px 0 15px;
+}
+
+.hl-gioithieu-content{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.hl-gioithieu-content img{
+    width:50%;
+    max-width:50%;
+    height:auto;
+    object-fit:contain;
+    display:block;
+    margin:15px auto;
+    border-radius:9px;
+}
+
+
+/*======================================================
+ CHUYEN HANG NGAY - RIGHT THUMB
+======================================================*/
+
+.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb{
+    width:100%;
+    height:150px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--hl-thumb-bg);
+}
+
+.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    border-radius:0 0 8px 8px;
+}
+
+.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb:empty{
+    display:none;
+}
+
+
+/*======================================================
+ CHUYEN HANG NGAY - CENTER LIST
+======================================================*/
+
+.hl-center .chn-list .chn-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:10px 12px;
+    cursor:pointer;
+}
+
+.hl-center .chn-list .chn-list-image{
+    width:64px;
+    height:64px;
+    min-width:64px;
+    min-height:64px;
+    overflow:hidden;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hl-center .chn-list .chn-list-image img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    border-radius:50%;
+}
+
+.hl-center .chn-list .chn-no-image{
+    background:var(--hl-row-active);
+    font-size:24px;
+}
+
+.hl-center .chn-list .chn-list-info{
+    flex:1;
+    min-width:0;
+}
+
+.hl-center .chn-list .chn-title{
+    margin:0 0 5px;
+    font-size:16px;
+    line-height:1.3;
+    color:var(--hl-secondary);
+    text-decoration:underline;
+}
+
+.hl-center .chn-list .chn-author{
+    font-size:14px;
+    line-height:1.4;
+}
+
+.hl-center .chn-list .chn-date{
+    font-size:12px;
+    line-height:1.3;
+    opacity:.75;
+}
+
+.chn-back{
+padding:4px 6px;
+color : white;
+background:blue;
+}
+
+
+/*======================================================
+ BAI VIET - RIGHT THUMB
+======================================================*/
+
+.hl-right .hl-menu[data-page="baiviet"] .hl-thumb{
+    width:100%;
+    height:auto;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hl-right .hl-menu[data-page="baiviet"] .hl-thumb img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+
+/*======================================================
+ BAI VIET - LIST
+======================================================*/
+
+.bv-index-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:12px;
+    margin-bottom:8px;
+    cursor:pointer;
+}
+
+.bv-index-avatar{
+    width:64px;
+    height:64px;
+    min-width:64px;
+    min-height:64px;
+    overflow:hidden;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.bv-index-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    border-radius:50%;
+}
+
+.bv-index-info{
+    flex:1;
+    min-width:0;
+}
+
+.bv-index-caption{
+    font-size:17px;
+    font-weight:600;
+    line-height:1.4;
+}
+
+.bv-index-author{
+    margin-top:4px;
+    font-size:14px;
+}
+
+.bv-index-date{
+    margin-top:3px;
+    font-size:12px;
+    opacity:.7;
+}
+
+
+/*======================================================
+ BAI VIET - DETAIL
+======================================================*/
+
+.bv-index-post{
+    margin-top:20px;
+    padding:20px;
+}
+
+.bv-index-post-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.bv-index-post-meta{
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+.bv-index-post-content{
+    font-size:14px;
+    line-height:1.45;
+    padding:5px 0;
+    margin-bottom:18px;
+}
+
+.bv-index-post-content p{
+    margin:2px 0;
+}
+
+.bv-index-post-image{
+    margin-top:15px;
+    text-align:center;
+}
+
+.bv-index-post-image img{
+    width:360px;
+    height:240px;
+    max-width:100%;
+    object-fit:cover;
+    border-radius:9px;
+    cursor:pointer;
+    transition:transform .2s ease;
+}
+
+.bv-index-post-clip{
+    margin-top:15px;
+}
+
+.bv-index-post-clip a{
+    text-decoration:none;
+}
+
+.bv-index-no-image{
+    font-size:24px;
+}
+
+.bv-index-back{
+    display:inline-block;
+    margin-bottom:12px;
+    padding:7px 12px;
+    border:none;
+    border-radius:8px;
+    background:transparent;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    color:var(--hl-secondary);
+}
+
+.bv-index-back:hover{
+    text-decoration:underline;
+}
+
+
+/*======================================================
+ YOUTUBE FLOATING PLAYER
+======================================================*/
+
+#bv-floating-player{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:360px;
+    background:#000;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.35);
+
+    z-index:99999;
+}
+
+.bv-floating-header{
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 10px;
+    background:#222;
+    font-size:14px;
+}
+
+#bv-close-player{
+    border:none;
+    background:transparent;
+    color:#fff;
+    font-size:18px;
+    cursor:pointer;
+    padding:2px 6px;
+}
+
+.bv-floating-video{
+    width:100%;
+    aspect-ratio:16 / 9;
+}
+
+.bv-floating-video iframe{
+    width:100%;
+    height:100%;
+    border:none;
+    display:block;
+}
+
+
+/*======================================================
+ THANH VIEN
+======================================================*/
+
+.tv-thumb-text{
+    color:var(--hl-primary-dark);
+    font-weight:700;
+padding:12px 14px;
+    background:var(--hl-primary-light);
+}
+
+.thanhvien-page{
+    width:100%;
+}
+
+.thanhvien-box{
+    width:100%;
+}
+
+.thanhvien-box h2{
+    margin:0 0 25px;
+    text-align:center;
+    color:var(--hl-primary-dark);
+}
+
+.thanhvien-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.thanhvien-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:10px 15px;
+    border-radius:10px;
+    background:var(--hl-panel-solid);
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    cursor:default;
+}
+
+.thanhvien-avatar{
+    width:65px;
+    height:65px;
+    flex-shrink:0;
+    overflow:hidden;
+    border-radius:50%;
+}
+
+.thanhvien-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.thanhvien-info{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.thanhvien-name{
+    font-size:17px;
+    font-weight:600;
+color:var(--hl-primary-dark);
+}
+
+.thanhvien-nationality{
+    font-size:14px;
+    color:var(--hl-muted);
+}
+
+.thanhvien-empty,
+.thanhvien-loading,
+.thanhvien-error{
+    padding:30px;
+    text-align:center;
+}
+
+
+/*======================================================
+ FOOTER
 ======================================================*/
 
 .hl-footer{
-    width:100%;
-    box-sizing:border-box;
-
-    margin-top:20px;
-    padding:20px;
-
-    background:#222 !important;
-    color:#EEE !important;
-
+    width:100vw !important;
+    max-width:100vw !important;
+    box-sizing:border-box !important;
+    margin-top:18px !important;
+    padding:28px 24px !important;
+    background:var(--hl-footer-bg) !important;
+    color:var(--hl-footer-text) !important;
+    border-top: 1px solid rgba(255,255,255,.08);
     display:grid !important;
-    grid-template-columns:1fr 1fr !important;
+    grid-template-columns: 1fr 1fr !important;
     grid-template-rows:auto !important;
-
     gap:30px;
-
     text-align:center;
     line-height:32px;
     font-size:15px;
 }
 
 
-/*======================================================
-CỘT THÔNG TIN
-======================================================*/
+/* Footer info */
 
 .hl-footer-info{
     grid-column:1 !important;
     grid-row:1 !important;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
     text-align:center;
 }
 
+.hl-footer-info a{
+    color:var(--hl-footer-title) !important;
+    font-weight:bold;
+    text-decoration:none;
+}
 
-/*======================================================
-CỘT LIÊN HỆ
-======================================================*/
+
+/* Footer contact */
 
 .hl-footer-contact{
     grid-column:2 !important;
     grid-row:1 !important;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
     text-align:left;
 }
 
-
-/*======================================================
-TIÊU ĐỀ LIÊN HỆ
-======================================================*/
-
 .hl-footer-contact-title{
     margin-bottom:8px;
-
-    color:#FFD54F !important;
+    color:var(--hl-footer-title) !important;
     font-weight:bold;
     font-size:16px;
 }
 
-
-/*======================================================
-CÁC LINK LIÊN HỆ
-======================================================*/
-
 .hl-footer-contact-item{
-    display:flex;
-    align-items:center;
-
-    gap:8px;
-
+   display:flex;
+   align-items:center;
+    gap:12px;
+    width:max-content;
     min-width:140px;
-
-    color:#EEE !important;
+    margin:10px auto;
+    color:var(--hl-footer-text) !important;
     text-decoration:none;
-
-    font-weight:bold;
-
-    transition:0.2s;
+    font-size:15px;
+    font-weight:600;
+    transition:
+        color .25s ease,
+        transform .25s ease;
 }
 
 .hl-footer-contact-item span:first-child{
     width:25px;
-
     text-align:center;
 }
 
 .hl-footer-contact-item:hover{
-    color:#FFD54F !important;
-    transform:translateX(3px);
+    color:var(--hl-footer-title) !important;
+    transform:translateX(4px);
 }
 
 
 /*======================================================
-ADMIN LOGIN
+ FOOTER CONTACT ICON
 ======================================================*/
 
-.hl-footer-info a{
-    color:#FFD54F !important;
-    font-weight:bold;
-    text-decoration:none;
+.hl-contact-icon{
+    width:28px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    border-radius:7px;
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+.hl-contact-icon svg{
+    width:21px;
+    height:21px;
+    display:block;
+    fill:currentColor;
+}
+
+.facebook-icon{
+    color:#1877f2;
+}
+
+.zalo-icon{
+    color:#008fe5;
+}
+
+.phone-icon{
+    color:#e53935;
+}
+
+.hl-footer-contact-item:hover .facebook-icon,
+.hl-footer-contact-item:hover .zalo-icon,
+.hl-footer-contact-item:hover .phone-icon{
+    transform:scale(1.18);
+    filter:brightness(1.25);
 }
 
 
 /*======================================================
-MOBILE
+ RESPONSIVE - TABLET
 ======================================================*/
 
-@media(max-width:600px){
+@media(
+    min-width:901px
+) and (
+    max-width:1200px
+){
+    .hl-main{
+        grid-template-columns:
+            21%
+            minmax(0,1fr)
+            22%;
+        gap:12px;
+        padding:12px;
+    }
 
-    .hl-footer{
+    .hl-left,
+    .hl-right{
+        padding:9px;
+    }
+
+    .hl-center{
+        padding:18px;
+    }
+}
+
+
+/*======================================================
+ FOOTER DESKTOP
+======================================================*/
+
+@media(min-width:901px){
+    .hl-main > .hl-footer{
+        grid-column:1 / -1 !important;
+        grid-row:auto !important;
+        width:100% !important;
         display:grid !important;
-
-        grid-template-columns:1fr !important;
-        grid-template-rows:auto auto !important;
-
-        gap:15px;
-
-        padding:15px 8px;
+        grid-template-columns:1fr 1fr !important;
+        grid-template-rows:auto !important;
     }
 
     .hl-footer-info{
@@ -479,42 +1939,24 @@ MOBILE
     }
 
     .hl-footer-contact{
-        grid-column:1 !important;
-        grid-row:2 !important;
-
-        padding-top:10px;
-
-        border-top:1px solid #555;
-    }
-
-}
-
-
-
-/*=========================
-RESPONSIVE
-=========================*/
-
-@media(max-width:1200px){
-    .hl-main{
-        grid-template-columns:22% 78%;
-    }
-
-    .hl-right{
-        display:block;
+        grid-column:2 !important;
+        grid-row:1 !important;
     }
 }
 
 
 /*======================================================
-MOBILE
+ MOBILE
+ LEFT + RIGHT
+ CENTER
+ FOOTER
 ======================================================*/
 
 @media(max-width:900px){
 
-    /*----------------------------------------------
-    HEADER
-    ----------------------------------------------*/
+    /*------------------------------------------
+      HEADER
+    ------------------------------------------*/
 
     .hl-header{
         height:120px;
@@ -525,194 +1967,260 @@ MOBILE
         display:none;
     }
 
-    .hl-header-overlay{
-        background:#6E3A26;
+    .hl-header::before{
+        background:var(--hl-header);
+    }
+
+    .hl-header::after{
+        display:none;
+    }
+
+    .hl-header-content{
+        gap:12px;
+        padding:8px 14px;
     }
 
     .hl-header-left{
-        width:100%;
+        left:50%;
+        top:50%;
+        transform:
+            translate(-50%,-50%);
+        width:max-content;
         gap:12px;
-        justify-content:center;
     }
 
+    .hl-header-logo,
+    .hl-header img.hl-logo,
     .hl-logo img{
         width:70px;
         height:70px;
         border-width:3px;
     }
 
-    .hl-title h1{
-        font-size:28px;
+    .hl-header-title h1,
+    .hl-header-text h1,
+    .hl-title h1,
+    .hl-header h1{
+        font-size:32px;
+        letter-spacing:2px;
+    }
+
+    .hl-header-title p,
+    .hl-header-title .subtitle,
+    .hl-header-subtitle,
+    .hl-header-text p,
+    .hl-title h3{
+        margin-top:6px;
+        font-size:14px;
         letter-spacing:1px;
     }
 
-    .hl-title h3{
-        font-size:17px;
-        margin-top:4px;
-    }
-
-
-    /*----------------------------------------------
-    MARQUEE
-    ----------------------------------------------*/
+    /*------------------------------------------
+      MARQUEE
+    ------------------------------------------*/
 
     .hl-marquee{
         height:36px;
         font-size:13px;
     }
 
-
-    /*----------------------------------------------
-    MAIN
-    ----------------------------------------------*/
+    /*------------------------------------------
+      MAIN
+    ------------------------------------------*/
 
     .hl-main{
-        width:100%;
-        min-height:calc(100vh - 156px);
-        display:grid;
-
-        /*
-        Hai cột song song:
-        LEFT 50%
-        RIGHT 50%
-        */
-
-        grid-template-columns:50% 50%;
+        display:grid !important;
+        grid-template-columns: 
+            minmax(0,1fr)
+            minmax(0,1fr) !important;
         grid-template-areas:
             "left right"
-            "center center";
-        gap:6px;
-        padding:6px;
-        position:relative;
+            "center center"
+            "footer footer" !important;
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        min-height:0 !important;
+        height:auto !important;
+        padding:8px !important;
+        gap:10px !important;
+        box-sizing:border-box !important;
+        overflow-x:hidden !important;
     }
 
 
-    /*----------------------------------------------
-    LEFT
-    ----------------------------------------------*/
+    /*------------------------------------------
+      LEFT
+    ------------------------------------------*/
 
     .hl-left{
-        grid-area:left;
+        grid-area:left !important;
         display:block;
-        width:100%;
-        min-width:0;
-        padding:6px;
-        border-radius:8px;
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        padding:7px;
+        border-radius:10px;
+        box-shadow:0 4px 16px rgba(35,55,44,.07);
     }
 
-
-    /*----------------------------------------------
-    RIGHT
-    ----------------------------------------------*/
+    /*------------------------------------------
+      RIGHT
+    ------------------------------------------*/
 
     .hl-right{
-        grid-area:right;
+        grid-area:right !important;
         display:block;
-        width:100%;
-        min-width:0;
-        padding:6px;
-        border-radius:8px;
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        padding:7px;
+        border-radius:10px;
+        box-shadow:0 4px 16px rgba(35,55,44,.07);
     }
 
-
-
-    /*----------------------------------------------
-    CENTER
-    ----------------------------------------------*/
+    /*------------------------------------------
+      CENTER
+    ------------------------------------------*/
 
     .hl-center{
-        grid-area:center;
-        width:100%;
-        min-width:0;
+        grid-area:center !important;
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
         min-height:260px;
-        position:relative;
-        overflow:hidden;
-        border-radius:8px;
+        padding:14px;
+        border-radius:10px;
+        box-shadow:none !important;
+        overflow:hidden !important;
     }
 
 
-    /*----------------------------------------------
-MOBILE MENU
-----------------------------------------------*/
+    /*------------------------------------------
+      CONTENT
+    ------------------------------------------*/
 
-.hl-menu{
-    width:100%;
-    margin-bottom:8px;
-    border-radius:7px;
-    display:flex;
-    flex-direction:row;
-    align-items:stretch;
-    overflow:hidden;
-}
+    #hl-content{
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        box-sizing:border-box !important;
+        overflow-wrap:anywhere;
+    }
 
-.hl-menu-title{
-    flex:1;
-    padding:9px 6px;
-    font-size:13px;
-    line-height:18px;
-    text-align:center;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
 
-.hl-thumb{
-    width:72px;
-    min-width:72px;
-    height:72px;
-    overflow:hidden;
-    order:-1;
-}
+    /*------------------------------------------
+      MENU
+    ------------------------------------------*/
 
-.hl-thumb img{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-}
+    .hl-menu{
+        width:100%;
+        margin-bottom:8px;
+        border-radius:8px;
+        display:flex;
+        flex-direction:row;
+        align-items:stretch;
+        overflow:hidden;
+    }
 
-/*----------------------------------------------
-THUMB CỘT PHẢI
-----------------------------------------------*/
+    .hl-menu-title{
+        flex:1;
+        padding:9px 6px;
+        font-size:13px;
+        line-height:18px;
+        text-align:center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        border-bottom:none;
+    }
 
-.hl-right .hl-thumb{
-    width:44px !important;
-    min-width:44px !important;
-    height:44px !important;
-}
+    .hl-thumb{
+        width:40px;
+        min-width:40px;
+        height:40px;
+        flex-shrink:0;
+        overflow:hidden;
+        order:-1;
+    }
 
-.hl-right .hl-menu-title{
-    min-width:0;
-    overflow-wrap:break-word;
-    word-break:normal;
-    padding:8px 4px;
-}
+    .hl-thumb img{
+        width:100%;
+        height:100%;
+        display:block;
+        object-fit:cover;
+    }
 
-/*----------------------------------------------
-Ô DS THÀNH VIÊN
-----------------------------------------------*/
 
-.hl-right .hl-menu[data-page="thanhvien"] .hl-thumb{
-    width:100% !important;
-    min-width:44px !important;
-    height:44px !important;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-}
+    /*------------------------------------------
+      RIGHT THUMB
+    ------------------------------------------*/
 
-.hl-right .hl-menu[data-page="thanhvien"] .tv-thumb-text{
-    width:100%;
-    text-align:center;
-    font-size:11px;
-    line-height:15px;
-    white-space:normal;
-    overflow-wrap:break-word;
-}
-    /*----------------------------------------------
-    USER MENU
-    ----------------------------------------------*/
+    .hl-right .hl-thumb{
+        width:44px !important;
+        min-width:44px !important;
+        height:44px !important;
+    }
+
+    .hl-right .hl-menu-title{
+        min-width:0;
+        overflow-wrap:break-word;
+        word-break:normal;
+        padding:8px 4px;
+    }
+
+
+    /*------------------------------------------
+      MEMBER THUMB
+    ------------------------------------------*/
+
+    .hl-right .hl-menu[data-page="thanhvien"] .hl-thumb{
+        width:100% !important;
+        min-width:44px !important;
+        height:44px !important;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        overflow:hidden;
+        background:var(--hl-primary-light);
+    }
+
+    .hl-right .hl-menu[data-page="thanhvien"] .tv-thumb-text{
+        width:100%;
+        padding:4px;
+        text-align:center;
+        font-size:11px;
+        line-height:15px;
+        white-space:normal;
+        overflow-wrap:break-word;
+        color:var(--hl-primary-dark);
+        background:transparent;
+    }
+
+
+    /*------------------------------------------
+      CHUYEN HANG NGAY
+    ------------------------------------------*/
+
+    .hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb{
+        width:44px;
+        min-width:44px;
+        height:44px;
+    }
+
+    /*------------------------------------------
+      BAI VIET
+    ------------------------------------------*/
+
+    .hl-right .hl-menu[data-page="baiviet"] .hl-thumb{
+        width:44px;
+        min-width:44px;
+        height:44px;
+    }
+
+    /*------------------------------------------
+      USER
+    ------------------------------------------*/
 
     .hl-user{
         width:100%;
@@ -735,9 +2243,9 @@ THUMB CỘT PHẢI
     }
 
 
-    /*----------------------------------------------
-    SLIDESHOW
-    ----------------------------------------------*/
+    /*------------------------------------------
+      SLIDESHOW
+    ------------------------------------------*/
 
     #bg-main{
         display:none !important;
@@ -747,10 +2255,9 @@ THUMB CỘT PHẢI
         height:180px;
     }
 
-
-    /*----------------------------------------------
-    CONTENT
-    ----------------------------------------------*/
+    /*------------------------------------------
+      CONTENT TITLE
+    ------------------------------------------*/
 
     .hl-content-title{
         font-size:24px;
@@ -761,1319 +2268,41 @@ THUMB CỘT PHẢI
     }
 
 
-    /*----------------------------------------------
-    HIDDEN COLUMNS
-    ----------------------------------------------*/
+    /*------------------------------------------
+      HIDDEN COLUMNS - MOBILE
+------------------------------------------*/
 
-    .hl-main.mobile-columns-hidden{
-        grid-template-areas:
-            "center center";
-    }
+@media (max-width: 900px){
 
     .hl-main.mobile-columns-hidden .hl-left,
     .hl-main.mobile-columns-hidden .hl-right{
-        display:none;
+        display: none !important;
     }
-
 
     .hl-main.mobile-columns-hidden .hl-center{
-        min-height:calc(100vh - 165px);
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: calc(100vh - 165px);
     }
 
+}
 
-    /*----------------------------------------------
-    FOOTER
-    ----------------------------------------------*/
+
+    /*------------------------------------------
+      FOOTER
+    ------------------------------------------*/
 
     .hl-footer{
+        grid-area:footer !important;
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        box-sizing:border-box !important;
         font-size:13px;
         line-height:24px;
-        padding:15px 8px;
+        padding:15px 8px !important;
     }
-}
-
-
-/*======================================================
-SMALL MOBILE
-======================================================*/
-
-@media(max-width:600px){
-    .hl-header{
-        height:105px;
-    }
-
-    .hl-logo img{
-        width:58px;
-        height:58px;
-    }
-
-    .hl-title h1{
-        font-size:23px;
-    }
-
-    .hl-title h3{
-        font-size:15px;
-    }
-
-    .hl-main{
-        gap:4px;
-        padding:4px;
-    }
-
-    .hl-left,
-    .hl-right{
-        padding:4px;
-    }
-
-    .hl-menu{
-    margin-bottom:6px;
-}
-
-.hl-menu-title{
-    font-size:12px;
-    padding:8px 3px;
-}
-
-.hl-thumb{
-    width:58px;
-    min-width:58px;
-    height:58px;
-}
-
-.hl-right .hl-thumb{
-    width:38px !important;
-    min-width:38px !important;
-    height:38px !important;
-}
-
-.hl-right .hl-menu-title{
-    min-width:0;
-    padding:7px 3px;
-    font-size:12px;
-    line-height:17px;
-}
-
-    .hl-user-btn{
-        font-size:12px;
-        padding:8px 2px;
-    }
-
-    .hl-slide{
-        height:160px;
-    }
-
-    .hl-content-title{
-        font-size:21px;
-    }
-}
-
-.hl-right .hl-menu[data-page="thanhvien"] .hl-thumb{
-    width:100% !important;
-    min-width:100% !important;
-    height:38px !important;
-}
-
-.hl-right .hl-menu[data-page="thanhvien"] .tv-thumb-text{
-    font-size:14px;
-    line-height:13px;
-}
-
-/*==========================================
-BACKGROUND SLIDESHOW
-==========================================*/
-#bg-main {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 50%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-    border-radius: 10px;
-}
-
-.hl-center{
-position:relative;
-overflow:hidden;
-background:#FFF;
-border-radius:10px;
-padding:20px;
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-min-height:560px;
-}
-
-.bg-layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-}
-
-.bg-layer.active {
-    opacity: 1;
-}
-#hl-content{
-position:relative;
-z-index:2;
-width:100%;
-}
-
-/*------------------------------------------------------
-  KHỐI GIỚI THIỆU
-------------------------------------------------------*/
-
-.hl-gioithieu {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-
-/*------------------------------------------------------
-  ẢNH ĐẠI DIỆN
-------------------------------------------------------*/
-.hl-gioithieu-image {
-    width: 100%;
-    text-align: center;
-    margin: 10px 0 20px;
-}
-
-.hl-gioithieu-image img {
-    width: 220px;
-    height: 150px;
-    max-width: 100%;
-    object-fit: cover;
-    display: inline-block;
-    border-radius: 10px;
-
-}
-
-
-/*------------------------------------------------------
-  BODY
-------------------------------------------------------*/
-.hl-gioithieu-body {
-    width: 100%;
-}
-
-/*------------------------------------------------------
-  TIÊU ĐỀ
-------------------------------------------------------*/
-
-.hl-gioithieu-title {
-    text-align: center;
-    margin: 10px 0 15px;
-}
-
-
-/*------------------------------------------------------
-  NỘI DUNG
-------------------------------------------------------*/
-
-.hl-gioithieu-content {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-
-/*------------------------------------------------------
-  ẢNH TRONG NỘI DUNG
-------------------------------------------------------*/
-
-.hl-gioithieu-content img {
-    width: 50%;
-    max-width: 50%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 15px auto;
-    border-radius: 9px;
-
-}
-
-/*======================================================
-LỊCH SỬ MENU
-======================================================*/
-
-.hl-history-menu{
-background:#fff;
-border-top:1px solid #ddd;
-}
-
-.hl-history-row{
-display:flex;
-align-items:center;
-gap:0px;
-padding:4px 5px;
-border-top:1px solid #eee;
-cursor:pointer;
-transition:.2s;
-}
-
-.hl-history-row:hover{
-background:#f6f6f6;
-}
-
-.hl-history-row.active{
-background:#e8f4ff;
-}
-
-/* Năm */
-.hl-history-row-year{
-flex:0 0 55px;
-font-weight:600;
-color:#8B3E2F;
-white-space:nowrap;
-}
-
-/* Tiêu đề */
-.hl-history-row-title {
-flex:1;
-color:#0B5E55;
-font-weight:500;
-
-overflow:hidden;
-white-space:nowrap;
-text-overflow:ellipsis;
-}
-/*======================================================
-  INDEX - LỊCH SỬ - MAIN
-======================================================*/
-
-.hl-lichsu {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/*------------------------------------------------------
-  NĂM
-------------------------------------------------------*/
-
-.hl-lichsu-year {
-    text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-    color: #8B3E2F;
-    margin: 5px 0 4px;
-}
-
-/*------------------------------------------------------
-  TIÊU ĐỀ
-------------------------------------------------------*/
-
-.hl-lichsu-title {
-    text-align: center;
-    color: #0B5E55;
-    margin: 5px 0 12px;
-}
-
-
-/*------------------------------------------------------
-  ẢNH ĐẠI DIỆN
-------------------------------------------------------*/
-
-.hl-lichsu-image {
-    width: 100%;
-    text-align: center;
-    margin: 8px 0 15px;
-}
-
-.hl-lichsu-image img {
-    width: 220px;
-    height: 150px;
-    max-width: 100%;
-    object-fit: cover;
-    display: inline-block;
-    border-radius: 9px;
-}
-
-
-/*------------------------------------------------------
-  NGUỒN TƯ LIỆU
-------------------------------------------------------*/
-
-.hl-lichsu-source {
-    font-size: 14px;
-    color: #666;
-    margin: 5px 0 12px;
-}
-
-/*------------------------------------------------------
-  NỘI DUNG
-------------------------------------------------------*/
-
-.hl-lichsu-content {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 15px;
-    line-height: 1.55;
-}
-
-
-/*------------------------------------------------------
-  ẢNH TRONG NỘI DUNG
-------------------------------------------------------*/
-
-.hl-lichsu-content img {
-    width: 50%;
-    max-width: 50%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 12px auto;
-    border-radius: 9px;
-}
-
-/*======================================================
-DANH THẮNG
-======================================================*/
-
-.hl-danhthang-menu{
-background:#fff;
-border-top:1px solid #ddd;
-}
-
-.hl-danhthang-row{
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px 10px;
-border-top:1px solid #eee;
-cursor:pointer;
-transition:.2s;
-}
-
-.hl-danhthang-row:hover{
-background:#f6f6f6;
-}
-
-.hl-danhthang-row.active{
-background:#e8f4ff;
-}
-
-.hl-danhthang-row-icon{
-flex:0 0 24px;
-font-size:18px;
-}
-
-.hl-danhthang-row-title{
-flex:1;
-color:#0B5E55;
-font-weight:700;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-/*======================================================
-CHI TIẾT DANH THẮNG
-======================================================*/
-
-.hl-danhthang-title,
-.hl-gioithieu-title{
-font-size:32px;
-margin-bottom:20px;
-color:#0B5E55;
-}
-
-.hl-danhthang-image img{
-display:block;
-max-width:100%;
-margin:20px auto;
-border-radius:10px;
-}
-
-.hl-danhthang-address{
-margin:15px 0;
-font-size:16px;
-}
-
-.hl-danhthang-map,
-.hl-danhthang-video{
-margin:12px 0;
-}
-
-.hl-danhthang-map a,
-.hl-danhthang-video a{
-color:#0B5E55;
-font-weight:700;
-text-decoration:none;
-}
-
-.hl-danhthang-map a:hover,
-.hl-danhthang-video a:hover{
-text-decoration:underline;
-}
-
-.hl-danhthang-content{
-margin-top:20px;
-line-height:1.8;
-text-align:justify;
-}
-
-/*======================================================
-CHI TIẾT ẨM THỰC
-======================================================*/
-.hl-amthuc-menu{
-background:#fff;
-border-top:1px solid #ddd;
-}
-
-.hl-amthuc-row{
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px 10px;
-border-top:1px solid #eee;
-cursor:pointer;
-transition:.2s;
-}
-
-.hl-amthuc-row:hover{
-background:#f6f6f6;
-}
-
-.hl-amthuc-row.active{
-background:#e8f4ff;
-}
-
-.hl-amthuc-row-icon{
-flex:0 0 24px;
-font-size:18px;
-}
-
-.hl-amthuc-row-title{
-flex:1;
-color:#0B5E55;
-font-weight:700;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-.hl-amthuc-title{
-font-size:32px;
-margin-bottom:20px;
-color:brown;
-}
-
-.hl-amthuc-image {
-    width:100%;
-    text-align:center;
-}
-
-.hl-amthuc-image img {
-    width:220px;
-    height:150px;
-    max-width:100%;
-    object-fit:cover;
-    display:inline-block;
-    margin:10px auto 18px;
-    border-radius:10px;
-}
-
-.hl-amthuc-address{
-margin:15px 0;
-font-size:16px;
-}
-
-.hl-amthuc-map,
-.hl-amthuc-video{
-margin:12px 0;
-}
-
-.hl-amthuc-map a,
-.hl-amthuc-video a{
-color:#0B5E55;
-font-weight:700;
-text-decoration:none;
-}
-
-.hl-amthuc-map a:hover,
-.hl-amthuc-video a:hover{
-text-decoration:underline;
-}
-
-.hl-amthuc-content{
-margin-top:20px;
-line-height:1.8;
-text-align:justify;
-}
-
-/*======================================================
-CHI TIẾT ĐỊA DANH
-======================================================*/
-.hl-diadanh-menu{
-background:#fff;
-border-top:1px solid #ddd;
-}
-
-.hl-diadanh-row{
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px 10px;
-border-top:1px solid #eee;
-cursor:pointer;
-transition:.2s;
-}
-
-.hl-diadanh-row:hover{
-background:#f6f6f6;
-}
-
-.hl-diadanh-row.active{
-background:#e8f4ff;
-}
-
-.hl-diadanh-row-icon{
-flex:0 0 24px;
-font-size:18px;
-}
-
-.hl-diadanh-row-title{
-flex:1;
-color:#0B5E55;
-font-weight:700;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-.hl-diadanh-title{
-font-size:32px;
-margin-bottom:20px;
-color:brown;
-}
-
-.hl-diadanh-image img{
-display:block;
-max-width:100%;
-margin:20px auto;
-border-radius:10px;
-}
-
-.hl-diadanh-address{
-margin:15px 0;
-font-size:16px;
-}
-
-.hl-diadanh-map,
-.hl-amthuc-video{
-margin:12px 0;
-}
-
-.hl-diadanh-map a,
-.hl-diadanh-video a{
-color:#0B5E55;
-font-weight:700;
-text-decoration:none;
-}
-
-.hl-diadanh-map a:hover,
-.hl-diadanh-video a:hover{
-text-decoration:underline;
-}
-
-.hl-diadanh-content{
-margin-top:20px;
-line-height:1.8;
-text-align:justify;
-}
-
-/*======================================================
-CHI TIẾT HỌ TỘC
-======================================================*/
-.hl-hotoc-menu{
-background:#fff;
-border-top:1px solid #ddd;
-}
-
-.hl-hotoc-row{
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px 10px;
-border-top:1px solid #eee;
-cursor:pointer;
-transition:.2s;
-}
-
-.hl-hotoc-row:hover{
-background:#f6f6f6;
-}
-
-.hl-hotoc-row.active{
-background:#e8f4ff;
-}
-
-.hl-hotoc-row-icon{
-flex:0 0 24px;
-font-size:18px;
-}
-
-.hl-hotoc-row-title{
-flex:1;
-color:#0B5E55;
-font-weight:700;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-.hl-hotoc-title{
-font-size:32px;
-margin-bottom:20px;
-color:brown;
-}
-
-.hl-hotoc-image img{
-display:block;
-max-width:100%;
-margin:20px auto;
-border-radius:10px;
-}
-
-.hl-hotoc-address{
-margin:15px 0;
-font-size:16px;
-}
-
-.hl-hotoc-map,
-.hl-amthuc-video{
-margin:12px 0;
-}
-
-.hl-hotoc-map a,
-.hl-hotoc-video a{
-color:#0B5E55;
-font-weight:700;
-text-decoration:none;
-}
-
-.hl-hotoc-map a:hover,
-.hl-hotoc-web,
-.hl-hotoc-video a:hover{
-color:#0B5E55;
-text-decoration:underline;
-}
-
-.hl-hotoc-content{
-margin-top:20px;
-line-height:1.8;
-text-align:justify;
-}
-
-/*======================================================
-CHI TIẾT TƯ LIỆU
-======================================================*/
-.hl-tulieu-menu{
-background:#fff;
-border-top:1px solid #ddd;
-}
-
-.hl-tulieu-row{
-display:flex;
-align-items:center;
-gap:8px;
-padding:8px 10px;
-border-top:1px solid #eee;
-cursor:pointer;
-transition:.2s;
-}
-
-.hl-tulieu-row:hover{
-background:#f6f6f6;
-}
-
-.hl-tulieu-row.active{
-background:#e8f4ff;
-}
-
-.hl-tulieu-row-icon{
-flex:0 0 24px;
-font-size:18px;
-}
-
-.hl-tulieu-row-title{
-flex:1;
-color:#0B5E55;
-font-weight:700;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
-}
-
-.hl-tulieu-title{
-font-size:32px;
-margin-bottom:20px;
-color:brown;
-}
-
-.hl-tulieu-image img{
-display:block;
-max-width:100%;
-margin:20px auto;
-border-radius:10px;
-}
-
-.hl-tulieu-map,
-.hl-tulieu-video{
-margin:12px 0;
-}
-
-.hl-tulieu-link{
-color:#0B5E55;
-font-weight:700;
-text-decoration:none;
-}
-
-.hl-tulieu-link,
-.hl-tulieu-web
-.hl-tulieu-video a:hover{
-color:#0B5E55;
-text-decoration:underline;
-}
-
-.hl-tulieu-content{
-margin-top:20px;
-line-height:1.8;
-text-align:justify;
-}
-
-/*======================================================
-  CHUYỆN HÀNG NGÀY
-  Thumbnail riêng cho ô bên phải
-======================================================*/
-.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb {
-    width: 100%;
-    height: 150px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.08);
-}
-/* Ảnh thumbnail */
-.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    border-radius: 0 0 8px 8px;
-}
-
-/* Khi chưa có ảnh */
-.hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb:empty {
-    display: none;
-}
-
-/*======================================================
-  CHUYỆN HÀNG NGÀY
-  ẢNH ĐẠI DIỆN TRONG DANH SÁCH
-======================================================*/
-.hl-center .chn-list .chn-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 12px;
-    cursor: pointer;
-}
-
-/* Ảnh đại diện */
-
-.hl-center .chn-list .chn-list-image {
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    min-height: 64px;
-    overflow: hidden;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Hình ảnh */
-.hl-center .chn-list .chn-list-image img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-
-/* Trường hợp không có ảnh */
-.hl-center .chn-list .chn-no-image {
-    background: rgba(0,0,0,0.08);
-    font-size: 24px;
-}
-
-/* Nội dung bên phải ảnh */
-.hl-center .chn-list .chn-list-info {
-    flex: 1;
-    min-width: 0;
-}
-
-/* Tiêu đề */
-.hl-center .chn-list .chn-title {
-    margin: 0 0 5px 0;
-    font-size: 16px;
-    line-height: 1.3;
-color:Brown;
-text-decoration:underline;
-}
-
-/* Người viết */
-.hl-center .chn-list .chn-author {
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-/* Ngày */
-.hl-center .chn-list .chn-date {
-    font-size: 12px;
-    line-height: 1.3;
-    opacity: 0.75;
-}
-
-/*======================================================
-  INDEX - BÀI VIẾT CÁ NHÂN
-======================================================*/
-.hl-right .hl-menu[data-page="baiviet"] .hl-thumb {
-    width: 100%;
-    height: 120px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.hl-right .hl-menu[data-page="baiviet"] .hl-thumb img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-/*======================================================
-  DANH SÁCH
-======================================================*/
-.bv-index-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px;
-    margin-bottom: 8px;
-    cursor: pointer;
-}
-.bv-index-avatar {
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    min-height: 64px;
-    overflow: hidden;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.bv-index-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border-radius: 50%;
-}
-.bv-index-info {
-    flex: 1;
-    min-width: 0;
-}
-.bv-index-caption {
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.4;
-}
-.bv-index-author {
-    margin-top: 4px;
-    font-size: 14px;
-}
-.bv-index-date {
-    margin-top: 3px;
-    font-size: 12px;
-    opacity: 0.7;
-}
-
-/*======================================================
-  CHI TIẾT
-======================================================*/
-.bv-index-post {
-    margin-top: 20px;
-    padding: 20px;
-}
-.bv-index-post-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-.bv-index-post-meta {
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
-.bv-index-post-content {
-    line-height: 1.7;
-    margin-bottom: 18px;
-}
-
-.bv-index-post-image {
-    margin-top: 15px;
-    text-align: center;
-}
-
-/* ẢNH TRONG NỘI DUNG BÀI VIẾT */
-.bv-index-post-content {
-    font-size: 14px;
-    line-height: 1.45;
-    padding: 5px 0;
-
-}
-.bv-index-post-content p {
-    margin: 2px 0;
-}
-/*======================================================
-  ẢNH BÀI VIẾT - INDEX
-======================================================*/
-.bv-index-post-image img {
-   width:360px;
-    height:240px;
-    max-width:100%;
-    object-fit:cover;
-    border-radius:9px;
-    cursor:pointer;
-    transition:
-        transform .2s ease;
-}
-.bv-index-post-clip {
-    margin-top: 15px;
-}
-.bv-index-post-clip a {
-    text-decoration: none;
-}
-.bv-index-no-image {
-    font-size: 24px;
-}
-
-/*======================================================
-  INDEX - BÀI VIẾT
-  NÚT QUAY LẠI DANH SÁCH
-======================================================*/
-.bv-index-back {
-    display: inline-block;
-    margin-bottom: 12px;
-    padding: 7px 12px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    color : Brown;
-}
-.bv-index-back:hover {
-    text-decoration: underline;
-}
-
-/*======================================================
-  BÀI VIẾT INDEX
-  YOUTUBE FLOATING PLAYER
-======================================================*/
-#bv-floating-player {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 360px;
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-    z-index: 99999;
-}
-
-/* HEADER */
-.bv-floating-header {
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    background: #222;
-    color: #fff;
-    font-size: 14px;
-}
-
-/* NÚT ĐÓNG */
-#bv-close-player {
-    border: none;
-    background: transparent;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 2px 6px;
-}
-
-/* VIDEO */
-.bv-floating-video {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-}
-
-.bv-floating-video iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-}
-
-body {
-    margin: 0 !important;
-}
-
-.hl-footer {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    box-sizing: border-box !important;
-    display: block !important;
-}
-
-
-
-/*======================================================
-  DANH SÁCH THÀNH VIÊN
-======================================================*/
-.tv-thumb-text{
-color:Brown;
-font-weight:700;
-background: #e8f4ff;
-}
-.thanhvien-page{
-    width:100%;
-}
-
-.thanhvien-box{
-    width:100%;
-}
-
-.thanhvien-box h2{
-    margin:0 0 25px;
-    text-align:center;
-}
-
-.thanhvien-list{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
-
-.thanhvien-item{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:10px 15px;
-    border-radius:10px;
-    background:#fff;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
-
-    /* Không tạo cảm giác đây là link */
-    cursor:default;
-}
-
-.thanhvien-avatar{
-    width:65px;
-    height:65px;
-    flex-shrink:0;
-    overflow:hidden;
-    border-radius:50%;
-}
-
-.thanhvien-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.thanhvien-name{
-    font-size:17px;
-    font-weight:600;
-}
-
-.thanhvien-empty{
-    padding:30px;
-    text-align:center;
-}
-
-.thanhvien-loading{
-    padding:30px;
-    text-align:center;
-}
-
-.thanhvien-error{
-    padding:30px;
-    text-align:center;
-}
-
-.thanhvien-info{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-}
-
-.thanhvien-name{
-    font-size:17px;
-    font-weight:600;
-}
-
-.thanhvien-nationality{
-    font-size:14px;
-    opacity:0.75;
-}
-
-
-/*======================================================
-FIX FOOTER DESKTOP
-======================================================*/
-
-@media(min-width:901px){
-
-    .hl-main > .hl-footer{
-        grid-column:1 / -1 !important;
-        grid-row:auto !important;
-
-        width:100% !important;
-
-        display:grid !important;
-        grid-template-columns:1fr 1fr !important;
-        grid-template-rows:auto !important;
-    }
-
-    .hl-footer-info{
-        grid-column:1 !important;
-        grid-row:1 !important;
-    }
-
-    .hl-footer-contact{
-        grid-column:2 !important;
-        grid-row:1 !important;
-    }
-
-}
-
-/* ==================================================
-   FOOTER - CONTACT ICON
-================================================== */
-
-.hl-footer-contact-item{
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    width:max-content;
-
-    margin:10px auto;
-
-    color:#EEE;
-    text-decoration:none;
-
-    font-size:15px;
-    font-weight:600;
-
-    transition:
-        color .25s ease,
-        transform .25s ease;
-}
-
-.hl-contact-icon{
-    width:28px;
-    height:28px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    flex-shrink:0;
-
-    border-radius:7px;
-
-    transition:
-        transform .25s ease,
-        filter .25s ease;
-}
-
-.hl-contact-icon svg{
-    width:21px;
-    height:21px;
-
-    display:block;
-
-    fill:currentColor;
-}
-
-/* Facebook */
-
-.facebook-icon{
-    color:#1877F2;
-}
-
-.hl-footer-contact-item:hover .facebook-icon{
-    transform:scale(1.18);
-    filter:brightness(1.25);
-}
-
-/* Zalo */
-
-.zalo-icon{
-    color:#008FE5;
-}
-
-.zalo-icon svg{
-    fill:currentColor;
-}
-
-.hl-footer-contact-item:hover .zalo-icon{
-    transform:scale(1.18);
-    filter:brightness(1.25);
-}
-
-/* Phone */
-
-.phone-icon{
-    color:#E53935;
-}
-
-.hl-footer-contact-item:hover .phone-icon{
-    transform:scale(1.18);
-    filter:brightness(1.25);
-}
-
-/* Text hover */
-
-.hl-footer-contact-item:hover{
-    color:#FFD54F;
-    transform:translateX(4px);
-}
-
-
-/* ==================================================
-   MOBILE
-================================================== */
-
-@media(max-width:900px){
 
     .hl-footer-contact-item{
         margin:9px auto;
@@ -2089,5 +2318,905 @@ FIX FOOTER DESKTOP
         width:20px;
         height:20px;
     }
+}
 
+
+/*======================================================
+ SMALL MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+    .hl-header{
+        height:105px;
+    }
+
+    .hl-header-left{
+        gap:9px;
+    }
+
+    .hl-header-logo,
+    .hl-header img.hl-logo,
+    .hl-logo img{
+        width:58px;
+        height:58px;
+        padding:4px;
+    }
+
+    .hl-header-title h1,
+    .hl-header-text h1,
+    .hl-title h1,
+    .hl-header h1{
+        font-size:25px;
+        letter-spacing:1.5px;
+    }
+
+    .hl-header-title p,
+    .hl-header-title .subtitle,
+    .hl-header-subtitle,
+    .hl-header-text p,
+    .hl-title h3{
+        margin-top:5px;
+        font-size:12px;
+        letter-spacing:.7px;
+    }
+
+    .hl-header-bg{
+        object-position:center center;
+    }
+
+
+    /*------------------------------------------
+      MAIN
+    ------------------------------------------*/
+
+    .hl-main{
+        grid-template-columns:
+            minmax(0,1fr)
+            minmax(0,1fr) !important;
+
+        grid-template-areas:
+            "left right"
+            "center center"
+            "footer footer" !important;
+        gap:7px !important;
+        padding:5px !important;
+    }
+
+    .hl-left,
+    .hl-right{
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        padding:5px;
+    }
+
+    .hl-center{
+        width:100% !important;
+        min-width:0 !important;
+        max-width:100% !important;
+        padding:10px;
+    }
+
+
+    /*------------------------------------------
+      MENU
+    ------------------------------------------*/
+
+    .hl-menu{
+        margin-bottom:6px;
+        border-radius:7px;
+    }
+
+    .hl-menu-title{
+        font-size:12px;
+        padding:8px 3px;
+    }
+
+    .hl-thumb{
+        width:58px;
+        min-width:58px;
+        height:58px;
+    }
+
+    .hl-right .hl-thumb{
+        width:38px !important;
+        min-width:38px !important;
+        height:38px !important;
+    }
+
+    .hl-right .hl-menu[data-page="chuyenhangngay"] .hl-thumb{
+        width:38px !important;
+        min-width:38px !important;
+        height:38px !important;
+    }
+
+    .hl-right .hl-menu[data-page="baiviet"] .hl-thumb{
+        width:38px !important;
+        min-width:38px !important;
+        height:38px !important;
+    }
+
+    .hl-right .hl-menu-title{
+        min-width:0;
+        padding:7px 3px;
+        font-size:12px;
+        line-height:17px;
+    }
+
+
+    /*------------------------------------------
+      MEMBER THUMB
+    ------------------------------------------*/
+
+    .hl-right .hl-menu[data-page="thanhvien"] .hl-thumb{
+        width:100% !important;
+        min-width:100% !important;
+        height:38px !important;
+    }
+
+    .hl-right .hl-menu[data-page="thanhvien"] .tv-thumb-text{
+        font-size:14px;
+        line-height:13px;
+
+    }
+
+
+    /*------------------------------------------
+      USER
+    ------------------------------------------*/
+
+    .hl-user-btn{
+        font-size:12px;
+        padding:8px 2px;
+    }
+
+
+    /*------------------------------------------
+      SLIDE
+    ------------------------------------------*/
+
+    .hl-slide{
+        height:160px;
+    }
+
+
+    /*------------------------------------------
+      CONTENT
+    ------------------------------------------*/
+
+    .hl-content-title{
+        font-size:21px;
+    }
+
+    /*------------------------------------------
+      FOOTER
+    ------------------------------------------*/
+
+    .hl-footer{
+        display:grid !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto auto !important;
+        gap:15px;
+        padding:15px 8px !important;
+    }
+
+    .hl-footer-info{
+        grid-column:1 !important;
+        grid-row:1 !important;
+    }
+
+    .hl-footer-contact{
+        grid-column:1 !important;
+        grid-row:2 !important;
+        padding-top:10px;
+        border-top:1px solid #555;
+    }
+}
+
+
+/*======================================================
+ REDUCED MOTION
+======================================================*/
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+    }
+}
+
+
+/*======================================================
+  THEME SWITCHER
+======================================================*/
+
+.hl-theme-switcher {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 99999;
+}
+
+.hl-theme-button {
+    border: 1px solid var(--hl-border);
+    background: var(--hl-panel-solid);
+    color: var(--hl-text);
+    padding: 9px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: var(--hl-shadow);
+    transition: all 0.2s ease;
+}
+
+.hl-theme-button:hover {
+    background: var(--hl-primary);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: var(--hl-shadow-hover);
+}
+
+.hl-theme-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 210px;
+    padding: 6px;
+    background: var(--hl-panel-solid);
+    border: 1px solid var(--hl-border);
+    border-radius: 12px;
+    box-shadow: var(--hl-shadow-hover);
+    z-index: 99999;
+}
+
+.hl-theme-menu button {
+    display: block;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--hl-text);
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.hl-theme-menu button:hover {
+    background: var(--hl-row-hover);
+    color: var(--hl-primary);
+}
+
+.hl-theme-switcher.open .hl-theme-menu {
+    display: block;
+}
+
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media (max-width: 900px) {
+    .hl-theme-switcher {
+        top: 10px;
+        right: 10px;
+    }
+
+    .hl-theme-button {
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+
+    .hl-theme-menu {
+        min-width: 175px;
+    }
+}
+
+
+/*======================================================
+  THEME SWITCHER - FIX 4 ITEMS
+======================================================*/
+
+.hl-theme-switcher {
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    z-index: 999999 !important;
+}
+
+.hl-theme-switcher .hl-theme-menu {
+    display: none !important;
+    position: absolute !important;
+    top: calc(100% + 2px) !important;
+    right: 0 !important;
+    width: 220px !important;
+    min-width: 220px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 6px !important;
+    background: var(--hl-panel-solid) !important;
+    border: 1px solid var(--hl-border) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--hl-shadow-hover) !important;
+    z-index: 999999 !important;
+}
+
+.hl-theme-switcher.open .hl-theme-menu {
+    display: block !important;
+}
+
+.hl-theme-switcher .hl-theme-menu button {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 40px !important;
+    margin: 0 !important;
+    padding: 4px 12px !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+/*======================================================
+  THEME SWITCHER - KHONG CAT MENU
+======================================================*/
+
+.hl-header {
+    overflow: visible !important;
+}
+
+.hl-theme-switcher {
+    overflow: visible !important;
+}
+
+.hl-theme-menu {
+    overflow: visible !important;
+}
+
+/*======================================================
+  THEME SWITCHER - CANH LAI VI TRI
+======================================================*/
+
+.hl-theme-switcher {
+    top: 1px !important;
+    right: 28px !important;
+}
+
+.hl-theme-menu {
+    top: calc(100% + 4px) !important;
+    right: 0 !important;
+    width: 150px !important;
+    min-width: 150px !important;
+}
+
+
+/*======================================================
+  THEME SYSTEM
+======================================================*/
+
+:root {
+    --theme-primary: #2e7d32;
+    --theme-secondary: #66bb6a;
+    --theme-bg: #f4f8f4;
+    --theme-card: #ffffff;
+    --theme-text: #263238;
+    --theme-border: #c8e6c9;
+    --theme-header: #2e7d32;
+}
+
+
+/*======================================================
+  🌿 XANH QUÊ HƯƠNG
+======================================================*/
+
+body[data-theme="home"] {
+    --theme-primary: #2e7d32;
+    --theme-secondary: #66bb6a;
+    --theme-bg: #f4f8f4;
+    --theme-card: #ffffff;
+    --theme-text: #263238;
+    --theme-border: #c8e6c9;
+    --theme-header: #2e7d32;
+}
+
+
+/*======================================================
+  🔵 XANH HIỆN ĐẠI
+======================================================*/
+
+body[data-theme="modern"] {
+    --theme-primary: #1976d2;
+    --theme-secondary: #42a5f5;
+    --theme-bg: #f3f7fc;
+    --theme-card: #ffffff;
+    --theme-text: #263238;
+    --theme-border: #bbdefb;
+    --theme-header: #1565c0;
+}
+
+
+/*======================================================
+  🟤 NÂU HOÀI NIỆM
+======================================================*/
+
+body[data-theme="nostalgia"]{
+    --theme-primary: #795548;
+    --theme-secondary: #a1887f;
+    --theme-bg: #f7f1eb;
+    --theme-card: #fffdf9;
+    --theme-text: #3e3028;
+    --theme-border: #d7ccc8;
+    --theme-header: #6d4c41;
+}
+
+
+/*======================================================
+  🌙 DARK MODE
+======================================================*/
+
+body[data-theme="dark"] {
+    --theme-primary: #90caf9;
+    --theme-secondary: #64b5f6;
+    --theme-bg: #121212;
+    --theme-card: #1e1e1e;
+    --theme-text: #eeeeee;
+    --theme-border: #424242;
+    --theme-header: #1b1b1b;
+}
+
+/*======================================================
+  THEME SYSTEM - KET NOI GIAO DIEN
+======================================================*/
+
+/* Nền tổng thể */
+body {
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+}
+
+/* Header */
+header {
+    background-color: var(--theme-header);
+}
+
+/* Các vùng nội dung */
+.hl-center,
+#main-content {
+    color: var(--theme-text);
+}
+
+/* Card / box */
+.hl-card,
+.card,
+.content-box {
+    background-color: var(--theme-card);
+    border-color: var(--theme-border);
+    color: var(--theme-text);
+}
+
+/* Tiêu đề */
+.hl-title,
+h1,
+h2,
+h3 {
+    color: var(--theme-primary);
+}
+
+/* Nút */
+button {
+    border-color: var(--theme-primary);
+}
+
+button:hover {
+    background-color: var(--theme-primary);
+}
+
+/* Menu / liên kết */
+a {
+    color: var(--theme-primary);
+}
+
+/* Đường viền */
+hr {
+    border-color: var(--theme-border);
+}
+
+/* Cột phải */
+.hl-right,
+.right-column {
+    color: var(--theme-text);
+}
+
+/* Footer */
+footer {
+    background-color: var(--theme-header);
+    color: var(--theme-text);
+}
+
+/*======================================================
+  MOBILE UI - BƯỚC 5.1
+  Khung giao diện riêng cho điện thoại
+======================================================*/
+
+@media (max-width: 768px) {
+
+    /*------------------------------------------
+      BODY
+    ------------------------------------------*/
+    html,
+    body {
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    /*------------------------------------------
+      HEADER MOBILE
+    ------------------------------------------*/
+
+    .hl-header {
+        height: 72px !important;
+        min-height: 72px !important;
+        position: relative;
+        overflow: visible;
+    }
+
+    .hl-header-bg {
+        height: 100% !important;
+        object-fit: cover;
+    }
+
+    .hl-header-overlay {
+        position: absolute;
+        inset: 0;
+    }
+
+  
+    .hl-header-left {
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding-left: 58px !important;
+        margin-left: 0 !important;
+        width: auto !important;
+    }
+
+
+
+    .hl-logo {
+        width: 48px !important;
+        height: 48px !important;
+        flex-shrink: 0;
+    }
+
+    .hl-logo img {
+        width: 48px !important;
+        height: 48px !important;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .hl-title h1 {
+        font-size: 20px !important;
+        line-height: 1.1;
+        margin: 0;
+    }
+
+    .hl-title h3 {
+        font-size: 12px !important;
+        margin: 3px 0 0;
+    }
+
+
+    /*------------------------------------------
+      THEME BUTTON
+    ------------------------------------------*/
+
+    .hl-theme-switcher {
+        top: 8px !important;
+        right: 10px !important;
+        z-index: 1000;
+    }
+
+    .hl-theme-button {
+        padding: 7px 9px !important;
+        font-size: 12px !important;
+    }
+
+
+    /*------------------------------------------
+      MARQUEE
+    ------------------------------------------*/
+    .hl-marquee {
+        min-height: 32px;
+        font-size: 13px;
+    }
+
+    /*------------------------------------------
+      MAIN - 1 CỘT
+    ------------------------------------------*/
+    .hl-main {
+        display: block !important;
+        width: 100%;
+        min-width: 0;
+    }
+
+    /*------------------------------------------
+      LEFT MENU
+      TẠM ẨN TRÊN MOBILE
+    ------------------------------------------*/
+    .hl-left {
+        display: none !important;
+    }
+
+    /*------------------------------------------
+      CENTER
+    -----------------------------------------*/
+
+    .hl-center {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    /*------------------------------------------
+      RIGHT
+      TẠM ẨN TRÊN MOBILE
+    ------------------------------------------*/
+    .hl-right {
+        display: none !important;
+    }
+
+    /*------------------------------------------
+      NỘI DUNG
+    ------------------------------------------*/
+    #hl-content {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /*------------------------------------------
+      FOOTER
+    ------------------------------------------*/
+    .hl-footer {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/*======================================================
+  MOBILE - ĐƯA LOGO + TIÊU ĐỀ SÁT MÉP TRÁI
+======================================================*/
+
+@media (max-width: 768px) {
+    .hl-header-left {
+        left: 0 !important;
+        padding-left: 54 !important;
+        margin-left: 0 !important;
+    }
+}
+
+/*======================================================
+  MOBILE MENU - BƯỚC 5.2
+======================================================*/
+.mobile-menu-btn,
+.mobile-menu,
+.mobile-menu-overlay {
+    display: none;
+}
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media (max-width: 768px) {
+
+    /*------------------------------------------
+      NÚT HAMBURGER
+    ------------------------------------------*/
+    .mobile-menu-btn {
+        display: flex;
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2000;
+        width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, .28);
+        color: #fff;
+        font-size: 25px;
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+    }
+
+
+    /*------------------------------------------
+      ĐẨY LOGO RA SAU NÚT ☰
+    ------------------------------------------*/
+    .hl-header-left {
+        left: 0 !important;
+        padding-left: 54px !important;
+    }
+
+    /*------------------------------------------
+      LỚP NỀN
+    -----------------------------------------*/
+    .mobile-menu-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 3000;
+        background: rgba(0, 0, 0, .45);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .25s ease;
+    }
+
+    /*------------------------------------------
+      MENU TRƯỢT
+    ------------------------------------------*/
+    .mobile-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        max-width: 82vw;
+        height: 100vh;
+        z-index: 3001;
+        padding: 80px 14px 30px;
+        background: var(--hl-bg, #fff);
+        box-shadow: 5px 0 25px rgba(0, 0, 0, .25);
+        transform: translateX(-105%);
+        transition: transform .28s ease;
+        overflow-y: auto;
+    }
+
+    /*------------------------------------------
+      TIÊU ĐỀ MENU
+    ------------------------------------------*/
+    .mobile-menu-title {
+        padding: 0 14px 18px;
+        font-size: 21px;
+        font-weight: 800;
+        color: var(--hl-primary, #1f6f43);
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
+        margin-bottom: 10px;
+    }
+
+    /*------------------------------------------
+      ITEM
+    ------------------------------------------*/
+
+    .mobile-menu-item {
+        padding: 15px 14px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--hl-text, #333);
+        cursor: pointer;
+        transition:
+            background .2s ease,
+            transform .2s ease;
+    }
+
+    .mobile-menu-item:active {
+        transform: scale(.98);
+    }
+
+    .mobile-menu-item:hover {
+        background: rgba(31, 111, 67, .10);
+    }
+
+    /*------------------------------------------
+      MENU ĐANG MỞ
+    ------------------------------------------*/
+
+    body.mobile-menu-open .mobile-menu {
+        transform: translateX(0);
+    }
+
+    body.mobile-menu-open .mobile-menu-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .hl-header {
+        position: relative !important;
+        z-index: 3000 !important;
+    }
+
+    .mobile-menu-overlay {
+        z-index: 3001 !important;
+    }
+
+    .mobile-menu {
+        z-index: 3002 !important;
+    }
+
+    .mobile-menu-btn {
+        z-index: 3003 !important;
+    }
+
+}
+
+@media (max-width: 900px){
+
+    .hl-main.mobile-columns-hidden{
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .hl-main.mobile-columns-hidden .hl-center{
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+/*==================================================
+  MOBILE MENU - TIÊU ĐỀ
+==================================================*/
+
+@media (max-width: 768px) {
+    .mobile-menu-title,
+    .mobile-menu-section-title {
+        font-weight: 700;
+        color: Blue;
+        text-align: center;
+    }
+.mobile-menu-title {
+      font-weight: 900;
+        color: Red;
+        text-align: center;
+    }
+.mobile-menu-link {
+font-weight: 900;
+        color: Brown;
+        text-align: center;
+}
+}
+
+/*==================================================
+  MOBILE - ẢNH TRONG NỘI DUNG KHÔNG BỊ CẮT
+==================================================*/
+
+@media (max-width: 768px) {
+    #hl-content img {
+        max-width: 100% !important;
+        width: auto;
+        height: auto !important;
+        object-fit: contain !important;
+    }
+
+    #hl-content {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }

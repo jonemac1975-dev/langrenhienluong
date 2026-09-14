@@ -5,6 +5,7 @@
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
 import {createEditor,getHtml,setHtml} from "../../js/editor.js";
+import {compressImage} from "../../scripts/compressImage.js";
 
 //======================================================
 // DATA
@@ -151,14 +152,22 @@ function renderForm(){
 // UPLOAD IMAGE
 //======================================================
 
-function uploadImage(){
-    const input = document.getElementById("chn-image");
-    const preview = document.getElementById("chn-image-preview");
+async function uploadImage(){
+
+    const input =
+        document.getElementById("chn-image");
+
+    const preview =
+        document.getElementById("chn-image-preview");
+
     if(!input){
         return;
     }
-    input.onchange = function(){
-        const file = this.files?.[0];
+
+    input.onchange = async function(){
+
+        const file =
+            this.files?.[0];
 
         if(!file){
             return;
@@ -169,42 +178,77 @@ function uploadImage(){
         //================================================
 
         if(!file.type.startsWith("image/")){
-            alert("Vui lòng chọn file hình ảnh!");
+
+            alert(
+                "Vui lòng chọn file hình ảnh!"
+            );
+
             input.value = "";
+
             return;
         }
 
         //================================================
-        // ĐỌC BASE64
+        // NÉN ẢNH
         //================================================
 
-        const reader = new FileReader();
-        reader.onload = function(e){
-        const base64 = e.target.result;
+        try{
 
-            // Lưu tạm ảnh vào CURRENT
-            // để Phần 3 saveData() sử dụng
+            const base64 =
+                await compressImage(
+                    file,
+                    "image"
+                );
 
-            if(!CURRENT){CURRENT = {};
+            //================================================
+            // LƯU TẠM
+            //================================================
+
+            if(!CURRENT){
+                CURRENT = {};
             }
 
-            CURRENT.image = base64;
+            CURRENT.image =
+                base64;
 
             //================================================
             // PREVIEW
             //================================================
 
             if(preview){
-                preview.innerHTML = `<img src="${base64}"alt="Ảnh minh họa">`;
-            }
-        };
-        reader.onerror = function(){
 
-            console.error("❌ Không đọc được hình ảnh.");
-            alert("Không thể đọc hình ảnh!");
-        };
-        reader.readAsDataURL(file);
+                preview.innerHTML =
+                    `<img
+                        src="${base64}"
+                        alt="Ảnh minh họa">`;
+
+            }
+
+            console.log(
+                "Ảnh Chuyện hàng ngày sau nén:",
+                base64.length,
+                "ký tự Base64"
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "❌ COMPRESS IMAGE ERROR:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "Không thể xử lý hình ảnh!"
+            );
+
+            input.value = "";
+
+        }
+
     };
+
 }
 
 //======================================================
