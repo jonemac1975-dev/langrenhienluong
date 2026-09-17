@@ -62,6 +62,32 @@ if(statusBox){
 }
 
 //==================================================
+// THÔNG BÁO TỪ ADMIN
+//==================================================
+
+const adminMessageBox = document.getElementById("view-admin-message");
+const adminMessageText = document.getElementById("view-admin-message-text");
+const adminMessage = profile.adminMessage || "";
+if(adminMessage.trim()){
+    if(adminMessageBox){
+        adminMessageBox.style.display = "block";
+    }
+
+    if(adminMessageText){
+        adminMessageText.textContent = adminMessage;
+    }
+}
+else{
+    if(adminMessageBox){
+        adminMessageBox.style.display = "none";
+    }
+
+    if(adminMessageText){
+        adminMessageText.textContent = "";
+    }
+}
+
+//==================================================
 // THÔNG TIN HỒ SƠ
 //==================================================
 
@@ -97,17 +123,10 @@ else if(avatar){
 // SET TEXT
 //======================================================
 
-function setText(
-id,
-value
-){
-
-
+function setText(id,value){
 const el = document.getElementById(id);
-
 if(!el){
     return;
 }
-
 el.textContent = value || "";
 }

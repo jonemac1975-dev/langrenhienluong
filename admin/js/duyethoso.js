@@ -185,6 +185,11 @@ setValue("dh-gioithieu",profile.gioithieu);
 setValue("dh-created",formatDateTime(profile.created_at));
 setValue("dh-updated",formatDateTime(profile.updated_at));
 setValue("dh-status",getStatusText(profile.status ||"pending"));
+const adminMessage = document.getElementById("dh-admin-message");
+if (adminMessage) {
+    adminMessage.value = profile.adminMessage || "";
+    adminMessage.disabled = profile.status === "approved";
+}
 const avatar = document.getElementById("dh-avatar");
 if(avatar){
     avatar.src = profile.avatar || "../../images/avatar-default.png";
@@ -290,6 +295,54 @@ async function unapproveCustomer(uid){
 }
 
 //======================================================
+// GỬI THÔNG BÁO CHO THÀNH VIÊN
+//======================================================
+
+async function saveAdminMessage(){
+
+    if (!CURRENT_UID) {
+        alert("⚠️ Hãy chọn một thành viên trước.");
+        return;
+    }
+
+    const customer = CUSTOMERS[CURRENT_UID];
+
+    if (!customer) {
+        return;
+    }
+
+    const profile = customer.profile || {};
+
+    if (profile.status === "approved") {
+
+        alert("ℹ️ Thành viên này đã được duyệt."
+        );
+        return;
+    }
+
+    const textarea = document.getElementById("dh-admin-message");
+    if (!textarea) {
+        return;
+    }
+
+    const message = textarea.value.trim();
+    if (!message) {
+
+        alert("⚠️ Vui lòng nhập nội dung thông báo.");
+        return;
+    }
+
+    try {
+        await writeData(`customers/${CURRENT_UID}/profile/adminMessage`,message);
+        CUSTOMERS[CURRENT_UID].profile = {...profile,adminMessage: message};
+        alert("📢 Đã gửi thông báo cho thành viên.");
+    }
+    catch(error){
+        console.error("❌ GỬI THÔNG BÁO THẤT BẠI:",error);
+        alert("❌ Không thể gửi thông báo.");
+    }
+}
+//======================================================
 // CLOSE DETAIL
 //======================================================
 
@@ -307,6 +360,7 @@ CURRENT_UID = null;
 
 function bindEvents(){
 document.getElementById("btn-close-duyet-detail")?.addEventListener("click",closeDetail);
+document.getElementById("btn-save-admin-message")?.addEventListener("click",saveAdminMessage);
 }
 
 //======================================================

@@ -166,7 +166,6 @@ HEADER
     <div class="hl-header-left">
 
         <div class="hl-logo">
-
             <img
                 src="store/logo.jpg"
                 alt="Logo Hiền Lương"
@@ -178,11 +177,8 @@ HEADER
         </div>
 
         <div class="hl-title">
-
             <h1>HIỀN LƯƠNG</h1>
-
             <h3>Quê hương tôi</h3>
-
         </div>
 
     </div>
@@ -206,7 +202,6 @@ HEADER
 ===================================================-->
 
 <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
-
 <nav id="mobile-menu" class="mobile-menu">
 
     <!--================================================
@@ -223,6 +218,10 @@ HEADER
 
     <div class="mobile-menu-item" data-page="lichsu">
         📜 Lịch sử
+    </div>
+
+   <div class="mobile-menu-item" data-page="danhnhan">
+        👤 Danh nhân
     </div>
 
     <div class="mobile-menu-item" data-page="danhthang">
@@ -287,7 +286,6 @@ HEADER
 
     </div>
 
-
     <!-- BÀI VIẾT CÁ NHÂN -->
 
     <div
@@ -316,7 +314,6 @@ MARQUEE
 ===================================================-->
 
 <div class="hl-marquee">
-
 <marquee
     behavior="scroll"
     direction="left">
@@ -324,9 +321,7 @@ MARQUEE
 ❤️ Chào mừng bạn đến với Website Hiền Lương •
 Lưu giữ ký ức quê hương •
 Kết nối những người con Hiền Lương trên mọi miền đất nước ❤️
-
 </marquee>
-
 </div>
 
 <!--==================================================
@@ -340,89 +335,76 @@ LEFT
 ===================================================-->
 
 <aside class="hl-left">
-
     <div
         class="hl-menu active"
         data-page="gioithieu">
-
         <div class="hl-menu-title">
             📘 Giới thiệu
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
 
     <div
         class="hl-menu"
         data-page="lichsu">
-
         <div class="hl-menu-title">
             📜 Lịch sử
         </div>
-
         <div class="hl-thumb"></div>
+    </div>
 
+    <div
+        class="hl-menu"
+        data-page="danhnhan">
+        <div class="hl-menu-title">
+            👤 Danh Nhân
+        </div>
+        <div class="hl-thumb"></div>
     </div>
 
     <div
         class="hl-menu"
         data-page="danhthang">
-
         <div class="hl-menu-title">
             🏞 Danh thắng
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
 
     <div
         class="hl-menu"
         data-page="amthuc">
-
         <div class="hl-menu-title">
             🍲 Ẩm thực
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
 
     <div
         class="hl-menu"
         data-page="diadanh">
-
         <div class="hl-menu-title">
             📍 Địa danh lịch sử
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
 
     <div
         class="hl-menu"
         data-page="hotoc">
-
         <div class="hl-menu-title">
             👪 Họ tộc
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
 
     <div
         class="hl-menu"
         data-page="tulieu">
-
         <div class="hl-menu-title">
             📚 Tư liệu
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
 
 </aside>
@@ -436,7 +418,6 @@ CENTER
     <!-- Background slideshow -->
 
     <div id="bg-main">
-
         <div
             id="bg1"
             class="bg-layer">
@@ -460,15 +441,11 @@ RIGHT
 ===================================================-->
 
 <aside class="hl-right">
-
     <div class="hl-user">
-
         <button class="hl-user-btn">
             👤 Blog cá nhân ▼
         </button>
-
         <div class="hl-user-menu">
-
             <a href="customers/tab/userlogin.html">
                 Đăng nhập
             </a>
@@ -476,46 +453,33 @@ RIGHT
             <a href="customers/tab/userregister.html">
                 Đăng ký
             </a>
-
         </div>
-
     </div>
 
 
     <div
         class="hl-menu"
         data-page="chuyenhangngay">
-
         <div class="hl-menu-title">
             📰 Tin hàng ngày
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
-
 
     <div
         class="hl-menu"
         data-page="baiviet">
-
         <div class="hl-menu-title">
             ✍ Bài viết cá nhân
         </div>
-
         <div class="hl-thumb"></div>
-
     </div>
-
 
     <div
         class="hl-menu"
         data-page="thanhvien">
-
         <div class="hl-thumb"></div>
-
     </div>
-
 </aside>
 
 <!--==================================================
@@ -649,6 +613,184 @@ FOOTER
     </div>
 
 </footer>
+
+
+<!--==================================================
+    MOBILE BOTTOM NAVIGATION
+===================================================-->
+
+<nav id="mobile-bottom-nav" class="mobile-bottom-nav">
+
+    <button
+        type="button"
+        class="mobile-bottom-item"
+        data-page="home">
+        <span class="mobile-bottom-icon">🏠</span>
+        <span class="mobile-bottom-label">Trang chủ</span>
+    </button>
+
+    <button
+    id="mobile-bottom-category"
+    type="button"
+    class="mobile-bottom-item"
+    data-page="danhmuc">
+        <span class="mobile-bottom-icon">📚</span>
+        <span class="mobile-bottom-label">Danh mục</span>
+    </button>
+
+    <button
+        type="button"
+        class="mobile-bottom-item"
+        data-page="congdong">
+        <span class="mobile-bottom-icon">📰</span>
+        <span class="mobile-bottom-label">Cộng đồng</span>
+    </button>
+
+    <button
+        type="button"
+        class="mobile-bottom-item"
+        data-page="canhan">
+        <span class="mobile-bottom-icon">👤</span>
+        <span class="mobile-bottom-label">Cá nhân</span>
+    </button>
+
+</nav>
+<!--==================================================
+    MOBILE CATEGORY PANEL
+===================================================-->
+
+<div
+    id="mobile-category-panel"
+    class="mobile-bottom-panel">
+    <div class="mobile-bottom-panel-title">
+        📚 DANH MỤC
+    </div>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="gioithieu">
+        📘 Giới thiệu
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="lichsu">
+        📜 Lịch sử
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="danhnhan">
+        👤 Danh Nhân
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="danhthang">
+        🏞 Danh thắng
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="amthuc">
+        🍲 Ẩm thực
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="diadanh">
+        📍 Địa danh lịch sử
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="hotoc">
+        👪 Họ tộc
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="tulieu">
+        📚 Tư liệu
+    </button>
+</div>
+
+<!--==================================================
+    MOBILE COMMUNITY PANEL
+===================================================-->
+<div id="mobile-community-panel" class="mobile-bottom-panel">
+
+    <div class="mobile-bottom-panel-title">
+        📰 CỘNG ĐỒNG
+    </div>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="chuyenhangngay"
+    >
+        📰 Chuyện hàng ngày
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="baiviet"
+    >
+        ✍️ Bài viết cá nhân
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-page="thanhvien"
+    >
+        👥 DS thành viên
+    </button>
+</div>
+
+
+<!--==================================================
+    MOBILE PERSONAL PANEL
+===================================================-->
+<div id="mobile-personal-panel" class="mobile-bottom-panel">
+
+    <div class="mobile-bottom-panel-title">
+        👤 CÁ NHÂN
+    </div>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-action="login"
+    >
+        🔐 Đăng nhập
+    </button>
+
+    <button
+        type="button"
+        class="mobile-panel-item"
+        data-action="register"
+    >
+        📝 Đăng ký
+    </button>
+</div>
+<!--==================================================
+    MOBILE CATEGORY LIST
+===================================================-->
+
+<div
+    id="mobile-category-list"
+    class="mobile-category-list">
+</div>
 
 <!--==================================================
     JAVASCRIPT

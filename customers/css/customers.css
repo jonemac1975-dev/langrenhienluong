@@ -2411,3 +2411,94 @@ color:#FFF;
 
 }
 
+
+/*======================================================
+    THÔNG BÁO TỪ ADMIN
+======================================================*/
+
+.hosoview-admin-message {
+
+    margin: 18px 0 22px;
+    padding: 16px 18px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255,248,235,.98),
+        rgba(255,255,255,.98)
+    );
+
+    border: 1px solid rgba(139,90,43,.25);
+    border-left: 5px solid #8b5a2b;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.08);
+
+    box-sizing: border-box;
+}
+
+
+.hosoview-admin-message-title {
+
+    margin-bottom: 10px;
+
+    color: #6f451f;
+
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+
+.hosoview-admin-message-text {
+
+    min-height: 24px;
+
+    padding: 12px 14px;
+
+    background: rgba(255,255,255,.85);
+
+    border-radius: 10px;
+
+    color: #4d3828;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+
+    box-sizing: border-box;
+
+}
+
+
+/*======================================================
+    MOBILE
+======================================================*/
+
+@media (max-width: 768px) {
+
+    .hosoview-admin-message {
+
+        margin: 15px 0 18px;
+        padding: 14px;
+
+        border-radius: 12px;
+
+    }
+
+    .hosoview-admin-message-title {
+
+        font-size: 15px;
+
+    }
+
+    .hosoview-admin-message-text {
+
+        font-size: 14px;
+        padding: 11px 12px;
+
+    }
+
+}

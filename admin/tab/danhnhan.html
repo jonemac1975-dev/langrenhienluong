@@ -1,0 +1,67 @@
+<div class="at-box">
+
+<h2 class="at-title">
+👤 CẬP NHẬT DANH NHÂN
+</h2>
+
+<div class="gt-row">
+<label>Họ và tên</label>
+<input id="dn-name" class="gt-input">
+</div>
+
+<div class="gt-row">
+<label>Ảnh đại diện</label>
+<input id="dn-image-file" type="file" accept="image/*">
+<br><br>
+<img id="dn-preview">
+</div>
+
+<div class="gt-row">
+<label>Tiểu sử</label>
+<div id="dn-editor"></div>
+</div>
+
+<div class="dn-row">
+<label>Địa chỉ mộ</label>
+<textarea
+    id="dn-address"
+    class="gt-input"
+    rows="4"
+    placeholder="Nhập địa chỉ mộ ..."
+></textarea>
+</div>
+
+<div class="dn-row">
+<label>Link Video</label>
+<input id="dn-video" class="gt-input">
+</div>
+
+<div class="dn-row">
+<label>Google Maps mộ </label>
+<input id="dn-map" class="gt-input">
+</div>
+
+<div class="dn-btn-area">
+<button id="btn-dn-save" class="gt-btn gt-btn-save">
+💾 Thêm / Lưu
+</button>
+</div>
+
+<hr>
+
+<h3>Danh sách Danh nhân</h3>
+<table class="ls-table">
+<thead>
+<tr>
+<th width="60">STT</th>
+<th width="220">Họ và tên</th>
+<th width="250">Mộ chôn</th>
+<th width="120">Google Maps</th>
+<th width="120">Video</th>
+<th width="170">Hành động</th>
+</tr>
+</thead>
+<tbody id="dn-body">
+</tbody>
+</table>
+</div>

@@ -397,6 +397,7 @@ body,
 .hl-menu-title,
 .hl-thumb,
 .hl-history-menu,
+.hl-danhnhan-menu,
 .hl-danhthang-menu,
 .hl-amthuc-menu,
 .hl-diadanh-menu,
@@ -616,7 +617,7 @@ body,
 .hl-title h3{
     font-weight:bold;
     color:#ffd84d;
-    animation:blinkTitle 1.2s infinite;
+    animation: blinkTitle 1.2s infinite !important;
 }
 
 .hl-header .blink{
@@ -1053,6 +1054,7 @@ body,
 ======================================================*/
 
 .hl-history-menu,
+.hl-danhnhan-menu,
 .hl-danhthang-menu,
 .hl-amthuc-menu,
 .hl-diadanh-menu,
@@ -1071,6 +1073,7 @@ body,
 ======================================================*/
 
 .hl-history-row,
+.hl-danhnhan-row,
 .hl-danhthang-row,
 .hl-amthuc-row,
 .hl-diadanh-row,
@@ -1088,6 +1091,7 @@ body,
 }
 
 .hl-history-row:hover,
+.hl-danhnhan-row:hover,
 .hl-danhthang-row:hover,
 .hl-amthuc-row:hover,
 .hl-diadanh-row:hover,
@@ -1097,6 +1101,7 @@ body,
 }
 
 .hl-history-row.active,
+.hl-danhnhan-row.active,
 .hl-danhthang-row.active,
 .hl-amthuc-row.active,
 .hl-diadanh-row.active,
@@ -1189,6 +1194,7 @@ body,
 ======================================================*/
 
 .hl-danhthang-row-icon,
+.hl-danhnhan-row-icon,
 .hl-amthuc-row-icon,
 .hl-diadanh-row-icon,
 .hl-hotoc-row-icon,
@@ -1197,10 +1203,12 @@ body,
     font-size:18px;
 }
 
+.hl-danhnhan-row-title,
 .hl-danhthang-row-title,
 .hl-amthuc-row-title,
 .hl-diadanh-row-title,
 .hl-hotoc-row-title,
+
 .hl-tulieu-row-title{
     flex:1;
     color:var(--hl-primary-dark);
@@ -1211,10 +1219,12 @@ body,
 }
 
 
+
 /*======================================================
  DETAIL TITLES
 ======================================================*/
 
+.hl-danhnhan-title,
 .hl-danhthang-title,
 .hl-gioithieu-title,
 .hl-amthuc-title,
@@ -1230,7 +1240,7 @@ body,
 /*======================================================
  DETAIL IMAGE
 ======================================================*/
-
+.hl-danhnhan-image img,
 .hl-danhthang-image img,
 .hl-diadanh-image img,
 .hl-hotoc-image img,
@@ -1260,7 +1270,7 @@ body,
 /*======================================================
  DETAIL INFO
 ======================================================*/
-
+.hl-danhnhan-address,
 .hl-danhthang-address,
 .hl-amthuc-address,
 .hl-diadanh-address,
@@ -1269,6 +1279,8 @@ body,
     font-size:16px;
 }
 
+.hl-danhnhan-map,
+.hl-danhnhan-video,
 .hl-danhthang-map,
 .hl-danhthang-video,
 .hl-amthuc-map,
@@ -1282,6 +1294,8 @@ body,
     margin:12px 0;
 }
 
+.hl-danhnhan-map a,
+.hl-danhnhan-video a,
 .hl-danhthang-map a,
 .hl-danhthang-video a,
 .hl-amthuc-map a,
@@ -1298,6 +1312,8 @@ body,
     text-decoration:none;
 }
 
+.hl-danhnhan-map a:hover,
+.hl-danhnhan-video a:hover,
 .hl-danhthang-map a:hover,
 .hl-danhthang-video a:hover,
 .hl-amthuc-map a:hover,
@@ -1317,7 +1333,7 @@ body,
 /*======================================================
  DETAIL CONTENT
 ======================================================*/
-
+.hl-danhnhan-content,
 .hl-danhthang-content,
 .hl-amthuc-content,
 .hl-diadanh-content,
@@ -2886,7 +2902,7 @@ footer {
         position: absolute !important;
         left: 0 !important;
         top: 50% !important;
-        transform: translateY(-50%) !important;
+        transform: translateY(0%) !important;
         display: flex !important;
         align-items: center !important;
         gap: 8px !important;
@@ -3219,4 +3235,442 @@ font-weight: 900;
         max-width: 100%;
         overflow-x: hidden;
     }
+}
+
+
+/*==================================================
+  MOBILE UI - HEADER KIỂU APP
+===================================================*/
+
+@media (max-width: 768px) {
+
+    .hl-header {
+        height: 72px !important;
+        min-height: 72px !important;
+        position: relative !important;
+        overflow: visible !important;
+    }
+
+    /* Ảnh nền header */
+
+    .hl-header-bg {
+        height: 72px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+
+    /* Lớp phủ */
+
+    .hl-header-overlay {
+        height: 72px !important;
+    }
+
+    /* Cụm logo + tiêu đề */
+
+    .hl-header-left {
+        position: absolute !important;
+        left: 58px !important;
+        top: 8px !important;
+
+        display: flex !important;
+        align-items: center !important;
+
+        z-index: 3000 !important;
+    }
+
+    /* Logo */
+
+    .hl-logo {
+        display: none !important;
+    }
+
+    /* Tiêu đề */
+
+    .hl-title {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .hl-title h1 {
+        margin: 0 !important;
+        font-size: 20px !important;
+        line-height: 24px !important;
+    }
+
+    .hl-title h3 {
+    margin: 0 !important;
+    font-size: 12px !important;
+    line-height: 16px !important;
+    animation: blinkTitle 1.2s infinite !important;
+
+}
+
+    /* Nút ☰ */
+
+    .mobile-menu-btn {
+        position: absolute !important;
+        left: 12px !important;
+        top: 17px !important;
+        width: 38px !important;
+        height: 38px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 24px !important;
+        line-height: 1 !important;
+        z-index: 3003 !important;
+    }
+
+    /* Nút theme 🎨 */
+
+    .hl-theme-switcher {
+        position: absolute !important;
+
+        right: 10px !important;
+        top: 17px !important;
+
+        z-index: 3003 !important;
+    }
+
+    .hl-theme-button {
+        width: 38px !important;
+        height: 38px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
+    }
+
+}
+
+/*==================================================
+  MOBILE UI - BOTTOM NAVIGATION
+===================================================*/
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+
+    .mobile-bottom-nav {
+
+        position: fixed;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        width: 100%;
+
+        height: 64px;
+
+        display: flex;
+
+        align-items: stretch;
+        justify-content: space-around;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        border-top: 1px solid rgba(139, 90, 43, 0.25);
+
+        box-shadow:
+            0 -3px 12px rgba(0, 0, 0, 0.12);
+
+        z-index: 2500;
+
+        padding:
+            4px
+            4px
+            env(safe-area-inset-bottom);
+
+        box-sizing: border-box;
+
+    }
+
+
+    .mobile-bottom-item {
+
+        flex: 1;
+
+        min-width: 0;
+
+        border: none;
+
+        background: transparent;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 2px;
+
+        padding: 4px 2px;
+
+        color: #5f4630;
+
+        font-family: inherit;
+
+        cursor: pointer;
+
+        -webkit-tap-highlight-color: transparent;
+
+    }
+
+
+    .mobile-bottom-icon {
+
+        font-size: 22px;
+
+        line-height: 24px;
+
+    }
+
+
+    .mobile-bottom-label {
+
+        font-size: 11px;
+
+        line-height: 14px;
+
+        white-space: nowrap;
+
+    }
+
+
+    .mobile-bottom-item:active {
+
+        transform: scale(0.94);
+
+    }
+
+
+    /* Chừa khoảng cuối nội dung */
+
+    body {
+
+        padding-bottom: 68px;
+
+    }
+
+}
+
+/*==================================================
+  MOBILE UI - CATEGORY PANEL
+===================================================*/
+
+.mobile-bottom-panel {
+    display: none;
+}
+
+
+@media (max-width: 768px) {
+
+    .mobile-bottom-panel {
+
+        position: fixed;
+
+        left: 8px;
+        right: 8px;
+        bottom: 72px;
+
+        max-height: calc(100vh - 150px);
+
+        overflow-y: auto;
+
+        background: rgba(255, 255, 255, 0.98);
+
+        border-radius: 16px;
+
+        border: 1px solid rgba(139, 90, 43, 0.25);
+
+        box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.20);
+
+        padding: 10px;
+
+        box-sizing: border-box;
+
+        z-index: 2400;
+
+    }
+
+
+    .mobile-bottom-panel-title {
+
+        text-align: center;
+
+        font-weight: 700;
+
+        color: #8b5a2b;
+
+        font-size: 16px;
+
+        padding: 8px 4px 12px;
+
+        border-bottom:
+            1px solid rgba(139, 90, 43, 0.18);
+
+        margin-bottom: 6px;
+
+    }
+
+
+    .mobile-panel-item {
+
+        width: 100%;
+
+        min-height: 46px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        background: transparent;
+
+        text-align: left;
+
+        padding: 10px 12px;
+
+        margin: 2px 0;
+
+        font-family: inherit;
+
+        font-size: 15px;
+
+        color: #5f4630;
+
+        cursor: pointer;
+
+        -webkit-tap-highlight-color: transparent;
+
+    }
+
+
+    .mobile-panel-item:active {
+
+        transform: scale(0.98);
+
+        background:
+            rgba(139, 90, 43, 0.10);
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    #mobile-community-panel,
+    #mobile-personal-panel {
+        position: fixed;
+        left: 8px;
+        right: 8px;
+        bottom: 72px;
+
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+
+        background: rgba(255,255,255,0.98);
+
+        border: 1px solid rgba(139,90,43,0.25);
+        border-radius: 16px;
+
+        box-shadow: 0 4px 20px rgba(0,0,0,0.20);
+
+        padding: 10px;
+        box-sizing: border-box;
+
+        z-index: 2450;
+    }
+
+}
+
+@media (min-width:769px) {
+
+    #mobile-community-panel,
+    #mobile-personal-panel {
+        display: none !important;
+    }
+
+}
+/*======================================================
+  MOBILE CATEGORY LIST - HIỂN THỊ TRÊN FOOTER
+======================================================*/
+
+.mobile-category-list {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    #mobile-category-list {
+        position: fixed !important;
+        left: 8px !important;
+        right: 8px !important;
+        bottom: 72px !important;
+
+        max-height: calc(100vh - 150px) !important;
+        overflow-y: auto !important;
+
+        background: rgba(255, 255, 255, 0.98) !important;
+
+        border: 1px solid rgba(139, 90, 43, 0.25) !important;
+        border-radius: 16px !important;
+
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20) !important;
+
+        padding: 10px !important;
+
+        box-sizing: border-box !important;
+
+        z-index: 2450 !important;
+    }
+
+    #mobile-category-list .hl-history-row {
+        width: 100% !important;
+        min-height: 46px !important;
+
+        display: flex !important;
+        align-items: center !important;
+
+        box-sizing: border-box !important;
+
+        padding: 10px 12px !important;
+        margin: 3px 0 !important;
+
+        border-radius: 10px !important;
+
+        cursor: pointer !important;
+    }
+
+    #mobile-category-list .hl-history-row-year {
+        min-width: 60px !important;
+        margin-right: 10px !important;
+
+        font-weight: 700 !important;
+    }
+
+    #mobile-category-list .hl-history-row-title {
+        flex: 1 !important;
+    }
+
+}
+
+/*======================================================
+  MOBILE CATEGORY LIST - ẨN HOÀN TOÀN TRÊN PC
+======================================================*/
+
+@media (min-width: 769px) {
+
+    #mobile-category-list {
+        display: none !important;
+    }
+
 }
