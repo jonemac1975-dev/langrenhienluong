@@ -1,0 +1,230 @@
+<div class="backup-tool">
+    <h2>🧰 Backup & Restore dữ liệu</h2>
+    <p>
+        Công cụ sao lưu và khôi phục dữ liệu Firebase của website Hiền Lương.
+    </p>
+    <div class="backup-actions">
+
+    <button
+        type="button"
+        id="btn-backup">
+        💾 Backup dữ liệu
+    </button>
+
+    <button
+        type="button"
+        id="btn-restore">
+        ♻️ Restore dữ liệu
+    </button>
+
+    <input
+        type="file"
+        id="restore-file"
+        accept=".json,application/json"
+        style="display:none;">
+
+</div>
+    <div
+    id="backup-status"
+    class="backup-status">
+</div>
+
+<div
+    id="restore-confirm"
+    class="restore-confirm"
+    style="display:none;">
+    <div class="restore-warning">
+        ⚠️ <strong>CẢNH BÁO</strong>
+        <br>
+        Dữ liệu Firebase hiện tại sẽ được thay thế
+        bằng dữ liệu trong file backup.
+        <br>
+        Hãy chắc chắn rằng anh muốn thực hiện Restore.
+    </div>
+    <div class="restore-confirm-actions">
+
+        <button
+            type="button"
+            id="btn-confirm-restore">
+            ♻️ Xác nhận Restore
+        </button>
+
+        <button
+            type="button"
+            id="btn-cancel-restore">
+            ❌ Hủy
+        </button>
+    </div>
+</div>
+<style>
+/*======================================================
+  BACKUP & RESTORE
+======================================================*/
+
+.backup-tool{
+    max-width:900px;
+    margin:30px auto;
+    padding:30px;
+    background:rgba(255,255,255,.94);
+    border-radius:18px;
+    box-shadow:0 10px 35px rgba(0,0,0,.12);
+    border:1px solid rgba(120,90,50,.15);
+}
+
+.backup-tool h2{
+    margin:0 0 10px;
+    font-size:28px;
+    color:#5b3a22;
+}
+
+.backup-tool > p{
+    margin:0 0 25px;
+    color:#6b625b;
+    font-size:15px;
+}
+
+/*------------------------------------------------------
+  BUTTON AREA
+------------------------------------------------------*/
+
+.backup-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+.backup-actions button,
+.restore-confirm-actions button{
+    border:0;
+    border-radius:12px;
+    padding:13px 22px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+}
+
+.backup-actions button:hover,
+.restore-confirm-actions button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 18px rgba(0,0,0,.16);
+}
+
+.backup-actions button:active,
+.restore-confirm-actions button:active{
+    transform:translateY(0);
+}
+
+#btn-backup{
+    background:#6b4a2f;
+    color:white;
+}
+
+#btn-restore{
+    background:#8b6a43;
+    color:white;
+}
+
+.backup-actions button:disabled,
+.restore-confirm-actions button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+/*------------------------------------------------------
+  STATUS
+------------------------------------------------------*/
+
+.backup-status{
+    margin-top:22px;
+    padding:15px 18px;
+    min-height:22px;
+    border-radius:12px;
+    background:#f7f3ee;
+    border:1px solid #e5dbcf;
+    color:#5d5147;
+    line-height:1.7;
+    word-break:break-word;
+}
+
+/*------------------------------------------------------
+  RESTORE WARNING
+------------------------------------------------------*/
+
+.restore-confirm{
+    margin-top:20px;
+    padding:20px;
+    border-radius:15px;
+    background:#fff8e8;
+    border:1px solid #e8c878;
+    box-shadow:0 5px 18px rgba(130,90,20,.08);
+}
+
+.restore-warning{
+    color:#654b20;
+    line-height:1.7;
+    font-size:15px;
+}
+
+.restore-warning strong{
+    color:#9a5b00;
+    font-size:17px;
+}
+
+.restore-confirm-actions{
+    display:flex;
+    gap:12px;
+    margin-top:18px;
+    flex-wrap:wrap;
+}
+
+#btn-confirm-restore{
+    background:#a0522d;
+    color:white;
+}
+
+#btn-cancel-restore{
+    background:#e5e0da;
+    color:#514941;
+}
+
+/*------------------------------------------------------
+  MOBILE
+------------------------------------------------------*/
+
+@media(max-width:700px){
+
+    .backup-tool{
+        margin:15px 10px;
+        padding:20px 16px;
+        border-radius:15px;
+    }
+
+    .backup-tool h2{
+        font-size:22px;
+    }
+
+    .backup-actions{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .backup-actions button{
+        width:100%;
+    }
+
+    .restore-confirm-actions{
+        flex-direction:column;
+    }
+
+    .restore-confirm-actions button{
+        width:100%;
+    }
+
+}
+</style>

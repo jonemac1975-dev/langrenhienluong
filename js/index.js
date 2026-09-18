@@ -96,7 +96,7 @@ async function loadModule(page) {
     //==================================================
 
     try {
-        
+
         const module = await import(file);
         MODULE_CACHE.set(page, module);
         return module;
@@ -737,13 +737,8 @@ if(clickedRow){
 // MOBILE BOTTOM - DANH MỤC
 //======================================================
 
-const mobileBottomCategory =
-    document.getElementById("mobile-bottom-category");
-
-const mobileCategoryPanel =
-    document.getElementById("mobile-category-panel");
-
-
+const mobileBottomCategory = document.getElementById("mobile-bottom-category");
+const mobileCategoryPanel = document.getElementById("mobile-category-panel");
 if (
     mobileBottomCategory &&
     mobileCategoryPanel
@@ -752,9 +747,7 @@ if (
     mobileBottomCategory.addEventListener(
         "click",
         function(event) {
-
             event.stopPropagation();
-
             if (!isMobile()) {
                 return;
             }
@@ -777,9 +770,16 @@ if (
         }
     );
 
+            const isOpen = mobileCategoryPanel.style.display === "block";
+
+            /* Đóng panel */
+
+            mobileCategoryPanel.style.display = isOpen ? "none" : "block";
+        }
+    );
 }
 
-         
+
 //======================================================
 // MOBILE BOTTOM - CATEGORY ITEM
 //======================================================
@@ -788,26 +788,19 @@ if (mobileCategoryPanel) {
     mobileCategoryPanel.addEventListener(
         "click",
         async function(event) {
-
             const item =
                 event.target.closest(
                     ".mobile-panel-item"
                 );
-
+            const item = event.target.closest(".mobile-panel-item");
             if (!item) {
                 return;
             }
-
             event.stopPropagation();
-
             const page =
                 item.dataset.page;
-
-            console.log(
-                "📚 BOTTOM CATEGORY →",
-                page
-            );
-
+                   event.stopPropagation();
+            const page = item.dataset.page;
             try {
 
                 //==================================================
@@ -817,6 +810,8 @@ if (mobileCategoryPanel) {
                 const module =
                     await loadModule(page);
 
+
+                const module = await loadModule(page);
                 if (!module) {
                     return;
                 }
@@ -832,7 +827,6 @@ if (mobileCategoryPanel) {
                         typeof module.renderMain ===
                         "function"
                     ) {
-
                         await module.renderMain();
 
                     }
@@ -853,6 +847,15 @@ if (mobileCategoryPanel) {
                         "📘 BOTTOM → GIỚI THIỆU → MAIN"
                     );
 
+
+                        await module.renderMain();
+                    }
+                    mobileCategoryPanel.style.display = "none";
+                    if (mobileCategoryList) {
+                        mobileCategoryList.style.display = "none";
+                    }
+                    hideMobileColumns();
+                    CURRENT_PAGE = page;
                     return;
                 }
 
@@ -865,9 +868,9 @@ if (mobileCategoryPanel) {
                     typeof module.initThumbnail ===
                     "function"
                 ) {
-
                     await module.initThumbnail();
 
+                    await module.initThumbnail();
                 }
 
 
@@ -891,7 +894,12 @@ if (mobileCategoryPanel) {
 
 
                 listBox.innerHTML = "";
-
+                const listBox = document.getElementById("mobile-category-list");
+                if (!listBox) {
+                    console.warn("⚠️ KHÔNG TÌM THẤY mobile-category-list");
+                   return;
+                }
+                listBox.innerHTML = "";
 
                 //==================================================
                 // LỊCH SỬ + DANH THẮNG
@@ -925,6 +933,10 @@ if (mobileCategoryPanel) {
                             page
                         );
 
+
+                    const menu = document.querySelector('.mobile-menu-item[data-page="' + page +'"]');
+                    if (!menu) {
+                        console.warn("⚠️ KHÔNG TÌM THẤY MENU:",page);
                         return;
                     }
 
@@ -932,6 +944,7 @@ if (mobileCategoryPanel) {
                     //================================================
                     // XÁC ĐỊNH CLASS LIST
                     //================================================
+
 
                     const listClass =
     page === "lichsu"
@@ -973,7 +986,7 @@ const rowClass =
                         menu.querySelector(
                             listClass
                         );
-
+                    const oldList = menu.querySelector(listClass);
                     if (oldList) {
                         oldList.remove();
                     }
@@ -987,9 +1000,8 @@ const rowClass =
                         typeof module.menuClick ===
                         "function"
                     ) {
-
                         await module.menuClick();
-
+                        await module.menuClick();
                     }
 
 
@@ -1009,6 +1021,9 @@ const rowClass =
                             page
                         );
 
+                    const originalList = menu.querySelector(listClass);
+                    if (!originalList) {
+                        console.warn("⚠️ KHÔNG TẠO ĐƯỢC LIST:",page);
                         return;
                     }
 
@@ -1016,11 +1031,11 @@ const rowClass =
                     //================================================
                     // LẤY ROW
                     //================================================
-
                     const rows =
                         originalList.querySelectorAll(
                             rowClass
                         );
+                    const rows = originalList.querySelectorAll(rowClass);
 
 
                     //================================================
@@ -1029,7 +1044,6 @@ const rowClass =
 
                     rows.forEach(
                         function(row) {
-
                             const clone =
                                 row.cloneNode(true);
 
@@ -1038,12 +1052,14 @@ const rowClass =
                                 clone
                             );
 
+                            const clone = row.cloneNode(true);
+                            listBox.appendChild(clone);
 
                             //========================================
                             // CLICK ROW
                             //========================================
 
-                            clone.addEventListener(
+                           clone.addEventListener(
                                 "click",
                                 function(event) {
 
@@ -1060,9 +1076,15 @@ const rowClass =
                                     );
 
 
+
+                            clone.addEventListener("click", function(event) {
+                                    event.stopPropagation();
+                                    const id = this.dataset.id;
+
                                     //================================
                                     // TÌM ROW GỐC
                                     //================================
+
 
                                     const originalRow =
                                         originalList.querySelector(
@@ -1072,6 +1094,8 @@ const rowClass =
                                             '"]'
                                         );
 
+                                    const originalRow = originalList.querySelector(rowClass +'[data-id="' + id + '"]');
+
 
                                     //================================
                                     // CLICK ROW GỐC
@@ -1080,8 +1104,11 @@ const rowClass =
 
                                     if (originalRow) {
 
+
                                         originalRow.click();
 
+
+                                        originalRow.click();
                                     }
 
 
@@ -1108,6 +1135,12 @@ const rowClass =
                                     );
 
                                 }
+
+                                    listBox.style.display = "none";
+                                    mobileCategoryPanel.style.display = "none";
+                                    hideMobileColumns();
+                                    CURRENT_PAGE = page;
+                                 }
                             );
 
                         }
@@ -1133,6 +1166,9 @@ const rowClass =
                     );
 
 
+
+                    listBox.style.display = "block";
+                    mobileCategoryPanel.style.display = "none";
                     return;
                 }
 
@@ -1141,10 +1177,6 @@ const rowClass =
                 // MODULE KHÁC CHƯA NỐI
                 //==================================================
 
-                console.log(
-                    "⏳ BOTTOM → MODULE LIST CHƯA NỐI:",
-                    page
-                );
 
             }
             catch (error) {
@@ -1160,11 +1192,18 @@ const rowClass =
         }
     );
 
+                   }
+            catch (error) {
+                console.error("❌ BOTTOM CATEGORY ERROR:",page,error);
+            }
+        }
+    );
 }
 
 //======================================================
 // MOBILE BOTTOM - CỘNG ĐỒNG + CÁ NHÂN
 //======================================================
+
 
 const mobileCategoryList =
     document.getElementById(
@@ -1242,6 +1281,42 @@ if (mobileBottomHome) {
         }
     );
 
+
+const mobileCategoryList = document.getElementById("mobile-category-list");
+const mobileCommunityPanel = document.getElementById("mobile-community-panel");
+const mobilePersonalPanel = document.getElementById("mobile-personal-panel");
+const mobileBottomHome = document.querySelector('.mobile-bottom-item[data-page="home"]');
+
+if (mobileBottomHome){mobileBottomHome.addEventListener("click",function(event){event.stopPropagation();
+
+            // Đóng các panel mobile
+            if (mobileCategoryPanel) {mobileCategoryPanel.style.display = "none";
+            }
+
+            if (mobileCategoryList) {mobileCategoryList.style.display = "none";
+            }
+
+            if (mobileCommunityPanel) {mobileCommunityPanel.style.display = "none";
+            }
+
+            if (mobilePersonalPanel) {mobilePersonalPanel.style.display = "none";
+            }
+
+            // Hiện lại 3 cột
+            const main = document.querySelector(".hl-main");
+
+            if (main) {main.classList.remove("mobile-columns-hidden");
+            }
+
+            // Hiện background
+            const bgMain = document.getElementById("bg-main");
+
+            if (bgMain) {bgMain.style.display = "";
+            }
+            CURRENT_PAGE = "";
+        }
+    );
+
 }
 const mobileBottomCommunity =
     document.querySelector(
@@ -1279,10 +1354,6 @@ if (mobileCommunityPanel) {
                 return;
             }
 
-            console.log(
-                "📰 BOTTOM COMMUNITY →",
-                page
-            );
 
             try {
 
@@ -1291,10 +1362,27 @@ if (mobileCommunityPanel) {
                 mobileCommunityPanel.style.display =
                     "none";
 
+
+    mobileCommunityPanel.addEventListener(
+        "click",
+        async function(event) {
+            const item = event.target.closest(".mobile-panel-item");
+            if (!item) {
+                return;
+            }
+            const page = item.dataset.page;
+            if (!page) {
+                return;
+            }
+           try {
+                await handleRightMenu(page);
+                mobileCommunityPanel.style.display = "none";
+
                 CURRENT_PAGE = page;
 
             }
             catch (error) {
+
 
                 console.error(
                     "❌ COMMUNITY ITEM ERROR:",
@@ -1303,10 +1391,12 @@ if (mobileCommunityPanel) {
                 );
 
             }
-
         }
     );
-
+                console.error("❌ COMMUNITY ITEM ERROR:",page,error);
+            }
+        }
+    );
 }
 //======================================================
 // CỘNG ĐỒNG
@@ -1329,22 +1419,32 @@ if (mobileBottomCommunity) {
             if (mobileCategoryList) {
                 mobileCategoryList.style.display =
                     "none";
+    mobileBottomCommunity.addEventListener(
+        "click",
+        function(event) {event.stopPropagation();
+
+            // Đóng Danh mục
+            if (mobileCategoryPanel) {
+                mobileCategoryPanel.style.display = "none";
+            }
+
+            if (mobileCategoryList) {
+                mobileCategoryList.style.display = "none";
             }
 
             // Đóng Cá nhân
             if (mobilePersonalPanel) {
                 mobilePersonalPanel.style.display =
                     "none";
+                mobilePersonalPanel.style.display = "none";
             }
 
             // Toggle Cộng đồng
             if (mobileCommunityPanel) {
-
                 if (
                     mobileCommunityPanel.style.display ===
                     "block"
                 ) {
-
                     mobileCommunityPanel.style.display =
                         "none";
 
@@ -1361,6 +1461,14 @@ if (mobileBottomCommunity) {
         }
     );
 
+                    mobileCommunityPanel.style.display = "none";
+                }
+                else {
+                    mobileCommunityPanel.style.display = "block";
+                }
+            }
+        }
+    );
 }
 
 //======================================================
@@ -1368,7 +1476,6 @@ if (mobileBottomCommunity) {
 //======================================================
 
 if (mobilePersonalPanel) {
-
     mobilePersonalPanel.addEventListener(
         "click",
         function(event) {
@@ -1394,18 +1501,29 @@ if (mobilePersonalPanel) {
 
                 window.location.href =
                     "customers/tab/userlogin.html";
+    mobilePersonalPanel.addEventListener(
+        "click",
+        function(event) {
+            const item = event.target.closest(".mobile-panel-item");
+            if (!item) {
+                return;
+            }
+            const action = item.dataset.action;
 
+            if (action === "login") {
+                window.location.href = "customers/tab/userlogin.html";
                 return;
             }
 
             if (action === "register") {
-
                 window.location.href =
                     "customers/tab/userregister.html";
 
                 return;
             }
-
+                window.location.href = "customers/tab/userregister.html";
+                return;
+            }
         }
     );
 
@@ -1415,11 +1533,12 @@ if (mobilePersonalPanel) {
 //======================================================
 
 if (mobileBottomPersonal) {
-
     mobileBottomPersonal.addEventListener(
         "click",
         function(event) {
-
+    mobileBottomPersonal.addEventListener(
+        "click",
+        function(event) {
             event.stopPropagation();
 
             // Đóng Danh mục
@@ -1431,12 +1550,17 @@ if (mobileBottomPersonal) {
             if (mobileCategoryList) {
                 mobileCategoryList.style.display =
                     "none";
+                mobileCategoryPanel.style.display = "none";
+            }
+            if (mobileCategoryList) {
+                mobileCategoryList.style.display = "none";
             }
 
             // Đóng Cộng đồng
             if (mobileCommunityPanel) {
                 mobileCommunityPanel.style.display =
                     "none";
+                mobileCommunityPanel.style.display = "none";
             }
 
             // Toggle Cá nhân
@@ -1446,7 +1570,6 @@ if (mobileBottomPersonal) {
                     mobilePersonalPanel.style.display ===
                     "block"
                 ) {
-
                     mobilePersonalPanel.style.display =
                         "none";
 
@@ -1463,4 +1586,13 @@ if (mobileBottomPersonal) {
         }
     );
 
+                    mobilePersonalPanel.style.display = "none";
+
+                }
+                else {
+                    mobilePersonalPanel.style.display = "block";
+                }
+            }
+        }
+    );
 }

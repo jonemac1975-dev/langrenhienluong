@@ -59,6 +59,12 @@ if(!entries.length){
 }
 body.innerHTML = entries.map(([uid, customer], index)=>{ const profile = customer?.profile || {};
             const status = profile.status ||"pending";
+const hasUpdate =
+    profile.updated_at &&
+    (
+        !profile.admin_checked_at ||
+        Number(profile.updated_at) > Number(profile.admin_checked_at)
+    );
             return `
             <tr>
                 <td>
@@ -88,14 +94,24 @@ body.innerHTML = entries.map(([uid, customer], index)=>{ const profile = custome
                     )}
                 </td>
                 <td>
-                    <span
-                        class="
-                        duyet-status
-                        duyet-status-${status}
-                        ">
-                        ${getStatusText(status)}
-                    </span>
-                </td>
+    <span
+        class="
+        duyet-status
+        duyet-status-${status}
+        ">
+        ${getStatusText(status)}
+    </span>
+
+    ${
+        hasUpdate
+        ? `<span
+            class="duyet-update-badge"
+            title="Hồ sơ đã được thành viên cập nhật">
+            🔔 Có cập nhật
+           </span>`
+        : ""
+    }
+</td>
                 <td>
                     <button
                         type="button"
@@ -158,7 +174,7 @@ document.querySelectorAll(".duyet-check").forEach(check=>{
 // SHOW PROFILE
 //======================================================
 
-function showProfile(uid){
+async function showProfile(uid){
 const customer = CUSTOMERS[uid];
 if(!customer){
     return;
@@ -166,6 +182,38 @@ if(!customer){
 
 const profile = customer.profile || {};
 CURRENT_UID = uid;
+
+//======================================================
+// ADMIN ĐÃ XEM HỒ SƠ
+//======================================================
+
+const checkedAt = Date.now();
+
+const saveChecked = await writeData(
+    `customers/${uid}/profile/admin_checked_at`,
+    checkedAt
+);
+
+if(saveChecked !== false){
+
+    CUSTOMERS[uid].profile = {
+        ...profile,
+        admin_checked_at: checkedAt
+    };
+
+    // Cập nhật lại danh sách để 🔔 biến mất
+    renderList();
+
+}
+else{
+
+    console.error(
+        "❌ KHÔNG GHI ĐƯỢC admin_checked_at:",
+        uid
+    );
+
+}
+
 const detail = document.getElementById("duyet-hoso-detail");
 if(!detail){
     return;
@@ -300,47 +348,94 @@ async function unapproveCustomer(uid){
 
 async function saveAdminMessage(){
 
-    if (!CURRENT_UID) {
-        alert("⚠️ Hãy chọn một thành viên trước.");
+    if(!CURRENT_UID){
+
+        alert("⚠ Hãy chọn một thành viên trước.");
+
         return;
+
     }
 
-    const customer = CUSTOMERS[CURRENT_UID];
+    const customer =
+        CUSTOMERS[CURRENT_UID];
 
-    if (!customer) {
+    if(!customer){
+
         return;
+
     }
 
-    const profile = customer.profile || {};
+    const profile =
+        customer.profile || {};
 
-    if (profile.status === "approved") {
+    if(profile.status === "approved"){
 
-        alert("ℹ️ Thành viên này đã được duyệt."
+        alert(
+            "ℹ Thành viên này đã được duyệt."
         );
+
         return;
+
     }
 
-    const textarea = document.getElementById("dh-admin-message");
-    if (!textarea) {
+    const textarea =
+        document.getElementById(
+            "dh-admin-message"
+        );
+
+    if(!textarea){
+
         return;
+
     }
 
-    const message = textarea.value.trim();
-    if (!message) {
+    const message =
+        textarea.value.trim();
 
-        alert("⚠️ Vui lòng nhập nội dung thông báo.");
+    if(!message){
+
+        alert(
+            "⚠ Vui lòng nhập nội dung thông báo."
+        );
+
         return;
+
     }
 
-    try {
-        await writeData(`customers/${CURRENT_UID}/profile/adminMessage`,message);
-        CUSTOMERS[CURRENT_UID].profile = {...profile,adminMessage: message};
-        alert("📢 Đã gửi thông báo cho thành viên.");
+    try{
+
+        await writeData(
+            `customers/${CURRENT_UID}/profile/adminMessage`,
+            message
+        );
+
+        CUSTOMERS[CURRENT_UID].profile = {
+
+            ...profile,
+
+            adminMessage:
+                message
+
+        };
+
+        alert(
+            "📢 Đã gửi thông báo cho thành viên."
+        );
+
     }
     catch(error){
-        console.error("❌ GỬI THÔNG BÁO THẤT BẠI:",error);
-        alert("❌ Không thể gửi thông báo.");
+
+        console.error(
+            "❌ GỬI THÔNG BÁO THẤT BẠI:",
+            error
+        );
+
+        alert(
+            "❌ Không thể gửi thông báo."
+        );
+
     }
+
 }
 //======================================================
 // CLOSE DETAIL

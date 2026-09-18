@@ -4,78 +4,24 @@
 // File   : firebaseService.js
 //======================================================
 
-import {
-
-    db
-
-}
-
-from
-
-"./firebaseConfig.js";
-
-import {
-
-    ref,
-
-    get,
-
-    set,
-
-    update,
-
-    remove,
-
-    onValue,
-
-    off
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+import {db}from"./firebaseConfig.js";
+import {ref,get,set,update,remove,onValue,off}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
 //======================================================
 // READ
 //======================================================
 
 export async function readData(path){
-
     try{
-
-        const snapshot =
-
-            await get(
-
-                ref(db,path)
-
-            );
-
+        const snapshot = await get(ref(db,path));
         return snapshot.exists()
-
             ? snapshot.val()
-
             : null;
-
     }
-
     catch(error){
-
-        console.error(
-
-            "READ ERROR",
-
-            path,
-
-            error
-
-        );
-
+        console.error("READ ERROR",path,error);
         return null;
-
     }
-
 }
 
 //======================================================
@@ -83,37 +29,14 @@ export async function readData(path){
 //======================================================
 
 export async function writeData(path,data){
-
     try{
-
-        await set(
-
-            ref(db,path),
-
-            data
-
-        );
-
+        await set(ref(db,path),data);
         return true;
-
     }
-
     catch(error){
-
-        console.error(
-
-            "WRITE ERROR",
-
-            path,
-
-            error
-
-        );
-
+        console.error("WRITE ERROR",path,error);
         return false;
-
     }
-
 }
 
 //======================================================
@@ -121,37 +44,14 @@ export async function writeData(path,data){
 //======================================================
 
 export async function updateData(path,data){
-
     try{
-
-        await update(
-
-            ref(db,path),
-
-            data
-
-        );
-
+        await update(ref(db,path),data);
         return true;
-
     }
-
     catch(error){
-
-        console.error(
-
-            "UPDATE ERROR",
-
-            path,
-
-            error
-
-        );
-
+        console.error("UPDATE ERROR",path,error);
         return false;
-
     }
-
 }
 
 //======================================================
@@ -159,35 +59,14 @@ export async function updateData(path,data){
 //======================================================
 
 export async function removeData(path){
-
     try{
-
-        await remove(
-
-            ref(db,path)
-
-        );
-
+        await remove(ref(db,path));
         return true;
-
     }
-
     catch(error){
-
-        console.error(
-
-            "REMOVE ERROR",
-
-            path,
-
-            error
-
-        );
-
+        console.error("REMOVE ERROR",path,error);
         return false;
-
     }
-
 }
 
 //======================================================
@@ -195,35 +74,11 @@ export async function removeData(path){
 //======================================================
 
 export function onDataChange(path,callback){
-
-    const listener =
-
-        ref(
-
-            db,
-
-            path
-
-        );
-
-    onValue(
-
-        listener,
-
-        snapshot=>{
-
-            callback(
-
-                snapshot.val()
-
-            );
-
+    const listener = ref(db,path);
+    onValue(listener,snapshot=>{callback(snapshot.val());
         }
-
     );
-
     return listener;
-
 }
 
 //======================================================
@@ -232,12 +87,8 @@ export function onDataChange(path,callback){
 
 export function offDataChange(listener){
 
-    if(listener){
-
-        off(listener);
-
+    if(listener){off(listener);
     }
-
 }
 
 //======================================================
@@ -245,79 +96,22 @@ export function offDataChange(listener){
 //======================================================
 
 export function serverTimestamp(){
-
     return Date.now();
-
 }
 
 //======================================================
 // GENERATE ID
 //======================================================
 
-export async function generateId(
-
-    path,
-
-    prefix
-
-){
-
-    const list =
-
-        await readData(path)
-
-        ||
-
-        {};
-
+export async function generateId(path,prefix){
+    const list = await readData(path) || {};
     let max = 0;
-
     Object.keys(list)
-
     .forEach(key=>{
-
-        const n =
-
-            parseInt(
-
-                key.replace(
-
-                    prefix,
-
-                    ""
-
-                )
-
-            );
-
-        if(
-
-            !isNaN(n)
-
-            &&
-
-            n>max
-
-        ){
-
-            max=n;
-
+        const n = parseInt(key.replace(prefix,""));
+        if(!isNaN(n) && n>max){max=n;
         }
-
     });
-
     return
-
-        prefix +
-
-        String(max+1)
-
-        .padStart(
-
-            3,
-
-            "0"
-
-        );
-
+        prefix + String(max+1).padStart(3,"0");
 }

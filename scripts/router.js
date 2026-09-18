@@ -4,100 +4,37 @@
 // File   : router.js
 //======================================================
 
-console.log("🔥 ROUTER LOADED");
-
-//======================================================
-
-export async function loadPage(
-
-    containerId,
-
-    htmlFile,
-
-    jsFile = null
-
-){
-
-    const container =
-
-        document.getElementById(
-
-            containerId
-
-        );
-
+export async function loadPage(containerId,htmlFile,jsFile = null){
+    const container = document.getElementById(containerId);
     if(!container){
-
-        console.error(
-
-            "Container not found :",
-
-            containerId
-
-        );
-
+        console.error("Container not found :",containerId);
         return;
-
     }
-
     try{
-
         //----------------------------------
         // LOAD HTML
         //----------------------------------
 
-        const response =
-
-            await fetch(
-
-                htmlFile
-
-            );
-
+        const response = await fetch(htmlFile);
         if(!response.ok){
-
-            throw new Error(
-
-                htmlFile
-
-            );
-
+            throw new Error(htmlFile);
         }
-
-        container.innerHTML =
-
-            await response.text();
+        container.innerHTML = await response.text();
 
         //----------------------------------
         // LOAD JS
         //----------------------------------
 
         if(jsFile){
-
-            const module =
-
-                await import(
-
-                    `${jsFile}?t=${Date.now()}`
-
-                );
-
+            const module = await import(`${jsFile}?t=${Date.now()}`);
             if(module.init){
-
                 await module.init();
-
             }
-
         }
-
     }
-
     catch(error){
-
         console.error(error);
-
         container.innerHTML =
-
         `
         <div style="
             padding:40px;
@@ -107,31 +44,14 @@ export async function loadPage(
             ${htmlFile}
         </div>
         `;
-
     }
-
 }
 
 //======================================================
 
-export function clearPage(
-
-    containerId
-
-){
-
-    const container =
-
-        document.getElementById(
-
-            containerId
-
-        );
-
+export function clearPage(containerId){
+    const container = document.getElementById(containerId);
     if(container){
-
         container.innerHTML = "";
-
     }
-
 }

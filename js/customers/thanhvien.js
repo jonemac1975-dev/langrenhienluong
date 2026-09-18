@@ -62,20 +62,14 @@ function renderList(box, customers){
     const members =
         Object.entries(customers)
         .map(([uid, customer]) => {
-
-            const profile =
-                customer?.profile || {};
-
+            const profile = customer?.profile || {};
             return {
     uid,
-    fullname:
-        profile.fullname || "",
-    nationality:
-        profile.nationality || "",
-    avatar:
-        profile.avatar || "",
-    status:
-        profile.status || "pending"
+    fullname: profile.fullname || "",
+    nationality: profile.nationality || "",
+    address: profile.address || "",
+    avatar: profile.avatar || "",
+    status: profile.status || "pending"
 };
         })
         .filter(member =>
@@ -133,9 +127,9 @@ function renderList(box, customers){
     </div>
 
     <div class="thanhvien-nationality">
-        🌐 ${escapeHtml(member.nationality || "Chưa cập nhật")}
+        🌐 ${escapeHtml(member.address ||"Chưa cập nhật")}
+           ${escapeHtml(member.nationality ||"Chưa cập nhật")}
     </div>
-
 </div>
                            </div>
                         `;

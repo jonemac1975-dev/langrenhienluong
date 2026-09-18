@@ -65,26 +65,52 @@ if(statusBox){
 // THÔNG BÁO TỪ ADMIN
 //==================================================
 
-const adminMessageBox = document.getElementById("view-admin-message");
-const adminMessageText = document.getElementById("view-admin-message-text");
-const adminMessage = profile.adminMessage || "";
+const adminMessageBox =
+    document.getElementById(
+        "view-admin-message"
+    );
+
+const adminMessageText =
+    document.getElementById(
+        "view-admin-message-text"
+    );
+
+const adminMessage =
+    profile.adminMessage || "";
+
 if(adminMessage.trim()){
+
     if(adminMessageBox){
-        adminMessageBox.style.display = "block";
+
+        adminMessageBox.style.display =
+            "block";
+
     }
 
     if(adminMessageText){
-        adminMessageText.textContent = adminMessage;
+
+        adminMessageText.textContent =
+            adminMessage;
+
     }
+
 }
 else{
+
     if(adminMessageBox){
-        adminMessageBox.style.display = "none";
+
+        adminMessageBox.style.display =
+            "none";
+
     }
 
     if(adminMessageText){
-        adminMessageText.textContent = "";
+
+        adminMessageText.textContent =
+            "";
+
     }
+
 }
 
 //==================================================

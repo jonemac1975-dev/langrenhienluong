@@ -4,17 +4,7 @@
 // File   : contentService.js
 //======================================================
 
-import {
-
-    readData,
-
-    writeData
-
-}
-
-from
-
-"./firebaseService.js";
+import {readData,writeData}from"./firebaseService.js";
 
 //======================================================
 // ROOT
@@ -27,25 +17,11 @@ const ROOT = "admin";
 //======================================================
 
 export async function loadContent(section){
+    return await readData(`${ROOT}/${section}`);
 
-    return await readData(
-
-        `${ROOT}/${section}`
-
-    );
-
-}
 
 export async function saveContent(section,data){
-
-    return await writeData(
-
-        `${ROOT}/${section}`,
-
-        data
-
-    );
-
+    return await writeData(`${ROOT}/${section}`,data);
 }
 
 //======================================================
@@ -53,11 +29,9 @@ export async function saveContent(section,data){
 //======================================================
 
 export const loadGioiThieu = ()=>
-
     loadContent("gioithieu");
 
 export const saveGioiThieu = (data)=>
-
     saveContent("gioithieu",data);
 
 //======================================================
@@ -65,11 +39,9 @@ export const saveGioiThieu = (data)=>
 //======================================================
 
 export const loadLichSu = ()=>
-
     loadContent("lichsu");
 
 export const saveLichSu = (data)=>
-
     saveContent("lichsu",data);
 
 //======================================================
@@ -77,11 +49,9 @@ export const saveLichSu = (data)=>
 //======================================================
 
 export const loadDanhThang = ()=>
-
     loadContent("danhthang");
 
 export const saveDanhThang = (data)=>
-
     saveContent("danhthang",data);
 
 //======================================================
@@ -89,11 +59,9 @@ export const saveDanhThang = (data)=>
 //======================================================
 
 export const loadAmThuc = ()=>
-
     loadContent("amthuc");
 
 export const saveAmThuc = (data)=>
-
     saveContent("amthuc",data);
 
 //======================================================
@@ -101,11 +69,9 @@ export const saveAmThuc = (data)=>
 //======================================================
 
 export const loadDiaDanh = ()=>
-
     loadContent("diadanh");
 
 export const saveDiaDanh = (data)=>
-
     saveContent("diadanh",data);
 
 //======================================================
@@ -113,11 +79,9 @@ export const saveDiaDanh = (data)=>
 //======================================================
 
 export const loadHoToc = ()=>
-
     loadContent("hotoc");
 
 export const saveHoToc = (data)=>
-
     saveContent("hotoc",data);
 
 //======================================================
@@ -125,9 +89,7 @@ export const saveHoToc = (data)=>
 //======================================================
 
 export const loadTuLieu = ()=>
-
     loadContent("tulieu");
 
 export const saveTuLieu = (data)=>
-
     saveContent("tulieu",data);
