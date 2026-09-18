@@ -1,6 +1,5 @@
 import {readData,writeData} from "../../scripts/firebaseService.js";
 
-console.log("🔥 userregister.js loaded");
 // ===============================
 // SHA 256
 // ===============================

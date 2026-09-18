@@ -760,21 +760,7 @@ if (
 
             mobileCategoryPanel.style.display =
                 isOpen ? "none" : "block";
-
-            console.log(
-                isOpen
-                    ? "📚 DANH MỤC → ĐÓNG"
-                    : "📚 DANH MỤC → MỞ"
-            );
-
-        }
-    );
-
-            const isOpen = mobileCategoryPanel.style.display === "block";
-
-            /* Đóng panel */
-
-            mobileCategoryPanel.style.display = isOpen ? "none" : "block";
+     
         }
     );
 }
@@ -785,22 +771,25 @@ if (
 //======================================================
 
 if (mobileCategoryPanel) {
+
     mobileCategoryPanel.addEventListener(
         "click",
         async function(event) {
+
             const item =
                 event.target.closest(
                     ".mobile-panel-item"
                 );
-            const item = event.target.closest(".mobile-panel-item");
+
             if (!item) {
                 return;
             }
+
             event.stopPropagation();
+
             const page =
                 item.dataset.page;
-                   event.stopPropagation();
-            const page = item.dataset.page;
+
             try {
 
                 //==================================================
@@ -810,8 +799,6 @@ if (mobileCategoryPanel) {
                 const module =
                     await loadModule(page);
 
-
-                const module = await loadModule(page);
                 if (!module) {
                     return;
                 }
@@ -827,6 +814,7 @@ if (mobileCategoryPanel) {
                         typeof module.renderMain ===
                         "function"
                     ) {
+
                         await module.renderMain();
 
                     }
@@ -835,28 +823,19 @@ if (mobileCategoryPanel) {
                         "none";
 
                     if (mobileCategoryList) {
+
                         mobileCategoryList.style.display =
                             "none";
+
                     }
 
                     hideMobileColumns();
 
-                    CURRENT_PAGE = page;
+                    CURRENT_PAGE =
+                        page;
 
-                    console.log(
-                        "📘 BOTTOM → GIỚI THIỆU → MAIN"
-                    );
+                             return;
 
-
-                        await module.renderMain();
-                    }
-                    mobileCategoryPanel.style.display = "none";
-                    if (mobileCategoryList) {
-                        mobileCategoryList.style.display = "none";
-                    }
-                    hideMobileColumns();
-                    CURRENT_PAGE = page;
-                    return;
                 }
 
 
@@ -868,9 +847,9 @@ if (mobileCategoryPanel) {
                     typeof module.initThumbnail ===
                     "function"
                 ) {
-                    await module.initThumbnail();
 
                     await module.initThumbnail();
+
                 }
 
 
@@ -884,36 +863,26 @@ if (mobileCategoryPanel) {
                     );
 
                 if (!listBox) {
-
-                    console.warn(
-                        "⚠️ KHÔNG TÌM THẤY mobile-category-list"
-                    );
-
                     return;
+
                 }
 
+                listBox.innerHTML = "";
 
-                listBox.innerHTML = "";
-                const listBox = document.getElementById("mobile-category-list");
-                if (!listBox) {
-                    console.warn("⚠️ KHÔNG TÌM THẤY mobile-category-list");
-                   return;
-                }
-                listBox.innerHTML = "";
 
                 //==================================================
-                // LỊCH SỬ + DANH THẮNG
+                // CÁC MODULE CÓ DANH SÁCH
                 //==================================================
 
                 if (
-    page === "lichsu" ||
-    page === "danhnhan" ||
-    page === "danhthang" ||
-    page === "amthuc" ||
-    page === "diadanh" ||
-    page === "hotoc" ||
-    page === "tulieu"
-) {
+                    page === "lichsu" ||
+                    page === "danhnhan" ||
+                    page === "danhthang" ||
+                    page === "amthuc" ||
+                    page === "diadanh" ||
+                    page === "hotoc" ||
+                    page === "tulieu"
+                ) {
 
                     //================================================
                     // XÁC ĐỊNH MENU GỐC
@@ -927,17 +896,9 @@ if (mobileCategoryPanel) {
                         );
 
                     if (!menu) {
-
-                        console.warn(
-                            "⚠️ KHÔNG TÌM THẤY MENU:",
-                            page
-                        );
-
-
-                    const menu = document.querySelector('.mobile-menu-item[data-page="' + page +'"]');
-                    if (!menu) {
-                        console.warn("⚠️ KHÔNG TÌM THẤY MENU:",page);
+                        
                         return;
+
                     }
 
 
@@ -945,37 +906,36 @@ if (mobileCategoryPanel) {
                     // XÁC ĐỊNH CLASS LIST
                     //================================================
 
-
                     const listClass =
-    page === "lichsu"
-        ? ".hl-history-menu"
-      : page === "danhnhan"
-            ? ".hl-danhnhan-menu"
-        : page === "danhthang"
-            ? ".hl-danhthang-menu"
-            : page === "amthuc"
-                ? ".hl-amthuc-menu"
-                : page === "diadanh"
-                    ? ".hl-diadanh-menu"
-                    : page === "hotoc"
-                        ? ".hl-hotoc-menu"
-                        : ".hl-tulieu-menu";
+                        page === "lichsu"
+                            ? ".hl-history-menu"
+                            : page === "danhnhan"
+                                ? ".hl-danhnhan-menu"
+                                : page === "danhthang"
+                                    ? ".hl-danhthang-menu"
+                                    : page === "amthuc"
+                                        ? ".hl-amthuc-menu"
+                                        : page === "diadanh"
+                                            ? ".hl-diadanh-menu"
+                                            : page === "hotoc"
+                                                ? ".hl-hotoc-menu"
+                                                : ".hl-tulieu-menu";
 
 
-const rowClass =
-    page === "lichsu"
-        ? ".hl-history-row"
-      : page === "danhnhan"
-            ? ".hl-danhnhan-row"
-        : page === "danhthang"
-            ? ".hl-danhthang-row"
-            : page === "amthuc"
-                ? ".hl-amthuc-row"
-                : page === "diadanh"
-                    ? ".hl-diadanh-row"
-                    : page === "hotoc"
-                        ? ".hl-hotoc-row"
-                        : ".hl-tulieu-row";
+                    const rowClass =
+                        page === "lichsu"
+                            ? ".hl-history-row"
+                            : page === "danhnhan"
+                                ? ".hl-danhnhan-row"
+                                : page === "danhthang"
+                                    ? ".hl-danhthang-row"
+                                    : page === "amthuc"
+                                        ? ".hl-amthuc-row"
+                                        : page === "diadanh"
+                                            ? ".hl-diadanh-row"
+                                            : page === "hotoc"
+                                                ? ".hl-hotoc-row"
+                                                : ".hl-tulieu-row";
 
 
                     //================================================
@@ -986,9 +946,11 @@ const rowClass =
                         menu.querySelector(
                             listClass
                         );
-                    const oldList = menu.querySelector(listClass);
+
                     if (oldList) {
+
                         oldList.remove();
+
                     }
 
 
@@ -1000,13 +962,14 @@ const rowClass =
                         typeof module.menuClick ===
                         "function"
                     ) {
+
                         await module.menuClick();
-                        await module.menuClick();
+
                     }
 
 
                     //================================================
-                    // LẤY LIST
+                    // LẤY LIST GỐC
                     //================================================
 
                     const originalList =
@@ -1015,27 +978,20 @@ const rowClass =
                         );
 
                     if (!originalList) {
-
-                        console.warn(
-                            "⚠️ KHÔNG TẠO ĐƯỢC LIST:",
-                            page
-                        );
-
-                    const originalList = menu.querySelector(listClass);
-                    if (!originalList) {
-                        console.warn("⚠️ KHÔNG TẠO ĐƯỢC LIST:",page);
+                        
                         return;
+
                     }
 
 
                     //================================================
                     // LẤY ROW
                     //================================================
+
                     const rows =
                         originalList.querySelectorAll(
                             rowClass
                         );
-                    const rows = originalList.querySelectorAll(rowClass);
 
 
                     //================================================
@@ -1044,22 +1000,20 @@ const rowClass =
 
                     rows.forEach(
                         function(row) {
+
                             const clone =
                                 row.cloneNode(true);
-
 
                             listBox.appendChild(
                                 clone
                             );
 
-                            const clone = row.cloneNode(true);
-                            listBox.appendChild(clone);
 
                             //========================================
                             // CLICK ROW
                             //========================================
 
-                           clone.addEventListener(
+                            clone.addEventListener(
                                 "click",
                                 function(event) {
 
@@ -1068,23 +1022,9 @@ const rowClass =
                                     const id =
                                         this.dataset.id;
 
-
-                                    console.log(
-                                        "📖 BOTTOM → CLICK:",
-                                        page,
-                                        id
-                                    );
-
-
-
-                            clone.addEventListener("click", function(event) {
-                                    event.stopPropagation();
-                                    const id = this.dataset.id;
-
                                     //================================
                                     // TÌM ROW GỐC
                                     //================================
-
 
                                     const originalRow =
                                         originalList.querySelector(
@@ -1094,8 +1034,6 @@ const rowClass =
                                             '"]'
                                         );
 
-                                    const originalRow = originalList.querySelector(rowClass +'[data-id="' + id + '"]');
-
 
                                     //================================
                                     // CLICK ROW GỐC
@@ -1104,11 +1042,8 @@ const rowClass =
 
                                     if (originalRow) {
 
-
                                         originalRow.click();
 
-
-                                        originalRow.click();
                                     }
 
 
@@ -1126,21 +1061,8 @@ const rowClass =
 
                                     CURRENT_PAGE =
                                         page;
-
-
-                                    console.log(
-                                        "📖 BOTTOM → LOAD MAIN:",
-                                        page,
-                                        id
-                                    );
-
+                          
                                 }
-
-                                    listBox.style.display = "none";
-                                    mobileCategoryPanel.style.display = "none";
-                                    hideMobileColumns();
-                                    CURRENT_PAGE = page;
-                                 }
                             );
 
                         }
@@ -1157,26 +1079,14 @@ const rowClass =
                     mobileCategoryPanel.style.display =
                         "none";
 
+                             return;
 
-                    console.log(
-                        "✅ BOTTOM → LIST ĐÃ HIỆN:",
-                        page,
-                        rows.length,
-                        "MỤC"
-                    );
-
-
-
-                    listBox.style.display = "block";
-                    mobileCategoryPanel.style.display = "none";
-                    return;
                 }
 
 
                 //==================================================
                 // MODULE KHÁC CHƯA NỐI
                 //==================================================
-
 
             }
             catch (error) {
@@ -1192,13 +1102,8 @@ const rowClass =
         }
     );
 
-                   }
-            catch (error) {
-                console.error("❌ BOTTOM CATEGORY ERROR:",page,error);
-            }
-        }
-    );
 }
+
 
 //======================================================
 // MOBILE BOTTOM - CỘNG ĐỒNG + CÁ NHÂN
@@ -1232,11 +1137,7 @@ if (mobileBottomHome) {
         function(event) {
 
             event.stopPropagation();
-
-            console.log(
-                "🏠 BOTTOM → TRANG CHỦ"
-            );
-
+     
             // Đóng các panel mobile
             if (mobileCategoryPanel) {
                 mobileCategoryPanel.style.display =
@@ -1280,44 +1181,8 @@ if (mobileBottomHome) {
 
         }
     );
-
-
-const mobileCategoryList = document.getElementById("mobile-category-list");
-const mobileCommunityPanel = document.getElementById("mobile-community-panel");
-const mobilePersonalPanel = document.getElementById("mobile-personal-panel");
-const mobileBottomHome = document.querySelector('.mobile-bottom-item[data-page="home"]');
-
-if (mobileBottomHome){mobileBottomHome.addEventListener("click",function(event){event.stopPropagation();
-
-            // Đóng các panel mobile
-            if (mobileCategoryPanel) {mobileCategoryPanel.style.display = "none";
-            }
-
-            if (mobileCategoryList) {mobileCategoryList.style.display = "none";
-            }
-
-            if (mobileCommunityPanel) {mobileCommunityPanel.style.display = "none";
-            }
-
-            if (mobilePersonalPanel) {mobilePersonalPanel.style.display = "none";
-            }
-
-            // Hiện lại 3 cột
-            const main = document.querySelector(".hl-main");
-
-            if (main) {main.classList.remove("mobile-columns-hidden");
-            }
-
-            // Hiện background
-            const bgMain = document.getElementById("bg-main");
-
-            if (bgMain) {bgMain.style.display = "";
-            }
-            CURRENT_PAGE = "";
-        }
-    );
-
 }
+
 const mobileBottomCommunity =
     document.querySelector(
         '.mobile-bottom-item[data-page="congdong"]'
@@ -1354,7 +1219,6 @@ if (mobileCommunityPanel) {
                 return;
             }
 
-
             try {
 
                 await handleRightMenu(page);
@@ -1362,27 +1226,11 @@ if (mobileCommunityPanel) {
                 mobileCommunityPanel.style.display =
                     "none";
 
-
-    mobileCommunityPanel.addEventListener(
-        "click",
-        async function(event) {
-            const item = event.target.closest(".mobile-panel-item");
-            if (!item) {
-                return;
-            }
-            const page = item.dataset.page;
-            if (!page) {
-                return;
-            }
-           try {
-                await handleRightMenu(page);
-                mobileCommunityPanel.style.display = "none";
-
-                CURRENT_PAGE = page;
+                CURRENT_PAGE =
+                    page;
 
             }
             catch (error) {
-
 
                 console.error(
                     "❌ COMMUNITY ITEM ERROR:",
@@ -1391,12 +1239,10 @@ if (mobileCommunityPanel) {
                 );
 
             }
+
         }
     );
-                console.error("❌ COMMUNITY ITEM ERROR:",page,error);
-            }
-        }
-    );
+
 }
 //======================================================
 // CỘNG ĐỒNG
@@ -1410,41 +1256,48 @@ if (mobileBottomCommunity) {
 
             event.stopPropagation();
 
-            // Đóng Danh mục
+            //==================================================
+            // ĐÓNG DANH MỤC
+            //==================================================
+
             if (mobileCategoryPanel) {
+
                 mobileCategoryPanel.style.display =
                     "none";
+
             }
 
             if (mobileCategoryList) {
+
                 mobileCategoryList.style.display =
                     "none";
-    mobileBottomCommunity.addEventListener(
-        "click",
-        function(event) {event.stopPropagation();
 
-            // Đóng Danh mục
-            if (mobileCategoryPanel) {
-                mobileCategoryPanel.style.display = "none";
             }
 
-            if (mobileCategoryList) {
-                mobileCategoryList.style.display = "none";
-            }
 
-            // Đóng Cá nhân
+            //==================================================
+            // ĐÓNG CÁ NHÂN
+            //==================================================
+
             if (mobilePersonalPanel) {
+
                 mobilePersonalPanel.style.display =
                     "none";
-                mobilePersonalPanel.style.display = "none";
+
             }
 
-            // Toggle Cộng đồng
+
+            //==================================================
+            // TOGGLE CỘNG ĐỒNG
+            //==================================================
+
             if (mobileCommunityPanel) {
+
                 if (
                     mobileCommunityPanel.style.display ===
                     "block"
                 ) {
+
                     mobileCommunityPanel.style.display =
                         "none";
 
@@ -1461,24 +1314,91 @@ if (mobileBottomCommunity) {
         }
     );
 
-                    mobileCommunityPanel.style.display = "none";
-                }
-                else {
-                    mobileCommunityPanel.style.display = "block";
-                }
-            }
-        }
-    );
 }
-
 //======================================================
 // CLICK ITEM CÁ NHÂN
 //======================================================
 
+if (mobileBottomPersonal) {
+
+    mobileBottomPersonal.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            //==================================================
+            // ĐÓNG DANH MỤC
+            //==================================================
+
+            if (mobileCategoryPanel) {
+
+                mobileCategoryPanel.style.display =
+                    "none";
+
+            }
+
+            if (mobileCategoryList) {
+
+                mobileCategoryList.style.display =
+                    "none";
+
+            }
+
+
+            //==================================================
+            // ĐÓNG CỘNG ĐỒNG
+            //==================================================
+
+            if (mobileCommunityPanel) {
+
+                mobileCommunityPanel.style.display =
+                    "none";
+
+            }
+
+
+            //==================================================
+            // TOGGLE CÁ NHÂN
+            //==================================================
+
+            if (mobilePersonalPanel) {
+
+                if (
+                    mobilePersonalPanel.style.display ===
+                    "block"
+                ) {
+
+                    mobilePersonalPanel.style.display =
+                        "none";
+
+                }
+                else {
+
+                    mobilePersonalPanel.style.display =
+                        "block";
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+//======================================================
+// CLICK ITEM TRONG PANEL CÁ NHÂN
+//======================================================
+
 if (mobilePersonalPanel) {
+
     mobilePersonalPanel.addEventListener(
         "click",
         function(event) {
+
+            event.stopPropagation();
 
             const item =
                 event.target.closest(
@@ -1492,107 +1412,33 @@ if (mobilePersonalPanel) {
             const action =
                 item.dataset.action;
 
-            console.log(
-                "👤 BOTTOM PERSONAL →",
-                action
-            );
+               //==================================================
+            // ĐĂNG NHẬP
+            //==================================================
 
             if (action === "login") {
 
                 window.location.href =
-                    "customers/tab/userlogin.html";
-    mobilePersonalPanel.addEventListener(
-        "click",
-        function(event) {
-            const item = event.target.closest(".mobile-panel-item");
-            if (!item) {
-                return;
-            }
-            const action = item.dataset.action;
+                    "./customers/tab/userlogin.html";
 
-            if (action === "login") {
-                window.location.href = "customers/tab/userlogin.html";
                 return;
+
             }
+
+            //==================================================
+            // ĐĂNG KÝ
+            //==================================================
 
             if (action === "register") {
+
                 window.location.href =
-                    "customers/tab/userregister.html";
+                    "./customers/tab/userregister.html";
 
                 return;
-            }
-                window.location.href = "customers/tab/userregister.html";
-                return;
-            }
-        }
-    );
-
-}
-//======================================================
-// CÁ NHÂN
-//======================================================
-
-if (mobileBottomPersonal) {
-    mobileBottomPersonal.addEventListener(
-        "click",
-        function(event) {
-    mobileBottomPersonal.addEventListener(
-        "click",
-        function(event) {
-            event.stopPropagation();
-
-            // Đóng Danh mục
-            if (mobileCategoryPanel) {
-                mobileCategoryPanel.style.display =
-                    "none";
-            }
-
-            if (mobileCategoryList) {
-                mobileCategoryList.style.display =
-                    "none";
-                mobileCategoryPanel.style.display = "none";
-            }
-            if (mobileCategoryList) {
-                mobileCategoryList.style.display = "none";
-            }
-
-            // Đóng Cộng đồng
-            if (mobileCommunityPanel) {
-                mobileCommunityPanel.style.display =
-                    "none";
-                mobileCommunityPanel.style.display = "none";
-            }
-
-            // Toggle Cá nhân
-            if (mobilePersonalPanel) {
-
-                if (
-                    mobilePersonalPanel.style.display ===
-                    "block"
-                ) {
-                    mobilePersonalPanel.style.display =
-                        "none";
-
-                }
-                else {
-
-                    mobilePersonalPanel.style.display =
-                        "block";
-
-                }
 
             }
 
         }
     );
 
-                    mobilePersonalPanel.style.display = "none";
-
-                }
-                else {
-                    mobilePersonalPanel.style.display = "block";
-                }
-            }
-        }
-    );
 }
