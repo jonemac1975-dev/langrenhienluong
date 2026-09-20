@@ -820,10 +820,8 @@ opacity:.9;
 
 .duyet-hoso-table {
     width: 100%;
-    min-width: 1050px;
-
+    min-width: 1500px;
     border-collapse: collapse;
-
     font-size: 14px;
 }
 
@@ -832,14 +830,10 @@ opacity:.9;
 
 .duyet-hoso-table thead th {
     padding: 11px 10px;
-
     background: #f3f4f6;
-
     border-bottom: 2px solid #ddd;
-
     text-align: center;
     white-space: nowrap;
-
     font-weight: 700;
 }
 
@@ -926,7 +920,7 @@ opacity:.9;
    ====================================================== */
 
 .duyet-view {
-    padding: 7px 11px;
+    padding: 7px 25px;
     border: 1px solid #bbb;
     border-radius: 6px;
     background: #fff;
@@ -1284,7 +1278,25 @@ color : Blue;
 
 }
 
+.duyet-update-badge{
+    display:inline-block;
 
+    font-size:14px;
+    color:red;
+    font-weight:700;
+
+    animation:duyetUpdateBlink 1.2s ease-in-out infinite;
+}
+
+@keyframes duyetUpdateBlink{
+    0%,100%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.25;
+    }
+}
 /*======================================================
     MOBILE
 ======================================================*/
@@ -1313,4 +1325,261 @@ color : Blue;
         padding: 11px;
     }
 }
+}
+
+/*======================================================
+  RESET TÀI KHOẢN - MODAL
+======================================================*/
+
+.duyet-reset-modal{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(4px);
+}
+
+.duyet-reset-box{
+    width:min(500px,100%);
+
+    background:var(--bg-main,#fff);
+    color:var(--text-main,#333);
+
+    border-radius:16px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+
+    overflow:hidden;
+
+    animation:duyetResetShow .2s ease;
+}
+
+@keyframes duyetResetShow{
+    from{
+        opacity:0;
+        transform:translateY(-15px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/*======================================================
+  HEADER
+======================================================*/
+
+.duyet-reset-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:16px 20px;
+
+    border-bottom:1px solid rgba(128,128,128,.25);
+}
+
+.duyet-reset-header h3{
+    margin:0;
+
+    font-size:18px;
+    font-weight:700;
+}
+
+.duyet-reset-header button{
+    width:34px;
+    height:34px;
+
+    border:0;
+    border-radius:50%;
+
+    background:transparent;
+
+    font-size:17px;
+
+    cursor:pointer;
+}
+
+.duyet-reset-header button:hover{
+    background:rgba(128,128,128,.15);
+}
+
+/*======================================================
+  THÔNG TIN TÀI KHOẢN
+======================================================*/
+
+.duyet-reset-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+
+    padding:18px 20px 8px;
+}
+
+.duyet-reset-info label,
+.duyet-reset-form label{
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:13px;
+    font-weight:600;
+}
+
+.duyet-reset-info input,
+.duyet-reset-form input{
+    width:100%;
+    box-sizing:border-box;
+
+    padding:10px 12px;
+
+    border:1px solid rgba(128,128,128,.35);
+    border-radius:9px;
+
+    background:rgba(128,128,128,.08);
+    color:inherit;
+
+    outline:none;
+}
+
+.duyet-reset-info input{
+    opacity:.8;
+}
+
+/*======================================================
+  FORM PASSWORD
+======================================================*/
+
+.duyet-reset-form{
+    display:grid;
+    gap:15px;
+
+    padding:10px 20px 8px;
+}
+
+.reset-password-wrap{
+    position:relative;
+}
+
+.reset-password-wrap input{
+    padding-right:46px;
+}
+
+.reset-show-password{
+    position:absolute;
+
+    right:7px;
+    top:50%;
+
+    width:34px;
+    height:34px;
+
+    transform:translateY(-50%);
+
+    border:0;
+    border-radius:7px;
+
+    background:transparent;
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+.reset-show-password:hover{
+    background:rgba(128,128,128,.15);
+}
+
+/*======================================================
+  THÔNG BÁO
+======================================================*/
+
+.reset-password-message{
+    min-height:20px;
+
+    padding:4px 20px;
+
+    font-size:13px;
+    font-weight:600;
+}
+
+/*======================================================
+  BUTTON
+======================================================*/
+
+.duyet-reset-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+
+    padding:15px 20px 20px;
+
+    border-top:1px solid rgba(128,128,128,.2);
+}
+
+.duyet-reset-actions button{
+    padding:10px 16px;
+
+    border:0;
+    border-radius:9px;
+
+    font-size:14px;
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+#btn-cancel-reset{
+    background:rgba(128,128,128,.15);
+    color:inherit;
+}
+
+#btn-confirm-reset{
+    background:#8b5e3c;
+    color:#fff;
+}
+
+#btn-confirm-reset:hover{
+    opacity:.9;
+}
+
+#btn-confirm-reset:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media(max-width:600px){
+
+    .duyet-reset-modal{
+        padding:12px;
+    }
+
+    .duyet-reset-info{
+        grid-template-columns:1fr;
+    }
+
+    .duyet-reset-box{
+        border-radius:14px;
+    }
+
+    .duyet-reset-actions{
+        flex-direction:column-reverse;
+    }
+
+    .duyet-reset-actions button{
+        width:100%;
+    }
 }

@@ -233,17 +233,6 @@ async function handleAvatar(e){
         showAvatar(
             AVATAR_BASE64
         );
-
-        //================================================
-        // LOG KIỂM TRA
-        //================================================
-
-        console.log(
-            "Avatar sau nén:",
-            AVATAR_BASE64.length,
-            "ký tự Base64"
-        );
-
     }
     catch(error){
 

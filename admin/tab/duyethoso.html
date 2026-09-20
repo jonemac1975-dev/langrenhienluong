@@ -27,6 +27,7 @@
                         <th>Trạng thái</th>
                         <th>Xem hồ sơ</th>
                         <th>Duyệt</th>
+			<th>Reset</th>
                     </tr>
 
                 </thead>
@@ -192,5 +193,111 @@
         </div>
 
     </div>
+<!--==================================================
+    RESET TÀI KHOẢN
+==================================================-->
 
+<div
+    id="duyet-reset-modal"
+    class="duyet-reset-modal"
+    style="display:none;">
+
+    <div class="duyet-reset-box">
+
+        <div class="duyet-reset-header">
+            <h3>🔐 RESET TÀI KHOẢN</h3>
+
+            <button
+                type="button"
+                id="btn-close-reset">
+                ✖
+            </button>
+        </div>
+
+        <div class="duyet-reset-info">
+
+            <div>
+                <label>UID</label>
+                <input
+                    id="reset-uid"
+                    readonly>
+            </div>
+
+            <div>
+                <label>Username</label>
+                <input
+                    id="reset-username"
+                    readonly>
+            </div>
+
+        </div>
+
+        <div class="duyet-reset-form">
+
+            <div>
+                <label for="reset-password">
+                    Mật khẩu mới
+                </label>
+
+                <div class="reset-password-wrap">
+                    <input
+                        type="password"
+                        id="reset-password"
+                        autocomplete="new-password">
+
+                    <button
+                        type="button"
+                        class="reset-show-password"
+                        data-target="reset-password">
+                        👁
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <label for="reset-password-confirm">
+                    Nhập lại mật khẩu
+                </label>
+
+                <div class="reset-password-wrap">
+                    <input
+                        type="password"
+                        id="reset-password-confirm"
+                        autocomplete="new-password">
+
+                    <button
+                        type="button"
+                        class="reset-show-password"
+                        data-target="reset-password-confirm">
+                        👁
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div
+            id="reset-password-message"
+            class="reset-password-message">
+        </div>
+
+        <div class="duyet-reset-actions">
+
+            <button
+                type="button"
+                id="btn-cancel-reset">
+                ↩ Hủy
+            </button>
+
+            <button
+                type="button"
+                id="btn-confirm-reset">
+                🔐 Reset mật khẩu
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 </div>

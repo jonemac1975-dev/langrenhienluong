@@ -5,6 +5,31 @@ MODULE : DUYỆT HỒ SƠ THÀNH VIÊN
 ======================================================*/
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
+
+//======================================================
+// SHA-256
+//======================================================
+
+async function hashPassword(password){
+
+    const encoder = new TextEncoder();
+
+    const data = encoder.encode(password);
+
+    const hashBuffer =
+        await crypto.subtle.digest(
+            "SHA-256",
+            data
+        );
+
+    return Array
+        .from(new Uint8Array(hashBuffer))
+        .map(
+            b =>
+                b.toString(16).padStart(2,"0")
+        )
+        .join("");
+}
 //======================================================
 // BIẾN
 //======================================================
@@ -128,6 +153,14 @@ const hasUpdate =
         ${status === "approved" ? "checked" : ""}
     >
 </td>
+<td>
+    <button
+        type="button"
+        class="duyet-reset"
+        data-id="${uid}">
+        🔐 Reset
+    </button>
+</td>
            </tr>
             `;
         }
@@ -149,27 +182,343 @@ if(status === "rejected"){
 return "⏳ Chờ Admin duyệt";
 }
 
+function bindListEvents(){
+
+    //======================================================
+    // XEM HỒ SƠ
+    //======================================================
+
+    document.querySelectorAll(".duyet-view").forEach(button=>{
+
+        button.onclick = ()=>{
+
+            const uid = button.dataset.id;
+
+            showProfile(uid);
+        };
+
+    });
+
+
+    //======================================================
+    // DUYỆT / BỎ DUYỆT
+    //======================================================
+
+    document.querySelectorAll(".duyet-check").forEach(check=>{
+
+        check.onchange = ()=>{
+
+            const uid = check.dataset.id;
+
+            if(check.checked){
+
+                approveCustomer(uid);
+
+            }else{
+
+                unapproveCustomer(uid);
+
+            }
+
+        };
+
+    });
+
+
+    //======================================================
+    // RESET TÀI KHOẢN
+    //======================================================
+
+    document.querySelectorAll(".duyet-reset").forEach(button=>{
+
+        button.onclick = ()=>{
+
+            const uid = button.dataset.id;
+
+            const customer = CUSTOMERS[uid];
+
+            if(!customer){
+
+                alert(
+                    "Không tìm thấy thông tin thành viên!"
+                );
+
+                return;
+            }
+
+            const profile =
+                customer.profile || {};
+
+
+            //==================================================
+            // ĐIỀN UID
+            //==================================================
+
+            document.getElementById(
+                "reset-uid"
+            ).value = uid;
+
+
+            //==================================================
+            // ĐIỀN USERNAME
+            //==================================================
+
+            document.getElementById(
+                "reset-username"
+            ).value =
+                profile.username ||
+                customer.username ||
+                "";
+
+
+            //==================================================
+            // XÓA PASSWORD CŨ
+            //==================================================
+
+            document.getElementById(
+                "reset-password"
+            ).value = "";
+
+            document.getElementById(
+                "reset-password-confirm"
+            ).value = "";
+
+
+            //==================================================
+            // XÓA THÔNG BÁO
+            //==================================================
+
+            document.getElementById(
+                "reset-password-message"
+            ).textContent = "";
+
+
+            //==================================================
+            // MỞ MODAL
+            //==================================================
+
+            document.getElementById(
+                "duyet-reset-modal"
+            ).style.display = "flex";
+
+
+            //==================================================
+            // FOCUS PASSWORD
+            //==================================================
+
+            setTimeout(()=>{
+
+                document.getElementById(
+                    "reset-password"
+                ).focus();
+
+            },100);
+
+        };
+
+    });
 //======================================================
-// BIND LIST EVENTS
+// XÁC NHẬN RESET MẬT KHẨU
 //======================================================
 
-function bindListEvents(){
-document.querySelectorAll(".duyet-view").forEach(button=>{button.onclick = ()=>{const uid = button.dataset.id;
-        showProfile(uid);
-    };
-});
-document.querySelectorAll(".duyet-check").forEach(check=>{
-    check.onchange = ()=>{
-        const uid = check.dataset.id;
-        if(check.checked){
-            approveCustomer(uid);
-        }else{
-            unapproveCustomer(uid);
+const btnConfirmReset =
+    document.getElementById("btn-confirm-reset");
+
+if(btnConfirmReset){
+
+    btnConfirmReset.onclick = async ()=>{
+
+        const uid =
+            document.getElementById("reset-uid").value;
+
+        const password =
+            document.getElementById("reset-password").value;
+
+        const confirmPassword =
+            document.getElementById(
+                "reset-password-confirm"
+            ).value;
+
+        const message =
+            document.getElementById(
+                "reset-password-message"
+            );
+
+
+        //==================================================
+        // KIỂM TRA
+        //==================================================
+
+        if(!uid){
+
+            message.textContent =
+                "❌ Không xác định được tài khoản!";
+
+            return;
         }
+
+        if(!password){
+
+            message.textContent =
+                "❌ Vui lòng nhập mật khẩu mới!";
+
+            return;
+        }
+
+        if(!confirmPassword){
+
+            message.textContent =
+                "❌ Vui lòng nhập lại mật khẩu!";
+
+            return;
+        }
+
+        if(password !== confirmPassword){
+
+            message.textContent =
+                "❌ Hai mật khẩu không giống nhau!";
+
+            return;
+        }
+
+
+        //==================================================
+        // KHÓA NÚT
+        //==================================================
+
+        btnConfirmReset.disabled = true;
+
+        message.textContent =
+            "⏳ Đang cập nhật mật khẩu...";
+
+
+        try{
+
+            // SHA-256
+            const hashpass =
+                await hashPassword(password);
+
+
+            // GHI FIREBASE
+            await writeData(
+                "users/customers/" +
+                uid +
+                "/hashpass",
+                hashpass
+            );
+
+            message.textContent =
+                "✅ Reset mật khẩu thành công!";
+
+
+            // Xóa password khỏi form
+            document.getElementById(
+                "reset-password"
+            ).value = "";
+
+            document.getElementById(
+                "reset-password-confirm"
+            ).value = "";
+
+
+            // Tự đóng sau 1 giây
+            setTimeout(()=>{
+
+                document.getElementById(
+                    "duyet-reset-modal"
+                ).style.display = "none";
+
+            },1000);
+
+
+        }catch(error){
+
+            console.error(
+                "❌ RESET PASSWORD ERROR:",
+                error
+            );
+
+            message.textContent =
+                "❌ Không thể reset mật khẩu!";
+
+
+        }finally{
+
+            btnConfirmReset.disabled = false;
+
+        }
+
     };
-});
+
+}
 }
 
+//======================================================
+// ĐÓNG HỘP RESET
+//======================================================
+
+function closeResetModal(){
+
+    const modal =
+        document.getElementById(
+            "duyet-reset-modal"
+        );
+
+    if(!modal){
+        return;
+    }
+
+    // Đóng modal
+    modal.style.display = "none";
+
+    // Xóa mật khẩu
+    document.getElementById(
+        "reset-password"
+    ).value = "";
+
+    document.getElementById(
+        "reset-password-confirm"
+    ).value = "";
+
+    // Xóa thông báo
+    document.getElementById(
+        "reset-password-message"
+    ).textContent = "";
+}
+
+
+//======================================================
+// NÚT X
+//======================================================
+
+const btnCloseReset =
+    document.getElementById(
+        "btn-close-reset"
+    );
+
+if(btnCloseReset){
+
+    btnCloseReset.onclick =
+        closeResetModal;
+
+}
+
+
+//======================================================
+// NÚT HỦY
+//======================================================
+
+const btnCancelReset =
+    document.getElementById(
+        "btn-cancel-reset"
+    );
+
+if(btnCancelReset){
+
+    btnCancelReset.onclick =
+        closeResetModal;
+
+}
 //======================================================
 // SHOW PROFILE
 //======================================================
