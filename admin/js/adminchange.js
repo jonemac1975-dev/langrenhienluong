@@ -7,13 +7,14 @@ import {getAuth,signInWithEmailAndPassword,updatePassword} from "https://www.gst
 import {app} from "../../scripts/firebaseConfig.js";
 
 const auth = getAuth(app);
-document.addEventListener("DOMContentLoaded",init);
+init();
 
 //======================================================
 
 function init(){
     document.getElementById("btn-ok").onclick = changePassword;
-    document.getElementById("btn-cancel").onclick = ()=>{location.href="admin.html";
+    document.getElementById("btn-cancel").onclick = ()=>{
+        location.href="admin.html";
     };
 }
 
