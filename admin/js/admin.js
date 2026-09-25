@@ -231,14 +231,14 @@ function bindHeader(){
     });
 
     document.getElementById("btn-change").onclick=()=>{
-        location.href="adminchange.html";
+    location.href="/admin/tab/adminchange.html";
     };
 
     document.getElementById("btn-permissions")?.addEventListener("click",()=>{
     loadPage("capquyen");
-});
+    });
 
-}
+    }
 
 //======================================================
 
