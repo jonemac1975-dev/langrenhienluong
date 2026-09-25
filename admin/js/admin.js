@@ -249,6 +249,7 @@ async function loadPage(page){
 //======================================================
 
 if(
+    page !== "adminchange" &&
     ADMIN_CLAIMS &&
     ADMIN_CLAIMS.role !== "superadmin" &&
     (
