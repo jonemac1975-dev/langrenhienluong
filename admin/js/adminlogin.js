@@ -122,7 +122,20 @@ async function login(){
         //-----------------------------------
 
         sessionStorage.setItem("adminLogin","1");
-        location.href = "/admin/tab/admin.html";
+
+const idToken = await user.getIdToken();
+
+const cookieSecure =
+    location.protocol === "https:" ? "; Secure" : "";
+
+document.cookie =
+    "hl_admin_token=" +
+    encodeURIComponent(idToken) +
+    "; path=/" +
+    cookieSecure +
+    "; SameSite=Lax";
+
+location.href = "/admin/tab/admin.html";
     }
     catch(error){
         console.error("❌ FIREBASE ADMIN LOGIN ERROR:",error);

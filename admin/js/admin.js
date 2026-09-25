@@ -280,7 +280,7 @@ if(!container)return;
 
 try{
 
-const html=await fetch(`/admin/tab/${page}.html`);
+const html=await fetch(`/admin/tab/${page}.html?raw=1`);
 if(!html.ok){
 throw new Error(
 "Không tìm thấy: /admin/tab/"+page+".html"
