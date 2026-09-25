@@ -1,0 +1,155 @@
+<div class="admin-permission-panel">
+
+    <h2>🔐 Quản lý Admin</h2>
+
+    <p>
+        Tạo hoặc cập nhật tài khoản quản trị.
+    </p>
+<!-- DANH SÁCH ADMIN HIỆN CÓ -->
+
+<div class="admin-form-group">
+
+    <label for="admin-select">
+        Chọn Admin hiện có
+    </label>
+
+    <select
+        id="admin-select"
+        class="admin-input">
+
+        <option value="">
+            ➕ Tạo Admin mới
+        </option>
+
+    </select>
+
+</div>
+
+    <!-- TÊN ADMIN -->
+
+    <div class="admin-form-group">
+
+        <label for="admin-name">
+            1. Tên Admin
+        </label>
+
+        <input
+            id="admin-name"
+            type="text"
+            placeholder="Ví dụ: Admin Lịch sử">
+
+    </div>
+
+
+    <!-- EMAIL -->
+
+    <div class="admin-form-group">
+
+        <label for="admin-email">
+            2. Email đăng nhập
+        </label>
+
+        <input
+            id="admin-email"
+            type="email"
+            placeholder="admin1@example.com">
+
+    </div>
+
+
+    <!-- PASSWORD -->
+
+    <div class="admin-form-group">
+
+        <label for="admin-pass">
+            3. Mật khẩu
+        </label>
+
+        <input
+            id="admin-pass"
+            type="password"
+            placeholder="Nhập mật khẩu">
+
+    </div>
+
+
+    <!-- QUYỀN -->
+
+    <h3>
+        4. Danh mục được quản lý
+    </h3>
+
+    <div class="admin-permission-list">
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="lichsu">
+            🏛 Lịch sử
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="amthuc">
+            🍜 Ẩm thực
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="danhnhan">
+            👤 Danh nhân
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="danhthang">
+            🏞 Danh lam thắng cảnh
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="diadanh">
+            📍 Địa danh
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="gioithieu">
+            📖 Giới thiệu
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="hotoc">
+            👨‍👩‍👧 Họ tộc
+        </label>
+
+        <label>
+            <input
+                type="checkbox"
+                data-permission="tulieu">
+            📚 Tư liệu
+        </label>
+
+    </div>
+
+
+    <!-- SAVE -->
+
+    <button
+        id="btn-save-admin"
+        type="button">
+        🔐 Tạo / Cập nhật Admin
+    </button>
+
+<button id="btn-delete-admin" type="button" style="display:none;">
+    🗑️ Xóa Admin
+</button>
+
+</div>

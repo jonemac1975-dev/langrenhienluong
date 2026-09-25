@@ -5,8 +5,13 @@
 //======================================================
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
-import {createEditor,getHtml,setHtml} from "../../js/editor.js";
-import {compressImage} from "../../scripts/compressImage.js";
+import {createEditor,getHtml,setHtml}from "../../js/editor.js";
+import {compressImage}from "../../scripts/compressImage.js";
+import {uploadToCloudinary}from "../../scripts/cloudinaryUpload.js";
+import{getAuth}from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import{app}from "../../scripts/firebaseConfig.js";
+
+const auth=getAuth(app);
 
 //======================================================
 // BIẾN
@@ -16,6 +21,7 @@ let CUSTOMER_UID = null;
 let CURRENT = null;
 let LIST = [];
 let imageBase64 = "";
+let imagePublicId = "";
 
 
 //======================================================
@@ -92,7 +98,7 @@ async function loadData(){
                 }
             );
 
-        
+
     }
     catch(err){
         console.error("❌ Không load được bài viết:", err);
@@ -170,103 +176,45 @@ function renderCreate(){
 
 //======================================================
 // LOAD IMAGE
-// NÉN ẢNH TRƯỚC KHI LƯU FIREBASE
 //======================================================
 
-async function loadImage(e){
+async function loadImage(event){
 
-    const file =
-        e.target.files?.[0];
-
-    if(!file){
+    const file = event?.target?.files?.[0];
+    if(!file) return;
+    if(!file.type.startsWith("image/")){
+        alert("Vui lòng chọn file ảnh");
         return;
     }
-
-    //==================================================
-    // KIỂM TRA FILE
-    //==================================================
-
-    if(
-        !file.type.startsWith("image/")
-    ){
-
-        alert(
-            "Vui lòng chọn file hình ảnh!"
-        );
-
-        e.target.value = "";
-
-        return;
-    }
-
-    //==================================================
-    // NÉN ẢNH
-    //==================================================
-
     try{
+        imageBase64 = await compressImage(file,"image");
 
-        const base64 =
-            await compressImage(
-                file,
-                "image"
-            );
+        // Có ảnh mới => bỏ public_id cũ
+        imagePublicId = "";
 
-        //================================================
-        // LƯU ẢNH
-        //================================================
+        const preview = document.getElementById("bv-image-preview");
+if(preview){
+    preview.innerHTML = `
+        <img
+            src="${imageBase64}"
+            alt="Ảnh xem trước"
+            style="
+                max-width:100%;
+                max-height:300px;
+                display:block;
+                margin:auto;
+                border-radius:10px;
+            "
+        >
+    `;
 
-        imageBase64 =
-            base64;
-
-        //================================================
-        // PREVIEW
-        //================================================
-
-        const preview =
-            document.getElementById(
-                "bv-image-preview"
-            );
-
-        if(preview){
-
-            preview.innerHTML =
-                `<img
-                    src="${imageBase64}"
-                    alt="Ảnh bài viết">`;
-
-            preview.classList.add(
-                "active"
-            );
-
-        }
-
-        //================================================
-        // LOG KIỂM TRA
-        //================================================
-
-        console.log(
-            "Ảnh bài viết sau nén:",
-            imageBase64.length,
-            "ký tự Base64"
-        );
-
+    preview.style.display = "block";
+}
     }
-    catch(error){
-
-        console.error(
-            "❌ COMPRESS IMAGE ERROR:",
-            error
-        );
-
-        alert(
-            error.message ||
-            "Không thể xử lý hình ảnh!"
-        );
-
-        e.target.value = "";
-
+    catch(err){
+        console.error("❌ IMAGE COMPRESS ERROR:",err);
+        alert("Không thể xử lý ảnh");
     }
-
 }
 
 
@@ -320,6 +268,7 @@ if(caption){ caption.value = "";
 }
     setHtml("bv-editor","");
     imageBase64 = "";
+    imagePublicId = "";
     const image = document.getElementById("bv-image-file");
     if(image){image.value = "";
     }
@@ -330,7 +279,7 @@ if(caption){ caption.value = "";
             "active"
         );
     }
-    
+
     const clip =document.getElementById("bv-clip");
     if(clip){
         clip.value = "";
@@ -342,55 +291,82 @@ if(caption){ caption.value = "";
             "active"
         );
     }
-    
+
     CURRENT = null;
     }
 
 
 async function saveData(){
-    if(!CUSTOMER_UID){
-        alert("Không xác định được tài khoản.");
+
+    const caption = document.getElementById("bv-caption")?.value.trim();
+    const content = getHtml("bv-editor") || "";
+    const clip = document.getElementById("bv-clip")?.value.trim();
+    if(!caption && !content && !imageBase64 && !clip){
+        alert("Vui lòng nhập nội dung bài viết");
         return;
     }
-
-    const caption = document.getElementById("bv-caption")?.value.trim() || "";
-    const content = getHtml("bv-editor");
-    const clip = document.getElementById("bv-clip")?.value.trim() || "";
-    //==================================================
-    // KIỂM TRA NỘI DUNG
-    //==================================================
-    const temp = document.createElement("div");
-    temp.innerHTML = content || "";
-    const text = temp.textContent.replace(/\s+/g," ").trim();
-    if(!caption && !text && !imageBase64 && !clip){alert("Hãy nhập caption, nội dung, chọn ảnh hoặc thêm clip.");
-    return;
-}
-
-    //==================================================
-    // ID BÀI VIẾT
-    //==================================================
-    const id = "bv" + Date.now();
-    const time = Date.now();
-    //==================================================
-    // DATA
-    //==================================================
-    const data = {caption: caption || "",content:content || "",image:imageBase64 || "",clip: clip || "", created_at: time, updated_at: time};
     try{
-        await writeData(`customers/${CUSTOMER_UID}/baiviet/${id}`, data);
-        //================================================
+        const time = Date.now();
+        let imageUrl = "";
+        let imagePublicId = "";
+
+        //==================================================
+        // UPLOAD ẢNH LÊN CLOUDINARY
+        //==================================================
+
+        if(imageBase64){
+            const response = await fetch(imageBase64);
+            const blob = await response.blob();
+            const file = new File([blob],`baiviet-${time}.jpg`,{type: blob.type || "image/jpeg"});
+            const media = await uploadToCloudinary(file,`hienluong/customers/baiviet/${CUSTOMER_UID}`);
+            imageUrl = media.secure_url || "";
+            imagePublicId = media.public_id || "";
+        }
+
+        //==================================================
+        // DATA
+        //==================================================
+
+        const id = "bv" + time;
+        const data = {
+            caption:caption || "",
+            content:content || "",
+            image:imageUrl,
+            image_public_id:imagePublicId,
+            clip:clip || "",
+            created_at:time,
+            updated_at:time
+        };
+
+        //==================================================
+        // SAVE FIREBASE
+        //==================================================
+
+        const success = await writeData(`customers/${CUSTOMER_UID}/baiviet/${id}`,data);
+        if(!success){
+            alert("Lưu bài viết thất bại");
+            return;
+        }
+
+        //==================================================
         // CẬP NHẬT LIST
-        //================================================
-        LIST.push({
+        //==================================================
+
+        LIST.unshift({
             id,
             ...data
         });
-        sortData();
+
+        //==================================================
+        // RESET
+        //==================================================
+
         clearCreateForm();
         renderPost();
-        alert("Đã đăng bài thành công.");
     }
-    catch(err){ console.error("❌ Lưu bài viết thất bại:", err);
-        alert("Lưu bài viết thất bại.");
+    catch(err){
+        console.error("❌ SAVE BÀI VIẾT ERROR:",err);
+        alert("Không thể lưu bài viết");
     }
 }
 
@@ -407,7 +383,7 @@ function renderPost(){
     }
     const avatar =localStorage.getItem("customer_avatar") ||"../../images/avatar-default.png";
     const username = localStorage.getItem("customer_username") ||"Thành viên";
-    
+
     box.innerHTML = LIST.map(item => {
 	const date = formatDate( item.created_at);
                 return `
@@ -567,111 +543,180 @@ function bindPostEvents(){
 //======================================================
 
 function editPost(id){
-    const item = LIST.find(x => x.id === id);
-    if(!item){
-        alert("Không tìm thấy bài viết.");
-        return;
-    }
-    CURRENT = item;
 
-const caption = document.getElementById("bv-caption");
-if(caption){caption.value = item.caption || "";
-}
+    const item = LIST.find(x => x.id === id);
+    if(!item) return;
+    CURRENT = item;
+    const caption = document.getElementById("bv-caption");
+    if(caption){
+        caption.value =
+            item.caption || "";
+    }
+
     setHtml("bv-editor",item.content || "");
-    imageBase64 = item.image || "";
-    const preview = document.getElementById( "bv-image-preview");
+    const clip = document.getElementById("bv-clip");
+    if(clip){
+        clip.value =
+            item.clip || "";
+    }
+
+    // Không đưa URL Cloudinary cũ vào imageBase64
+
+     imageBase64 = "";
+
+    // Giữ public_id cũ để dùng khi cập nhật
+
+     imagePublicId = item.image_public_id || "";
+     const preview = document.getElementById("bv-image-preview");
+
     if(preview){
         if(item.image){
-            preview.innerHTML = `
-                <img
-                    src="${item.image}"
-                    alt="Ảnh bài viết">
-            `;
-            preview.classList.add(
-                "active"
-            );
+            preview.src = item.image;
+            preview.style.display = "block";
         }
         else{
-            preview.innerHTML = "";
-            preview.classList.remove(
-                "active"
-            );
+            preview.src = "";
+            preview.style.display = "none";
         }
     }
-
-    const clip = document.getElementById("bv-clip");
-    const clipBox = document.querySelector(".baiviet-clip-input");
-    if(clip){
-        clip.value =item.clip || "";
-    }
-
-    if(clipBox){
-        if(item.clip){
-            clipBox.classList.add(
-                "active"
-            );
-        }
-        else{
-            clipBox.classList.remove(
-                "active"
-            );
-        }
-    }
-
-
-    //==================================================
-    // ĐỔI NÚT ĐĂNG → CẬP NHẬT
-    //==================================================
     const btn = document.getElementById("bv-btn-post");
-    if(btn){btn.textContent =
-            "CẬP NHẬT BÀI VIẾT";
+    if(btn){
+        btn.textContent = "💾 Cập nhật bài viết";
     }
-
-    //==================================================
-    // SCROLL LÊN FORM
-    //==================================================
-
-    document.querySelector(".baiviet-create")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 async function updatePost(){
+
     if(!CURRENT){
-        saveData();
         return;
     }
-    const caption = document.getElementById("bv-caption")?.value.trim() || "";
-    const content = getHtml("bv-editor");
-    const clip = document.getElementById("bv-clip")?.value.trim() || "";
-    const data = {caption: caption || "",content: content || "",image: imageBase64 || "",clip: clip || "", created_at: CURRENT.created_at || Date.now(),updated_at: Date.now()};
+    const caption = document.getElementById("bv-caption")?.value.trim();
+    const content = getHtml("bv-editor") || "";
+    const clip = document.getElementById("bv-clip")?.value.trim();
     try{
-        await writeData(`customers/${CUSTOMER_UID}/baiviet/${CURRENT.id}`,data);
-        const index = LIST.findIndex(x =>x.id === CURRENT.id);
-        if(index !== -1){
-            LIST[index] = {
-                id:
-                    CURRENT.id,
-                ...data
-            };
+
+        //==================================================
+        // GIỮ ẢNH CŨ NẾU KHÔNG CHỌN ẢNH MỚI
+        //==================================================
+
+        let imageUrl = CURRENT.image || "";
+        let newImagePublicId = CURRENT.image_public_id || "";
+        const oldImagePublicId = CURRENT.image_public_id || "";
+
+        //==================================================
+        // NẾU CÓ ẢNH MỚI → UPLOAD CLOUDINARY
+        //==================================================
+
+        if(imageBase64){
+
+            const response = await fetch(imageBase64);
+            const blob = await response.blob();
+            const file =
+                new File(
+                    [blob],
+                    `baiviet-${Date.now()}.jpg`,
+                    {
+                        type:
+                            blob.type || "image/jpeg"
+                    }
+                );
+
+            const media = await uploadToCloudinary(file,`hienluong/customers/baiviet/${CUSTOMER_UID}`);
+            imageUrl = media.secure_url || "";
+            newImagePublicId = media.public_id || "";
+
+            //================================================
+            // XÓA ẢNH CŨ TRÊN CLOUDINARY
+            //================================================
+
+            if(
+                oldImagePublicId &&
+                newImagePublicId
+            ){
+
+                const user = auth.currentUser;
+                if(!user){
+                    alert("Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.");
+                    return;
+                }
+
+                const token = await user.getIdToken(true);
+                const responseDelete =
+                    await fetch(
+                        "https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+                        {
+                            method:"POST",
+                            headers:{
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+                            body:
+                                JSON.stringify({
+                                    public_id:
+                                        oldImagePublicId
+                                })
+                        }
+                    );
+
+                const deleteResult = await responseDelete.json();
+
+                if(
+                    !responseDelete.ok ||
+                    !deleteResult.success
+                ){
+
+                    console.error("❌ XÓA ẢNH CŨ THẤT BẠI:",deleteResult);
+                    alert("Không thể xóa ảnh cũ trên Cloudinary. Bài viết chưa được cập nhật.");
+                    return;
+                }
+            }
         }
 
-        sortData();
-        CURRENT = null;
-        clearCreateForm();
-        //================================================
-        // TRẢ NÚT VỀ ĐĂNG BÀI
-        //================================================
-        const btn = document.getElementById("bv-btn-post");
-        if(btn){
-            btn.textContent = "ĐĂNG BÀI";
+        //==================================================
+        // DATA MỚI
+        //==================================================
+
+        const data = {
+            caption:caption || "",
+            content:content || "",
+            image:imageUrl,
+            image_public_id:newImagePublicId,
+            clip:clip || "",
+            created_at:CURRENT.created_at || Date.now(),
+            updated_at:Date.now()
+        };
+
+        //==================================================
+        // SAVE FIREBASE
+        //==================================================
+
+        const success = await writeData(`customers/${CUSTOMER_UID}/baiviet/${CURRENT.id}`,data);
+        if(!success){
+            alert("Lưu bài viết thất bại");
+            return;
         }
+
+        //==================================================
+        // UPDATE LIST
+        //==================================================
+
+        const index = LIST.findIndex(x => x.id === CURRENT.id);
+        if(index !== -1){
+            LIST[index] = {id: CURRENT.id,...data};
+        }
+
+        //==================================================
+        // RESET
+        //==================================================
+
+        clearCreateForm();
         renderPost();
-        alert(
-            "Đã cập nhật bài viết."
-        );
     }
     catch(err){
-        console.error("❌ Cập nhật thất bại:",err);
-        alert("Cập nhật bài viết thất bại.");
+        console.error("❌ UPDATE BÀI VIẾT ERROR:",err);
+        alert("Không thể cập nhật bài viết");
     }
 }
 
@@ -681,31 +726,85 @@ async function updatePost(){
 //======================================================
 
 async function deletePost(id){
-    const item = LIST.find( x => x.id === id);
+
+    const item = LIST.find(x => x.id === id);
     if(!item){
         return;
     }
 
-    const ok = confirm("Bạn có chắc muốn xóa bài viết này?");
-    if(!ok){
+    if(!confirm("Bạn có chắc muốn xóa bài viết này?")){
         return;
     }
+
     try{
-            await writeData(`customers/${CUSTOMER_UID}/baiviet/${id}`,null);
-        LIST = LIST.filter(x => x.id !== id);
-        if(
-            CURRENT &&
-            CURRENT.id === id
-        ){
-            CURRENT = null;
-            clearCreateForm();
+
+        //==================================================
+        // XÓA ẢNH CLOUDINARY TRƯỚC
+        //==================================================
+
+        if(item.image_public_id){
+
+            const user = auth.currentUser;
+            if(!user){
+                alert("Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.");
+                return;
+            }
+            const token = await user.getIdToken(true);
+            const response =
+                await fetch(
+                    "https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+                    {
+                        method:"POST",
+                        headers:{
+                            "Content-Type":
+                                "application/json",
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+                        body:
+                            JSON.stringify({
+                                public_id:
+                                    item.image_public_id
+                            })
+                    }
+                );
+
+            const result = await response.json();
+            if(
+                !response.ok ||
+                !result.success
+            ){
+
+                console.error("❌ XÓA ẢNH CLOUDINARY THẤT BẠI:",result);
+                alert("Không thể xóa ảnh. Bài viết chưa bị xóa.");
+                return;
+            }
         }
+
+        //==================================================
+        // XÓA FIREBASE
+        //==================================================
+
+        const success = await writeData(`customers/${CUSTOMER_UID}/baiviet/${id}`,null);
+        if(!success){
+            alert("Xóa bài viết trên Firebase thất bại");
+            return;
+        }
+
+        //==================================================
+        // UPDATE LIST
+        //==================================================
+
+        LIST = LIST.filter(x => x.id !== id);
+        if(CURRENT?.id === id){
+            CURRENT = null;
+        }
+
         renderPost();
-        alert("Đã xóa bài viết.");
     }
     catch(err){
-        console.error("❌ Xóa bài viết thất bại:",err);
-        alert("Xóa bài viết thất bại.");
+        console.error("❌ DELETE BÀI VIẾT ERROR:",err);
+        alert("Không thể xóa bài viết");
     }
 }
 

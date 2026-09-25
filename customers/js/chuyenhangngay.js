@@ -4,8 +4,13 @@
 //======================================================
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
-import {createEditor,getHtml,setHtml} from "../../js/editor.js";
+import {createEditor,getHtml,setHtml}from "../../js/editor.js";
 import {compressImage} from "../../scripts/compressImage.js";
+import {uploadToCloudinary} from "../../scripts/cloudinaryUpload.js";
+import{getAuth}from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import{app}from "../../scripts/firebaseConfig.js";
+
+const auth=getAuth(app);
 
 //======================================================
 // DATA
@@ -14,6 +19,8 @@ import {compressImage} from "../../scripts/compressImage.js";
 let LIST = [];
 let CURRENT = null;
 let CUSTOMER_UID = null;
+let IMAGE_BASE64 = "";
+let IMAGE_PUBLIC_ID = "";
 
 //======================================================
 // INIT
@@ -93,10 +100,10 @@ function sortData(){
 //======================================================
 
 function renderForm(){
+
     const title = document.getElementById("chn-title");
-    const clip =  document.getElementById("chn-clip");
-    const date =  document.getElementById("chn-date");
-    const content = document.getElementById("chn-content");
+    const clip = document.getElementById("chn-clip");
+    const date = document.getElementById("chn-date");
     const preview = document.getElementById("chn-image-preview");
     const imageInput = document.getElementById("chn-image");
     if(!title){
@@ -108,18 +115,22 @@ function renderForm(){
     //==================================================
 
     if(!CURRENT){
+
         title.value = "";
         clip.value = "";
         date.value = "";
-        setHtml("chn-editor","");
+        setHtml("chn-editor",""
+        );
+        IMAGE_BASE64 = "";
+        IMAGE_PUBLIC_ID = "";
         if(preview){
             preview.innerHTML = "";
-
         }
 
         if(imageInput){
             imageInput.value = "";
         }
+
         return;
     }
 
@@ -130,20 +141,33 @@ function renderForm(){
     title.value = CURRENT.title || "";
     clip.value = CURRENT.clip || "";
     date.value = CURRENT.date || "";
-    setHtml("chn-editor",CURRENT.content || "");
+    setHtml("chn-editor",CURRENT.content || ""
+    );
 
     //==================================================
-    // ẢNH
+    // ẢNH CŨ
     //==================================================
 
+    IMAGE_BASE64 = "";
+    IMAGE_PUBLIC_ID = CURRENT.image_public_id || "";
     if(
         preview &&
         CURRENT.image
     ){
-        preview.innerHTML = `<img src="${CURRENT.image}" alt="Ảnh minh họa">`;
+
+        preview.innerHTML =
+            `<img
+                src="${CURRENT.image}"
+                alt="Ảnh minh họa">`;
+
     }
     else if(preview){
+
         preview.innerHTML = "";
+    }
+
+    if(imageInput){
+        imageInput.value = "";
     }
 }
 
@@ -154,21 +178,14 @@ function renderForm(){
 
 async function uploadImage(){
 
-    const input =
-        document.getElementById("chn-image");
-
-    const preview =
-        document.getElementById("chn-image-preview");
-
+    const input = document.getElementById("chn-image");
+    const preview = document.getElementById("chn-image-preview");
     if(!input){
         return;
     }
-
     input.onchange = async function(){
 
-        const file =
-            this.files?.[0];
-
+        const file = this.files?.[0];
         if(!file){
             return;
         }
@@ -178,13 +195,8 @@ async function uploadImage(){
         //================================================
 
         if(!file.type.startsWith("image/")){
-
-            alert(
-                "Vui lòng chọn file hình ảnh!"
-            );
-
+            alert("Vui lòng chọn file hình ảnh!");
             input.value = "";
-
             return;
         }
 
@@ -193,23 +205,17 @@ async function uploadImage(){
         //================================================
 
         try{
-
-            const base64 =
-                await compressImage(
-                    file,
-                    "image"
-                );
+            const base64 = await compressImage(file,"image");
 
             //================================================
-            // LƯU TẠM
+            // LƯU ẢNH MỚI TẠM THỜI
             //================================================
 
-            if(!CURRENT){
-                CURRENT = {};
-            }
+            IMAGE_BASE64 = base64;
 
-            CURRENT.image =
-                base64;
+            // Ảnh mới chưa có public_id
+
+            IMAGE_PUBLIC_ID = "";
 
             //================================================
             // PREVIEW
@@ -223,32 +229,13 @@ async function uploadImage(){
                         alt="Ảnh minh họa">`;
 
             }
-
-            console.log(
-                "Ảnh Chuyện hàng ngày sau nén:",
-                base64.length,
-                "ký tự Base64"
-            );
-
         }
         catch(error){
-
-            console.error(
-                "❌ COMPRESS IMAGE ERROR:",
-                error
-            );
-
-            alert(
-                error.message ||
-                "Không thể xử lý hình ảnh!"
-            );
-
+            console.error("❌ COMPRESS IMAGE ERROR:",error);
+            alert(error.message ||"Không thể xử lý hình ảnh!");
             input.value = "";
-
         }
-
     };
-
 }
 
 //======================================================
@@ -380,11 +367,8 @@ function getContentText(html){
         return "";
     }
 
-    const div =
-        document.createElement("div");
-
+    const div = document.createElement("div");
     div.innerHTML = html;
-
     return (
         div.textContent ||
         div.innerText ||
@@ -424,66 +408,38 @@ function bindListActions(){
     .forEach(btn=>{
 
         btn.onclick = function(){
-
-            const id =
-                this.dataset.id;
-
-            const item =
-                LIST.find(
-                    x => x.id === id
-                );
-
+        const id = this.dataset.id;
+        const item = LIST.find(x => x.id === id);
             if(!item){
                 return;
             }
 
             CURRENT = item;
-
             renderForm();
-
             window.scrollTo({
                 top:0,
                 behavior:"smooth"
             });
-
         };
-
     });
 
 
     document
     .querySelectorAll(".chn-btn-delete")
     .forEach(btn=>{
-
         btn.onclick = async function(){
-
-            const id =
-                this.dataset.id;
-
-            const item =
-                LIST.find(
-                    x => x.id === id
-                );
-
+            const id = this.dataset.id;
+            const item = LIST.find(x => x.id === id);
             if(!item){
                 return;
             }
-
-            const ok =
-                confirm(
-                    `Xóa chuyện "${item.title || ""}"?`
-                );
-
+            const ok = confirm(`Xóa chuyện "${item.title || ""}"?`);
             if(!ok){
                 return;
             }
-
             await deleteData(id);
-
         };
-
     });
-
 }
 
 
@@ -492,10 +448,12 @@ function bindListActions(){
 //======================================================
 
 async function saveData(){
+
     if(!CUSTOMER_UID){
         alert("Không xác định được thành viên.");
         return;
     }
+
     const title = document.getElementById("chn-title")?.value.trim();
     const content = getHtml("chn-editor");
     const clip = document.getElementById("chn-clip")?.value.trim();
@@ -524,40 +482,128 @@ async function saveData(){
     // ID
     //==================================================
 
-    const id = CURRENT?.id || `chn${Date.now()}`;
+    const id = CURRENT?.id ||`chn${Date.now()}`;
     const time = Date.now();
-
-    //==================================================
-    // DATA
-    //==================================================
-
-    const data = {
-        title,
-        image:
-            CURRENT?.image || "",
-        content,
-        clip,
-        date,
-        updated_at:
-            time
-    };
     try{
-        await writeData(`customers/${CUSTOMER_UID}/chuyenhangngay/${id}`,data);
+
+        //================================================
+        // ẢNH HIỆN TẠI
+        //================================================
+
+        let imageUrl = CURRENT?.image || "";
+        const oldPublicId = CURRENT?.image_public_id || IMAGE_PUBLIC_ID || "";
+
+        //================================================
+        // CÓ ẢNH MỚI
+        //================================================
+
+        if(IMAGE_BASE64){
+            const response = await fetch(IMAGE_BASE64);
+            const blob = await response.blob();
+            const file =
+                new File(
+                    [blob],
+                    "chuyenhangngay.jpg",
+                    {
+                        type:"image/jpeg"
+                    }
+                );
+
+            //================================================
+            // UPLOAD CLOUDINARY
+            //================================================
+
+            const media = await uploadToCloudinary(file,`hienluong/customers/chuyenhangngay/${CUSTOMER_UID}`);
+            imageUrl = media.secure_url;
+            IMAGE_PUBLIC_ID = media.public_id;
+
+            //================================================
+            // XÓA ẢNH CŨ
+            //================================================
+
+            if(oldPublicId){
+                const user = auth.currentUser;
+                if(!user){
+                    throw new Error("Phiên đăng nhập Firebase đã hết.");
+                }
+                const token = await user.getIdToken(true);
+                const deleteResponse =
+                    await fetch(
+                        "https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+                        {
+                            method:"POST",
+                            headers:{
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    "Bearer " + token
+                            },
+                            body:JSON.stringify({
+                                public_id:
+                                    oldPublicId
+                            })
+                        }
+                    );
+
+                const deleteData = await deleteResponse.json();
+                if(
+                    !deleteResponse.ok ||
+                    !deleteData.success
+                ){
+
+                    console.warn("⚠️ Không xóa được ảnh cũ:",deleteData);
+                }
+                else{
+                }
+            }
+        }
+
+        //================================================
+        // DATA
+        //================================================
+
+        const data = {
+            title,
+            image:imageUrl,
+            image_public_id:IMAGE_PUBLIC_ID || oldPublicId,
+            content,
+            clip,
+            date,
+            updated_at: time
+        };
+
+        //================================================
+        // LƯU FIREBASE
+        //================================================
+
+        const success = await writeData(`customers/${CUSTOMER_UID}/chuyenhangngay/${id}`,data);
+        if(!success){
+            throw new Error("Firebase không lưu được dữ liệu.");
+        }
         alert("Đã lưu thành công!");
+
+        //================================================
+        // RESET
+        //================================================
+
+        IMAGE_BASE64 = "";
+        IMAGE_PUBLIC_ID = data.image_public_id || "";
 
         //================================================
         // LOAD LẠI
         //================================================
+
         await loadData();
 
-// Sau khi lưu → chuyển về form mới
-CURRENT = null;
-renderForm();
-renderList();
+        // Sau khi lưu → form mới
+
+        CURRENT = null;
+        renderForm();
+        renderList();
     }
     catch(err){
-        console.error("❌ SAVE ERROR:", err);
-        alert("Không thể lưu dữ liệu.");
+        console.error("❌ SAVE ERROR:",err);
+        alert("Không thể lưu dữ liệu: " + (err.message || err));
     }
 }
 
@@ -567,37 +613,91 @@ renderList();
 //======================================================
 
 async function deleteData(id){
-
     try{
 
-        await writeData(
-            `customers/${CUSTOMER_UID}/chuyenhangngay/${id}`,
-            null
-        );
+        //================================================
+        // TÌM BÀI
+        //================================================
+
+        const item = LIST.find(x => x.id === id);
+        if(!item){
+            return;
+        }
+
+        //================================================
+        // PUBLIC ID ẢNH
+        //================================================
+
+        const publicId = item.image_public_id || "";
+
+        //================================================
+        // XÓA CLOUDINARY
+        //================================================
+
+        if(publicId){
+
+            const user = auth.currentUser;
+            if(!user){
+                throw new Error("Phiên đăng nhập Firebase đã hết.");
+            }
+
+            const token = await user.getIdToken(true);
+            const deleteResponse =
+                await fetch(
+                    "https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+                    {
+                        method:"POST",
+                        headers:{
+                            "Content-Type":
+                                "application/json",
+                            "Authorization":
+                                "Bearer " + token
+                        },
+                        body:JSON.stringify({
+                            public_id:
+                                publicId
+                        })
+                    }
+                );
+
+            const deleteData = await deleteResponse.json();
+
+            if(
+                !deleteResponse.ok ||
+                !deleteData.success
+            ){
+
+                console.warn("⚠️ Không xóa được ảnh Cloudinary:",deleteData);
+
+                // Không xóa Firebase nếu ảnh Cloudinary
+                // chưa được xử lý thành công
+
+                return;
+            }
+        }
+
+        //================================================
+        // XÓA FIREBASE
+        //================================================
+
+        const success = await writeData(`customers/${CUSTOMER_UID}/chuyenhangngay/${id}`,null);
+        if(!success){
+            throw new Error("Firebase không xóa được dữ liệu.");
+        }
+
+        //================================================
+        // LOAD LẠI
+        //================================================
 
         await loadData();
-
-        CURRENT =
-            LIST[0] || null;
-
+        CURRENT = LIST[0] || null;
         renderForm();
-
         renderList();
-
     }
     catch(err){
-
-        console.error(
-            "❌ DELETE ERROR:",
-            err
-        );
-
-        alert(
-            "Không thể xóa dữ liệu."
-        );
-
+        console.error("❌ DELETE ERROR:",err);
+        alert("Không thể xóa dữ liệu: " +(err.message || err));
     }
-
 }
 
 
@@ -608,7 +708,6 @@ async function deleteData(id){
 function clearForm(){
 
     CURRENT = null;
-
     renderForm();
 
 }

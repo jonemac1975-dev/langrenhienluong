@@ -1,5 +1,10 @@
 import {readData,writeData} from "../../scripts/firebaseService.js";
 import {compressImage} from "../../scripts/compressImage.js";
+import {uploadToCloudinary} from "../../scripts/cloudinaryUpload.js";
+import{getAuth}from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import{app}from "../../scripts/firebaseConfig.js";
+
+const auth=getAuth(app);
 
 //======================================================
 // USER
@@ -8,6 +13,7 @@ import {compressImage} from "../../scripts/compressImage.js";
 let CUSTOMER_UID = null;
 let PROFILE = null;
 let AVATAR_BASE64 = "";
+let AVATAR_PUBLIC_ID = "";
 
 //======================================================
 // INIT
@@ -20,7 +26,7 @@ document.addEventListener("DOMContentLoaded", init);
 //======================================================
 
 export async function init(){
-   
+
     CUSTOMER_UID = localStorage.getItem("customer_uid");
     if(!CUSTOMER_UID){
         alert("Không tìm thấy thông tin thành viên.");
@@ -45,15 +51,19 @@ async function loadProfile(){
         }
 
         //================================================
-        // AVATAR
+        // AVATAR CŨ
         //================================================
 
-        AVATAR_BASE64 = PROFILE.avatar || "";
-        }
+        AVATAR_BASE64 = "";
+        AVATAR_PUBLIC_ID = PROFILE.avatar_public_id || "";
+
+    }
     catch(err){
-        console.error("❌ LOAD PROFILE ERROR:", err);
+        console.error("❌ LOAD PROFILE ERROR:",err);
+
         PROFILE = {};
         AVATAR_BASE64 = "";
+        AVATAR_PUBLIC_ID = "";
     }
 }
 
@@ -87,7 +97,7 @@ function renderProfile(){
 renderStatus();
     const idBox = document.getElementById("hoso-id");
     const usernameBox = document.getElementById("hoso-username");
-    
+
     if(idBox){
         idBox.value = String(CUSTOMER_UID);
         idBox.disabled = true;
@@ -124,8 +134,9 @@ renderStatus();
     // AVATAR PREVIEW
     //==================================================
 
-    if(AVATAR_BASE64){showAvatar(AVATAR_BASE64);
-    }
+    if(PROFILE.avatar){
+    showAvatar(PROFILE.avatar);
+}
 }
 
 //======================================================
@@ -183,9 +194,7 @@ function bindEvents(){
 
 async function handleAvatar(e){
 
-    const file =
-        e.target.files?.[0];
-
+    const file = e.target.files?.[0];
     if(!file){
         return;
     }
@@ -197,13 +206,8 @@ async function handleAvatar(e){
     if(
         !file.type.startsWith("image/")
     ){
-
-        alert(
-            "Vui lòng chọn file hình ảnh."
-        );
-
+        alert("Vui lòng chọn file hình ảnh.");
         e.target.value = "";
-
         return;
     }
 
@@ -212,44 +216,26 @@ async function handleAvatar(e){
     //==================================================
 
     try{
-
-        const base64 =
-            await compressImage(
-                file,
-                "avatar"
-            );
+        const base64 = await compressImage(file,"avatar");
 
         //================================================
-        // LƯU AVATAR
+        // CHỈ LƯU ẢNH MỚI TẠM THỜI
         //================================================
 
-        AVATAR_BASE64 =
-            base64;
+        AVATAR_BASE64 = base64;
 
         //================================================
         // PREVIEW
         //================================================
 
-        showAvatar(
-            AVATAR_BASE64
-        );
+        showAvatar(AVATAR_BASE64);
+
     }
     catch(error){
-
-        console.error(
-            "❌ COMPRESS AVATAR ERROR:",
-            error
-        );
-
-        alert(
-            error.message ||
-            "Không thể xử lý avatar."
-        );
-
+        console.error("❌ COMPRESS AVATAR ERROR:", error);
+        alert(error.message || "Không thể xử lý avatar.");
         e.target.value = "";
-
     }
-
 }
 
 //======================================================
@@ -271,6 +257,7 @@ function showAvatar(src){
 //======================================================
 
 async function saveProfile(){
+
     if(!CUSTOMER_UID){
         alert("Không xác định được thành viên.");
         return;
@@ -281,6 +268,7 @@ async function saveProfile(){
         document.getElementById("hoso-name").focus();
         return;
     }
+
     const gender = document.querySelector('input[name="gender"]:checked')?.value || "";
     const address = document.getElementById("hoso-address").value.trim();
     const nationality = document.getElementById("hoso-nationality").value.trim();
@@ -289,52 +277,133 @@ async function saveProfile(){
     const zalo = document.getElementById("hoso-zalo").value.trim();
     const facebook = document.getElementById("hoso-facebook").value.trim();
     const gioithieu = document.getElementById("hoso-gioithieu").value.trim();
-
-    //==================================================
-    // DATA
-    //==================================================
-
-    const data = {
-        username:
-            PROFILE.username || "",
-        created_at:
-            PROFILE.created_at ||
-           Date.now(),
-        fullname,
-        gender,
-        address,
-        nationality,
-        phone,
-        gmail,
-        zalo,
-        facebook,
-        gioithieu,
-
-        // Avatar mới hoặc avatar cũ
-        avatar:
-            AVATAR_BASE64 || "",
-// Giữ nguyên trạng thái xét duyệt
-    status:
-        PROFILE.status || "pending",
-        updated_at:
-            Date.now()
-    };
-
     try{
-        await writeData(`customers/${CUSTOMER_UID}/profile`, data);
+
+        //==================================================
+        // AVATAR HIỆN TẠI
+        //==================================================
+
+        let avatarUrl = PROFILE.avatar || "";
+        const oldPublicId = PROFILE.avatar_public_id ||AVATAR_PUBLIC_ID || "";
+
+        //==================================================
+        // CÓ AVATAR MỚI
+        //==================================================
+
+        if(AVATAR_BASE64){
+            const response = await fetch(AVATAR_BASE64);
+            const blob = await response.blob();
+            const file =
+                new File(
+                    [blob],
+                    "avatar.jpg",
+                    {
+                        type:"image/jpeg"
+                    }
+                );
+
+            //================================================
+            // UPLOAD CLOUDINARY
+            //================================================
+
+            const media = await uploadToCloudinary(file,`hienluong/customers/avatar/${CUSTOMER_UID}`);
+            avatarUrl = media.secure_url;
+            AVATAR_PUBLIC_ID = media.public_id;
+
+            //================================================
+            // XÓA AVATAR CŨ
+            //================================================
+
+            if(oldPublicId){
+
+                const user = auth.currentUser;
+                if(!user){
+                    throw new Error("Phiên đăng nhập Firebase đã hết.");
+                }
+                const token = await user.getIdToken(true);
+                const deleteResponse =
+                    await fetch(
+                        "https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+                        {
+                            method:"POST",
+                            headers:{
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    "Bearer " + token
+                           },
+                            body:JSON.stringify({
+                                public_id:oldPublicId
+                            })
+                        }
+                    );
+
+                const deleteData = await deleteResponse.json();
+
+                if(
+                    !deleteResponse.ok ||
+                    !deleteData.success
+                ){
+
+                    console.warn("⚠️ Không xóa được avatar cũ:",deleteData);
+                }
+                else{
+                }
+            }
+        }
+
+        //==================================================
+        // DATA
+        //==================================================
+
+        const data = {
+            username:PROFILE.username || "",
+            created_at:PROFILE.created_at ||Date.now(),
+            fullname,
+            gender,
+            address,
+            nationality,
+            phone,
+            gmail,
+            zalo,
+            facebook,
+            gioithieu,
+            avatar:avatarUrl,
+            avatar_public_id:AVATAR_PUBLIC_ID || oldPublicId,
+
+            // Giữ nguyên trạng thái xét duyệt
+
+		status: PROFILE.status ||"pending",
+            updated_at:Date.now()
+        };
+
+        //==================================================
+        // LƯU FIREBASE
+        //==================================================
+
+        const success = await writeData(`customers/${CUSTOMER_UID}/profile`,data);
+        if(!success){
+            throw new Error("Firebase không lưu được hồ sơ.");
+        }
         PROFILE = data;
 
-
-        //================================================
+        //==================================================
         // LOCAL STORAGE
-        //================================================
+        //==================================================
 
-        localStorage.setItem("customer_avatar", AVATAR_BASE64 || "");
-        localStorage.setItem("customer_username", data.username || "");
+        localStorage.setItem("customer_avatar",data.avatar || "");
+        localStorage.setItem("customer_username",data.username || "");
+
+        //==================================================
+        // RESET ẢNH MỚI
+        //==================================================
+
+        AVATAR_BASE64 = "";
+        AVATAR_PUBLIC_ID = data.avatar_public_id || "";
         alert("Lưu hồ sơ thành công!");
     }
     catch(err){
         console.error("❌ SAVE PROFILE ERROR:",err);
-        alert("Không thể lưu hồ sơ. Vui lòng thử lại.");
+        alert("Không thể lưu hồ sơ: " +(err.message || err));
     }
 }

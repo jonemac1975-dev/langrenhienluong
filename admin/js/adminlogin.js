@@ -3,63 +3,129 @@
 // adminlogin.js
 //======================================================
 
-import { readData }from "../../scripts/firebaseService.js";
+import {getAuth,signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { app } from "../../scripts/firebaseConfig.js";
+
+const auth = getAuth(app);
+
 document.addEventListener("DOMContentLoaded",init);
 
 //======================================================
+// WORKER
+//======================================================
+
+const AUTH_WORKER ="https://hienluong-auth-test.jonemac1975.workers.dev";
+
+
+//======================================================
+// LOAD ADMIN LIST
+//======================================================
+
+async function loadAdminList(){
+
+    const select = document.getElementById("admin-account");
+    if(!select) return;
+    try{
+
+        const response = await fetch(AUTH_WORKER + "/admin/public-list");
+        const result = await response.json();
+        if(!response.ok || !result.success){
+            throw new Error(
+                result.error || "Không tải được danh sách Admin."
+            );
+        }
+
+        select.innerHTML ='<option value="">-- Chọn tài khoản Admin --</option>';
+        (result.admins || []).forEach(admin => {
+            const option = document.createElement("option");
+            option.value = admin.email;
+            option.textContent = admin.name? `${admin.name} — ${admin.email}`: admin.email;
+            select.appendChild(option);
+
+        });
+
+    }
+    catch(error){
+        console.error("❌ LỖI LOAD ADMIN LIST:",error);
+        alert("❌ Không tải được danh sách tài khoản Admin.");
+    }
+}
+//======================================================
+// INIT
+//======================================================
 
 function init(){
-    document.getElementById("btn-login").onclick=login;
-    document.getElementById("btn-cancel").onclick=()=>{location.href="../../index.html";
-    };
+
+    document.getElementById("btn-login").onclick = login;
+    document.getElementById("btn-cancel").onclick = () => {location.href ="../../index.html";
+        };
+  loadAdminList();
 }
 
+
+//======================================================
+// LOGIN
 //======================================================
 
 async function login(){
-    const password = document.getElementById("admin-pass").value.trim();
-    if(!password){alert("Nhập mật khẩu.");
+
+    const account = document.getElementById("admin-account")?.value;
+    const password = document.getElementById("admin-pass")?.value.trim();
+
+
+    //-----------------------------------
+    // KIỂM TRA TÀI KHOẢN
+    //-----------------------------------
+
+    if(!account){
+        alert("Vui lòng chọn tài khoản quản trị.");
         return;
     }
 
-    //-----------------------------------
-    // SHA-256
-    //-----------------------------------
-
-    const hash = await sha256(password);
 
     //-----------------------------------
-    // đọc Firebase
+    // KIỂM TRA PASSWORD
     //-----------------------------------
 
-    const hashPass = await readData("users/admin/hashpass");
-    if(!hashPass){alert("Không tìm thấy mật khẩu Admin.");
+    if(!password){
+        alert("Nhập mật khẩu.");
         return;
     }
 
-    if(hash !== hashPass){alert("Sai mật khẩu.");
-        return;
+    try{
+
+        //-----------------------------------
+        // FIREBASE AUTH LOGIN
+        //-----------------------------------
+
+        const credential = await signInWithEmailAndPassword(auth,account,password);
+        const user = credential.user;
+
+
+        //-----------------------------------
+        // KIỂM TRA ADMIN CLAIM
+        //-----------------------------------
+
+        const tokenResult = await user.getIdTokenResult(true);
+
+        if(
+            tokenResult.claims.admin !== true
+        ){
+            alert("Tài khoản không có quyền Admin.");
+            await auth.signOut();
+            return;
+        }
+
+
+        //-----------------------------------
+        // LOGIN OK
+        //-----------------------------------
+
+        sessionStorage.setItem("adminLogin","1");
+        location.href = "/admin/tab/admin.html";
     }
-
-    //-----------------------------------
-    // Login OK
-    //-----------------------------------
-
-    sessionStorage.setItem("adminLogin","1");
-    location.href = "admin.html";
-
-}
-
-//======================================================
-
-async function sha256(text){
-    const msgUint8= new TextEncoder().encode(text);
-    const hashBuffer= await crypto.subtle.digest("SHA-256", msgUint8 );
-    const hashArray= Array.from( new Uint8Array(hashBuffer));
-    return hashArray
-    .map(
-    b=>b.toString(16)
-    .padStart(2,"0")
-    )
-    .join("");
+    catch(error){
+        console.error("❌ FIREBASE ADMIN LOGIN ERROR:",error);
+        alert("Đăng nhập thất bại. Kiểm tra tài khoản hoặc mật khẩu.");
+    }
 }

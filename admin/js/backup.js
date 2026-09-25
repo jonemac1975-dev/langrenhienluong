@@ -5,6 +5,10 @@
 //======================================================
 
 import {readData,writeData} from "../../scripts/firebaseService.js";
+import{getAuth}from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import{app}from "../../scripts/firebaseConfig.js";
+
+const auth=getAuth(app);
 let RESTORE_DATA = null;
 //======================================================
 // INIT
@@ -24,6 +28,13 @@ export async function init(){
     //==================================================
 
     const restoreButton = document.getElementById("btn-restore");
+
+const backupMediaButton =
+    document.getElementById("btn-backup-media");
+if(backupMediaButton){
+    backupMediaButton.onclick = backupCloudinaryMedia;
+}
+
     const restoreFile = document.getElementById("restore-file");
     if(
         restoreButton &&
@@ -183,7 +194,7 @@ async function backupFirebase(){
         link.click();
         link.remove();
 
-      
+
         //----------------------------------------------
         // THÔNG BÁO
         //----------------------------------------------
@@ -255,7 +266,7 @@ async function handleRestoreFile(event){
 
         const sizeKB = (file.size / 1024).toFixed(1);
         const topKeys = Object.keys(data);
-        
+
         //----------------------------------------------
         // HIỂN THỊ
         //----------------------------------------------
@@ -298,4 +309,345 @@ function escapeHtml(value){
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
 
+}
+
+async function backupCloudinaryMedia(){
+
+    const status =
+        document.getElementById("backup-status");
+
+    try{
+
+        const auth =
+            getAuth();
+
+        let user = auth.currentUser;
+
+if(!user){
+
+    user =
+        await new Promise(resolve => {
+
+            const unsubscribe =
+                auth.onAuthStateChanged(
+                    currentUser => {
+
+                        unsubscribe();
+                        resolve(currentUser);
+
+                    }
+                );
+
+        });
+}
+
+if(!user){
+
+    throw new Error(
+        "Chưa đăng nhập Firebase."
+    );
+}
+
+        if(status){
+            status.textContent =
+                "☁️ Đang đọc danh sách ảnh Cloudinary...";
+        }
+
+        const token =
+            await user.getIdToken(true);
+
+        let allResources = [];
+
+let cursorImage = "";
+let cursorVideo = "";
+
+let page = 0;
+
+while(true){
+
+    page++;
+
+    let listUrl =
+        "https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/list";
+
+    const params =
+        new URLSearchParams();
+
+    if(cursorImage){
+
+        params.set(
+            "cursor_image",
+            cursorImage
+        );
+
+    }
+
+    if(cursorVideo){
+
+        params.set(
+            "cursor_video",
+            cursorVideo
+        );
+
+    }
+
+    const query =
+        params.toString();
+
+    if(query){
+
+        listUrl +=
+            "?" + query;
+
+    }
+
+
+    const listResponse =
+        await fetch(
+            listUrl,
+            {
+                method:"GET",
+                headers:{
+                    "Authorization":
+                        "Bearer " + token
+                }
+            }
+        );
+
+    const responseText =
+        await listResponse.text();
+
+
+    let pageData;
+
+    try{
+
+        pageData =
+            JSON.parse(responseText);
+
+    }
+    catch(error){
+
+        throw new Error(
+            responseText
+        );
+
+    }
+
+    if(!listResponse.ok){
+
+        throw new Error(
+            pageData ||
+            "Cloudinary LIST thất bại."
+        );
+
+    }
+
+
+    allResources.push(
+        ...(pageData.resources || [])
+    );
+
+    cursorImage =
+        pageData.next_cursor_image || "";
+
+    cursorVideo =
+        pageData.next_cursor_video || "";
+
+    if(
+        !cursorImage &&
+        !cursorVideo
+    ){
+
+        break;
+
+    }
+
+}
+
+const data = {
+
+    success:true,
+
+    resources:allResources,
+
+    image_count:
+        allResources.filter(
+            item =>
+                item.resource_type === "image"
+        ).length,
+
+    video_count:
+        allResources.filter(
+            item =>
+                item.resource_type === "video"
+        ).length
+
+};
+
+const resources =
+    data.resources || [];
+
+const zip = new JSZip();
+
+if(status){
+
+    status.innerHTML =
+        "☁️ Đang tạo backup ZIP...<br>" +
+        "📦 Tổng media: " +
+        resources.length;
+}
+
+for(let i = 0; i < resources.length; i++){
+
+    const item =
+        resources[i];
+
+    const mediaResponse =
+        await fetch(item.secure_url);
+
+    if(!mediaResponse.ok){
+
+        throw new Error(
+            "Không tải được: " +
+            item.public_id
+        );
+
+    }
+
+    const blob =
+        await mediaResponse.blob();
+
+    /*
+      Bỏ "hienluong/" để tạo
+      cấu trúc thư mục bên trong ZIP
+    */
+
+    const zipPath =
+        item.public_id +
+        "." +
+        item.format;
+
+    zip.file(
+        zipPath,
+        blob
+    );
+
+        if(status){
+
+        status.innerHTML =
+            "☁️ Đang tạo backup ZIP...<br>" +
+            "📦 " +
+            (i + 1) +
+            "/" +
+            resources.length +
+            " media";
+
+    }
+
+}
+
+if(status){
+
+    status.innerHTML =
+        "⏳ Đang đóng gói ZIP...";
+
+}
+
+const zipBlob =
+    await zip.generateAsync(
+        {
+            type:"blob",
+            compression:"DEFLATE",
+            compressionOptions:{
+                level:6
+            }
+        },
+        metadata => {
+
+            if(status){
+
+                status.innerHTML =
+                    "⏳ Đang đóng gói ZIP: " +
+                    Math.round(
+                        metadata.percent
+                    ) +
+                    "%";
+
+            }
+
+        }
+    );
+
+const zipUrl =
+    URL.createObjectURL(zipBlob);
+
+const link =
+    document.createElement("a");
+
+link.href =
+    zipUrl;
+
+link.download =
+    "backup-cloudinary.zip";
+
+document.body.appendChild(link);
+
+link.click();
+
+link.remove();
+
+URL.revokeObjectURL(
+    zipUrl
+);
+
+if(status){
+
+    status.innerHTML =
+        "✅ Backup Cloudinary hoàn tất!<br><br>" +
+
+        "📦 Tổng media: " +
+        resources.length +
+        "<br>" +
+
+        "🖼️ Ảnh: " +
+        data.image_count +
+        "<br>" +
+
+        "🎬 Video: " +
+        data.video_count +
+        "<br>" +
+
+        "📄 Số trang: " +
+        page +
+        "<br>" +
+
+        "💾 ZIP: " +
+        Math.round(
+            zipBlob.size / 1024
+        ) +
+        " KB<br><br>" +
+
+        "✅ Đã tải đủ " +
+        resources.length +
+        "/" +
+        resources.length +
+        " media.";
+
+}
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ CLOUDINARY LIST ERROR:",
+            error
+        );
+
+        if(status){
+
+            status.textContent =
+                "❌ Không đọc được danh sách Cloudinary.";
+        }
+    }
 }

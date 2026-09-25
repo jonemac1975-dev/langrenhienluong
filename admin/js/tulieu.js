@@ -6,10 +6,15 @@
 import{readData,writeData}from "../../scripts/firebaseService.js";
 import{createEditor,getHtml,setHtml}from "../../js/editor.js";
 import{compressImage}from "../../scripts/compressImage.js";
+import{uploadToCloudinary}from "../../scripts/cloudinaryUpload.js";
+import{getAuth}from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import{app}from "../../scripts/firebaseConfig.js";
 
+const auth=getAuth(app);
 let DATA={};
 let editId="";
 let imageBase64="";
+let imagePublicId="";
 
 export async function init(){
 createEditor("tl-editor");
@@ -58,59 +63,106 @@ body.innerHTML+=`
 async function loadImage(e){
 
 const file=e.target.files[0];
-
 if(!file)return;
-
 try{
-
-imageBase64=
-await compressImage(
-file,
-"image"
-);
-
-const img=
-document.getElementById(
-"tl-preview"
-);
-
-img.src=imageBase64;
-img.style.display="block";
-
-console.log(
-"Ảnh tư liệu sau nén:",
-imageBase64.length,
-"ký tự Base64"
-);
+imageBase64 = await compressImage(file,"image");
+const img = document.getElementById("tl-preview");
+img.src = imageBase64;
+img.style.display = "block";
 
 }catch(error){
-
 console.error(error);
-
-alert(
-error.message||
-"Không thể xử lý ảnh."
-);
+alert(error.message||"Không thể xử lý ảnh.");
 
 }
 }
 
 
 async function saveData(){
-const type=document.getElementById("tl-type").value;
-const title=document.getElementById("tl-title-input").value.trim();
-const content=getHtml("tl-editor");
-const link=document.getElementById("tl-link").value.trim();
-const author=document.getElementById("tl-author").value.trim();
-const source=document.getElementById("tl-source").value.trim();
-const date=document.getElementById("tl-date").value;
+
+const type = document.getElementById("tl-type").value;
+const title = document.getElementById("tl-title-input").value.trim();
+const content = getHtml("tl-editor");
+const link = document.getElementById("tl-link").value.trim();
+const author = document.getElementById("tl-author").value.trim();
+const source = document.getElementById("tl-source").value.trim();
+const date = document.getElementById("tl-date").value;
 
 if(title===""){
 alert("Nhập tiêu đề.");
 return;
 }
 
-if(editId==="")editId="tl"+Date.now();
+if(editId===""){
+editId="tl"+Date.now();
+}
+
+//==================================================
+// GIỮ ẢNH CŨ
+//==================================================
+
+let imageUrl = DATA[editId]?.image||"";
+let oldPublicId = DATA[editId]?.image_public_id||"";
+let imagePublicId = oldPublicId;
+
+//==================================================
+// UPLOAD ẢNH MỚI
+//==================================================
+
+if(imageBase64){
+
+const response = await fetch(imageBase64);
+const blob = await response.blob();
+const file = new File([blob],"tulieu.jpg",{type:"image/jpeg"});
+const media = await uploadToCloudinary(file,"hienluong/admin/tulieu");
+imageUrl = media.secure_url;
+imagePublicId = media.public_id;
+
+//==================================================
+// XÓA ẢNH CŨ
+//==================================================
+
+if(oldPublicId){
+
+const user = auth.currentUser;
+if(!user){
+throw new Error("Chưa đăng nhập Firebase Auth.");
+}
+
+const token = await user.getIdToken(true);
+const response=
+await fetch(
+"https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+{
+method:"POST",
+headers:{
+"Authorization":
+"Bearer "+token,
+"Content-Type":
+"application/json"
+},
+body:
+JSON.stringify({
+public_id:
+oldPublicId
+})
+}
+);
+
+const result = await response.json();
+
+if(
+!response.ok||
+!result.success
+){
+throw new Error(result.result||"Cloudinary xóa ảnh cũ thất bại.");
+}
+}
+}
+
+//==================================================
+// LƯU FIREBASE
+//==================================================
 
 DATA[editId]={
 type,
@@ -120,11 +172,17 @@ link,
 author,
 source,
 date,
-image:imageBase64,
+image:imageUrl,
+image_public_id:imagePublicId,
 updated_at:Date.now()
 };
 
-await writeData("admin/tulieu",DATA);
+const firebaseOK = await writeData("admin/tulieu",DATA);
+
+if(!firebaseOK){
+throw new Error("Firebase lưu dữ liệu thất bại.");
+}
+
 alert("Đã lưu.");
 clearForm();
 await loadData();
@@ -162,10 +220,82 @@ behavior:"smooth"
 window.deleteTuLieu=async function(id){
 
 if(!confirm("Xóa tư liệu này?"))return;
+const record=DATA[id];
+
+if(!record){
+alert("❌ Không tìm thấy dữ liệu.");
+return;
+}
+
+try{
+
+//==================================================
+// XÓA ẢNH CLOUDINARY
+//==================================================
+
+const publicId=
+record.image_public_id||"";
+
+if(publicId){
+const user = auth.currentUser;
+
+if(!user){
+throw new Error("Chưa đăng nhập Firebase Auth.");
+}
+
+const token = await user.getIdToken(true);
+const response=
+await fetch(
+"https://hienluong-auth-test.jonemac1975.workers.dev/cloudinary/delete",
+{
+method:"POST",
+headers:{
+"Authorization":
+"Bearer "+token,
+"Content-Type":
+"application/json"
+},
+body:
+JSON.stringify({
+public_id:
+publicId
+})
+}
+);
+
+const result = await response.json();
+if(
+!response.ok||
+!result.success
+){
+throw new Error(result.result||"Cloudinary xóa ảnh thất bại.");
+}
+}
+
+//==================================================
+// XÓA FIREBASE
+//==================================================
+
 delete DATA[id];
-await writeData("admin/tulieu",DATA);
+
+const firebaseOK = await writeData("admin/tulieu",DATA);
+
+if(!firebaseOK){
+throw new Error("Firebase xóa dữ liệu thất bại.");
+}
+alert("Đã xóa.");
+clearForm();
 await loadData();
+
+}
+catch(error){
+console.error("❌ DELETE TƯ LIỆU ERROR:",error);
+
+alert("❌ Không thể xóa tư liệu.\n\n"+error.message);
+
+}
 };
+
 
 function clearForm(){
 

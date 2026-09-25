@@ -1583,3 +1583,330 @@ color : Blue;
         width:100%;
     }
 }
+
+/*======================================================
+  CAPQUYEN - MODERN ADMIN PANEL
+======================================================*/
+
+.admin-permission-panel {
+    max-width: 820px;
+    margin: 25px auto;
+    padding: 30px 34px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.98),
+            rgba(248,243,235,.96)
+        );
+
+    border: 1px solid rgba(120,90,55,.18);
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 35px rgba(60,40,20,.12),
+        inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+
+/*======================================================
+  TIÊU ĐỀ
+======================================================*/
+
+.admin-permission-panel h2 {
+    margin: 0 0 8px;
+    color: #5b3a20;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+
+.admin-permission-panel > p {
+    margin: 0 0 28px;
+    color: #806b59;
+    font-size: 14px;
+}
+
+
+/*======================================================
+  FORM GROUP
+======================================================*/
+
+.admin-form-group {
+    margin-bottom: 20px;
+}
+
+
+.admin-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #5b3a20;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+
+/*======================================================
+  INPUT + SELECT
+======================================================*/
+
+.admin-permission-panel
+.admin-input,
+.admin-permission-panel
+input[type="text"],
+.admin-permission-panel
+input[type="email"],
+.admin-permission-panel
+input[type="password"],
+.admin-permission-panel
+select {
+
+    width: 100%;
+    box-sizing: border-box;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #d8c8b7;
+    border-radius: 11px;
+    background: #fffdf9;
+    color: #4b3625;
+    font-size: 14px;
+    outline: none;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+.admin-permission-panel
+.admin-input:focus,
+.admin-permission-panel
+input:focus,
+.admin-permission-panel
+select:focus {
+    border-color: #a8794d;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(168,121,77,.13);
+}
+
+
+/*======================================================
+  SELECT ADMIN
+======================================================*/
+
+#admin-select {
+    font-weight: 600;
+    cursor: pointer;
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf9,
+            #f7efe5
+        );
+}
+
+
+/*======================================================
+  MẬT KHẨU
+======================================================*/
+
+#admin-pass::placeholder,
+#admin-email::placeholder,
+#admin-name::placeholder {
+    color: #b09d8b;
+}
+
+
+/*======================================================
+  TIÊU ĐỀ QUYỀN
+======================================================*/
+
+.admin-permission-panel h3 {
+    margin: 28px 0 14px;
+    padding-bottom: 10px;
+    color: #5b3a20;
+    font-size: 17px;
+    border-bottom:
+        1px solid #dfd1c2;
+}
+
+
+/*======================================================
+  DANH SÁCH QUYỀN
+======================================================*/
+
+.admin-permission-list {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+
+.admin-permission-list label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid #e0d3c5;
+    border-radius: 11px;
+    background: rgba(255,255,255,.65);
+    color: #5c4938;
+    font-size: 14px;
+    font-weight: 550;
+    cursor: pointer;
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+
+.admin-permission-list label:hover {
+    transform: translateY(-1px);
+    background: #fffaf3;
+    border-color: #c6a27f;
+    box-shadow:
+        0 4px 12px rgba(70,45,20,.08);
+}
+
+
+/*======================================================
+  CHECKBOX
+======================================================*/
+
+.admin-permission-list input[type="checkbox"] {
+    width: 19px;
+    height: 19px;
+    margin: 0;
+    accent-color: #8b5e34;
+    cursor: pointer;
+}
+
+
+/*======================================================
+  NÚT TẠO / CẬP NHẬT
+======================================================*/
+
+#btn-save-admin {
+    width: 30%;
+    min-height: 50px;
+    border: 0;
+    border-radius: 12px;
+    background:
+        linear-gradient(
+            135deg,
+            #79502f,
+            #a8794d
+        );
+
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(91,58,32,.22);
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        filter .15s ease;
+}
+
+
+#btn-save-admin:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 10px 22px rgba(91,58,32,.28);
+}
+
+
+#btn-delete-admin:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(91,58,32,.18);
+}
+
+#btn-delete-admin {
+    width: 30%;
+    min-height: 50px;
+    border: 0;
+    border-radius: 12px;
+    background:
+        linear-gradient(
+            135deg,
+            #79502f,
+            #a8794d
+        );
+
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(91,58,32,.22);
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        filter .15s ease;
+}
+
+
+#btn-delete-admin:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 10px 22px rgba(91,58,32,.28);
+}
+
+
+#btn-save-admin:active {
+
+    transform: translateY(1px);
+
+    box-shadow:
+        0 4px 10px rgba(91,58,32,.18);
+}
+/*======================================================
+  MOBILE
+======================================================*/
+
+@media (max-width: 600px) {
+
+    .admin-permission-panel {
+
+        margin: 12px;
+
+        padding: 22px 18px;
+
+        border-radius: 16px;
+    }
+
+
+    .admin-permission-panel h2 {
+
+        font-size: 21px;
+    }
+
+
+    .admin-permission-list {
+
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+    }
+
+
+    .admin-permission-list label {
+
+        min-height: 46px;
+    }
+
+
+    #btn-save-admin {
+
+        min-height: 48px;
+    }
+
+}

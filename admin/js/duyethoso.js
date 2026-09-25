@@ -13,14 +13,8 @@ import {readData,writeData} from "../../scripts/firebaseService.js";
 async function hashPassword(password){
 
     const encoder = new TextEncoder();
-
     const data = encoder.encode(password);
-
-    const hashBuffer =
-        await crypto.subtle.digest(
-            "SHA-256",
-            data
-        );
+    const hashBuffer = await crypto.subtle.digest("SHA-256",data);
 
     return Array
         .from(new Uint8Array(hashBuffer))

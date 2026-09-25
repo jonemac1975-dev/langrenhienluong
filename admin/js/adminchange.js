@@ -3,7 +3,10 @@
 // adminchange.js
 //======================================================
 
-import {readData,writeData}from "../../scripts/firebaseService.js";
+import {getAuth,signInWithEmailAndPassword,updatePassword} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import {app} from "../../scripts/firebaseConfig.js";
+
+const auth = getAuth(app);
 document.addEventListener("DOMContentLoaded",init);
 
 //======================================================
@@ -17,50 +20,140 @@ function init(){
 //======================================================
 
 async function changePassword(){
-    const oldPass = document.getElementById("old-pass").value.trim();
-    const newPass = document.getElementById("new-pass").value.trim();
-    const confirmPass = document.getElementById("confirm-pass").value.trim();
+
+    const oldPass =
+        document.getElementById("old-pass")
+        .value
+        .trim();
+
+    const newPass =
+        document.getElementById("new-pass")
+        .value
+        .trim();
+
+    const confirmPass =
+        document.getElementById("confirm-pass")
+        .value
+        .trim();
+
     if(
         !oldPass ||
         !newPass ||
         !confirmPass
     ){
-        alert("Nhập đầy đủ thông tin.");
+
+        alert(
+            "Nhập đầy đủ thông tin."
+        );
+
         return;
     }
+
     if(
         newPass !== confirmPass
     ){
-        alert("Xác nhận mật khẩu không đúng.");
+
+        alert(
+            "Xác nhận mật khẩu không đúng."
+        );
+
         return;
     }
-    const oldHash = await sha256(oldPass);
-    const currentHash = await readData("users/admin/hashpass");
+
     if(
-        oldHash !== currentHash
+        newPass.length < 6
     ){
-        alert("Mật khẩu cũ không đúng.");
+
+        alert(
+            "Mật khẩu mới phải có ít nhất 6 ký tự."
+        );
+
         return;
     }
-    const newHash = await sha256(newPass);
-    await writeData("users/admin/hashpass",newHash);
-    alert("Đổi mật khẩu thành công.");
-    location.href="admin.html";
-}
 
-//======================================================
+    try{
 
-async function sha256(text){
-    const msg = new TextEncoder().encode(text);
-    const hash = await crypto.subtle.digest("SHA-256",msg);
-    return Array
-    .from(
-        new Uint8Array(hash)
-    )
-    .map(
-        b=>b
-        .toString(16)
-        .padStart(2,"0")
-    )
-    .join("");
+        const user =
+            auth.currentUser;
+
+        if(!user){
+
+            alert(
+                "Phiên đăng nhập đã hết. Vui lòng đăng nhập lại."
+            );
+
+            location.href =
+                "adminlogin.html";
+
+            return;
+        }
+
+        await signInWithEmailAndPassword(
+            auth,
+            user.email,
+            oldPass
+        );
+
+        await updatePassword(
+            auth.currentUser,
+            newPass
+        );
+
+        alert(
+            "Đổi mật khẩu thành công."
+        );
+
+        location.href =
+            "admin.html";
+
+    }
+    catch(error){
+
+        console.error(
+            "❌ FIREBASE CHANGE PASSWORD ERROR:",
+            error
+        );
+
+        if(
+            error.code ===
+            "auth/wrong-password" ||
+            error.code ===
+            "auth/invalid-credential"
+        ){
+
+            alert(
+                "Mật khẩu cũ không đúng."
+            );
+
+            return;
+        }
+
+        if(
+            error.code ===
+            "auth/weak-password"
+        ){
+
+            alert(
+                "Mật khẩu mới quá yếu."
+            );
+
+            return;
+        }
+
+        if(
+            error.code ===
+            "auth/requires-recent-login"
+        ){
+
+            alert(
+                "Phiên đăng nhập đã cũ. Vui lòng đăng nhập lại rồi đổi mật khẩu."
+            );
+
+            return;
+        }
+
+        alert(
+            "Đổi mật khẩu thất bại."
+        );
+    }
 }

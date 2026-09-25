@@ -29,15 +29,24 @@ href="../css/admin.css">
             ⚙️ TRANG QUẢN TRỊ
         </div>
         <div class="ad-header-right">
-            <button
-                id="btn-change">
-                🔑 Đổi pass
-            </button>
-            <button
-                id="btn-home">
-                🏠 Home
-            </button>
-        </div>
+
+    <button
+        id="btn-permissions"
+        style="display:none;">
+        🔐 Cấp quyền
+    </button>
+
+    <button
+        id="btn-change">
+        🔑 Đổi pass
+    </button>
+
+    <button
+        id="btn-home">
+        🏠 Home
+    </button>
+
+</div>
     </header>
 
     <!--==========================
@@ -123,6 +132,7 @@ href="../css/admin.css">
 <script type="module" src="scripts/contentService.js"> </script>
 <script type="module" src="scripts/router.js"> </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script type="module" src="../js/admin.js"></script>
 
 
