@@ -231,7 +231,7 @@ function bindHeader(){
     });
 
     document.getElementById("btn-change").onclick=()=>{
-    location.href="/admin/tab/adminchange.html";
+    loadPage("adminchange");
     };
 
     document.getElementById("btn-permissions")?.addEventListener("click",()=>{
