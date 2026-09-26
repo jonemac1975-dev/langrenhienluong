@@ -3674,3 +3674,208 @@ font-weight: 900;
     }
 
 }
+
+/*==================================================
+WELCOME MUSIC
+==================================================*/
+
+.hl-welcome-overlay{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(5px);
+}
+
+.hl-welcome-box{
+    width:min(560px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    padding:28px 26px 24px;
+    border-radius:20px;
+    text-align:center;
+    background:linear-gradient(145deg,#fffdf5,#f3ead5);
+    border:3px solid #b58b45;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    animation:hlWelcomeShow .5s ease;
+}
+
+.hl-welcome-title{
+    font-size:19px;
+    line-height:1.5;
+    font-weight:800;
+    color:#704214;
+}
+
+.hl-welcome-text{
+    font-size:21px;
+    line-height:1.7;
+    font-weight:600;
+    color:#49351f;
+}
+
+.hl-welcome-music-text{
+    margin-top:24px;
+    font-size:18px;
+    font-weight:600;
+    color:#76552d;
+}
+
+.hl-welcome-buttons{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-top:24px;
+}
+
+.hl-welcome-buttons button{
+    min-width:130px;
+    padding:12px 22px;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:17px;
+    font-weight:700;
+    transition:.2s;
+}
+
+#hl-welcome-agree{
+    color:#fff;
+    background:#7b5428;
+}
+
+#hl-welcome-exit{
+    color:#4d3822;
+    background:#e4d5b8;
+}
+
+.hl-welcome-buttons button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 5px 14px rgba(0,0,0,.2);
+}
+
+#hl-welcome-music-list{
+    display:none;
+    margin-top:24px;
+    text-align:left;
+}
+
+@keyframes hlWelcomeShow{
+    from{
+        opacity:0;
+        transform:translateY(25px) scale(.96);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+@media(max-width:600px){
+    .hl-welcome-box{
+        padding:28px 20px 24px;
+        border-radius:18px;
+    }
+
+    .hl-welcome-title{
+        font-size:25px;
+    }
+
+    .hl-welcome-text{
+        font-size:18px;
+    }
+
+    .hl-welcome-music-text{
+        font-size:16px;
+    }
+
+    .hl-welcome-buttons{
+        gap:10px;
+    }
+
+    .hl-welcome-buttons button{
+        min-width:110px;
+        padding:11px 16px;
+        font-size:16px;
+    }
+}
+
+.hl-welcome-music-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:12px;
+    background:#fff;
+    border:1px solid #d8c7a8;
+    cursor:pointer;
+}
+
+.hl-welcome-music-item img{
+    width:64px;
+    height:64px;
+    flex:0 0 64px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.hl-welcome-music-title{
+    font-size:17px;
+    font-weight:700;
+    color:#49351f;
+}
+
+.hl-welcome-music-type{
+    margin-top:4px;
+    font-size:14px;
+    color:#80694b;
+}
+
+@media(max-width:600px){
+    .hl-welcome-music-item img{
+        width:54px;
+        height:54px;
+        flex-basis:54px;
+    }
+
+    .hl-welcome-music-title{
+        font-size:16px;
+    }
+}
+
+#hl-footer-play{
+    padding:0;
+    border:0;
+    background:none;
+    color:inherit;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#hl-footer-play:hover{
+    transform:none;
+    box-shadow:none;
+    text-decoration:underline;
+}
+
+#hl-welcome-stop{
+    display:none;
+    margin:16px auto 0;
+    padding:8px 16px;
+    border:0;
+    background:none;
+    color:#76552d;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#hl-welcome-stop:hover{
+    text-decoration:underline;
+}

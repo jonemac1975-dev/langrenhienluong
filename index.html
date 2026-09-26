@@ -487,7 +487,10 @@ FOOTER
 ===================================================-->
 
 <footer class="hl-footer">
-
+<div id="hl-footer-player" class="hl-footer-player">
+    <button id="hl-footer-play" type="button">🎵 Nhạc</button>
+    <span id="hl-footer-music-title">Chưa chọn bài</span>
+</div>
     <div class="hl-footer-info">
 
         <div>
@@ -652,6 +655,11 @@ FOOTER
         <span class="mobile-bottom-label">Cộng đồng</span>
     </button>
 
+<button id="mobile-bottom-music" type="button" class="mobile-bottom-item">
+    <span>🎵</span>
+    <span>Nhạc</span>
+</button>
+
     <button
         type="button"
         class="mobile-bottom-item"
@@ -798,6 +806,29 @@ FOOTER
     class="mobile-category-list">
 </div>
 
+<!--==================================================
+    WELCOME MUSIC
+===================================================-->
+
+<div id="hl-welcome-overlay" class="hl-welcome-overlay">
+    <div id="hl-welcome-box" class="hl-welcome-box">
+        <div class="hl-welcome-title">
+            🌿 Chào mừng bạn
+        </div>
+        <div class="hl-welcome-text">
+            Chào mừng bạn đến với trang thông tin của làng rèn Hiền Lương thân yêu.
+        </div>
+        <div class="hl-welcome-music-text">
+            Mời bạn nghe một bản nhạc
+        </div>
+        <div class="hl-welcome-buttons">
+            <button id="hl-welcome-agree" type="button">🎵 Đồng ý</button>
+            <button id="hl-welcome-exit" type="button">Thoát</button>
+        </div>
+        <div id="hl-welcome-music-list"></div>
+<button id="hl-welcome-stop" type="button">⏹️ Tắt nhạc</button>
+    </div>
+</div>
 <!--==================================================
     JAVASCRIPT
 ===================================================-->

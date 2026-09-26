@@ -1,0 +1,175 @@
+<div class="tl-box">
+
+<h2 class="tl-title">
+🎵🎬 QUẢN LÝ PHIM - NHẠC
+</h2>
+
+
+<!--====================================================
+TÊN
+=====================================================-->
+
+<div class="tl-row">
+
+<label>Tên bài / Tên phim</label>
+
+<input
+    id="nhac-title"
+    class="gt-input"
+    placeholder="Nhập tên bài nhạc hoặc tên phim"
+>
+
+</div>
+
+
+<!--====================================================
+TÁC GIẢ
+=====================================================-->
+
+<div class="tl-row">
+
+<label>Tác giả / người thể hiện</label>
+
+<input
+    id="nhac-author"
+    class="gt-input"
+>
+
+</div>
+
+
+<!--====================================================
+FILE + LINK
+=====================================================-->
+
+<div class="tl-row">
+
+<label>File từ máy tính</label>
+
+<input
+    id="nhac-file"
+    type="file"
+    accept="audio/*,video/*"
+>
+<button
+    type="button"
+    id="btn-nhac-clear-file"
+    style="display:none;margin-top:8px;"
+>
+❌ Bỏ file
+</button>
+
+</div>
+
+
+<div class="tl-row">
+
+<label>Link</label>
+
+<input
+    id="nhac-link"
+    class="gt-input"
+    placeholder="Dán link MP3, MP4, YouTube, Facebook, TikTok..."
+>
+
+</div>
+
+<!--====================================================
+ẢNH ĐẠI DIỆN
+=====================================================-->
+
+<div class="tl-row">
+
+<label>Ảnh đại diện</label>
+
+<input
+    id="nhac-image-file"
+    type="file"
+    accept="image/*"
+>
+
+<br><br>
+
+<img
+    id="nhac-preview"
+    style="display:none;"
+>
+
+</div>
+
+
+<!--====================================================
+BUTTON
+=====================================================-->
+
+<div class="gt-btn-area">
+
+<button
+    id="btn-nhac-save"
+    class="gt-btn gt-btn-save"
+>
+💾 Lưu
+</button>
+
+<button
+    id="btn-nhac-cancel"
+    class="gt-btn"
+>
+↩️ Hủy
+</button>
+
+</div>
+
+
+<hr>
+
+
+<!--====================================================
+DANH SÁCH
+=====================================================-->
+
+<h3>Danh sách phim - nhạc</h3>
+
+
+<table class="ls-table">
+
+<thead>
+
+<tr>
+
+<th width="60">
+STT
+</th>
+
+<th width="240">
+Tên bài / Tên phim
+</th>
+
+<th width="180">
+Tác giả / người thể hiện
+</th>
+
+<th width="100">
+Loại
+</th>
+
+<th width="80">
+Bật / Tắt
+</th>
+
+<th width="170">
+Hành động
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="nhac-body">
+</tbody>
+
+
+</table>
+
+</div>

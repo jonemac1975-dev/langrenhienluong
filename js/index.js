@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded",init);
 function init() {
     bindMenu();
     bindMobileToggle();
+    initWelcome();
 
     //==================================================
     // THUMBNAIL TĨNH - THÀNH VIÊN
@@ -70,6 +71,142 @@ function init() {
     );
     }
 
+//======================================================
+// WELCOME
+//======================================================
+
+function initWelcome(){
+    const overlay = document.getElementById("hl-welcome-overlay");
+    if(!overlay)return;
+
+    if(sessionStorage.getItem("hl_welcome_shown") === "1"){
+        overlay.style.display = "none";
+        return;
+    }
+
+    overlay.style.display = "flex";
+
+const exitButton = document.getElementById("hl-welcome-exit");
+exitButton?.addEventListener("click",()=>{
+    sessionStorage.setItem("hl_welcome_shown","1");
+    overlay.style.display="none";
+});
+const agreeButton = document.getElementById("hl-welcome-agree");
+agreeButton?.addEventListener("click",async()=>{
+    sessionStorage.setItem("hl_welcome_shown","1");
+    agreeButton.disabled=true;
+    agreeButton.textContent="⏳ Đang tải...";
+    await loadWelcomeMusic();
+});
+const footerPlay=document.getElementById("hl-footer-play");
+footerPlay?.addEventListener("click",()=>{
+    const overlay=document.getElementById("hl-welcome-overlay");
+    const list=document.getElementById("hl-welcome-music-list");
+    if(!list||!list.querySelector("iframe"))return;
+    overlay.style.display="flex";
+    list.style.display="block";
+});
+const mobileMusic=document.getElementById("mobile-bottom-music");
+mobileMusic?.addEventListener("click",()=>{
+    const overlay=document.getElementById("hl-welcome-overlay");
+    const list=document.getElementById("hl-welcome-music-list");
+    if(!list||!list.querySelector("iframe"))return;
+    overlay.style.display="flex";
+    list.style.display="block";
+});
+const stopButton=document.getElementById("hl-welcome-stop");
+stopButton?.addEventListener("click",()=>{
+    const overlay=document.getElementById("hl-welcome-overlay");
+    const list=document.getElementById("hl-welcome-music-list");
+    const footerTitle=document.getElementById("hl-footer-music-title");
+    const footerPlay=document.getElementById("hl-footer-play");
+    const mobileMusic=document.getElementById("mobile-bottom-music");
+    if(list)list.innerHTML="";
+    if(stopButton)stopButton.style.display="none";
+    if(overlay)overlay.style.display="none";
+    if(footerTitle)footerTitle.textContent="Chưa chọn bài";
+    if(footerPlay)footerPlay.textContent="🎵 Nhạc";
+    if(mobileMusic)mobileMusic.innerHTML="<span>🎵</span><span>Nhạc</span>";
+});
+}
+
+//======================================================
+// WELCOME MUSIC
+//======================================================
+
+async function loadWelcomeMusic(){
+    const list=document.getElementById("hl-welcome-music-list");
+    if(!list)return;
+
+    try{
+        const {readData}=await import("../scripts/firebaseService.js");
+        const data=await readData("admin/nhac");
+        const items=Object.entries(data||{}).filter(([id,item])=>item&&item.active===true);
+
+        if(!items.length){
+            list.innerHTML="<div style=\"text-align:center;padding:20px;\">Hiện chưa có bản nhạc nào.</div>";
+            list.style.display="block";
+            return;
+        }
+
+        list.innerHTML=items.map(([id,item])=>`
+            <div class="hl-welcome-music-item" data-id="${id}">
+                ${item.image_url?`<img src="${item.image_url}" alt="">`:""}
+                <div>
+                    <div class="hl-welcome-music-title">${item.title||"Không tên"}</div>
+                    <div class="hl-welcome-music-type">${item.type||"Nhạc"}</div>
+                </div>
+            </div>
+        `).join("");
+
+        list.style.display="block";
+list.querySelectorAll(".hl-welcome-music-item").forEach(item=>{
+    item.addEventListener("click",()=>{
+    const id=item.dataset.id;
+    const music=items.find(([musicId])=>musicId===id)?.[1];
+    if(!music)return;
+
+    console.log("🎵 CHỌN BÀI NHẠC:",music);
+
+    if(music.media_type==="youtube"&&music.link){
+        const match=music.link.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/);
+        const videoId=match?.[1];
+        if(!videoId){
+            console.warn("⚠️ KHÔNG LẤY ĐƯỢC YOUTUBE ID:",music.link);
+            return;
+        }
+
+        const player=document.createElement("iframe");
+        player.src=`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        player.width="100%";
+        player.height="315";
+        player.allow="autoplay; encrypted-media";
+        player.allowFullscreen=true;
+        player.style.border="0";
+        player.style.borderRadius="12px";
+
+        list.innerHTML="";
+        list.appendChild(player);
+	const stopButton=document.getElementById("hl-welcome-stop");
+	if(stopButton)stopButton.style.display="block";
+	const footerTitle=document.getElementById("hl-footer-music-title");
+	if(footerTitle)footerTitle.textContent=music.title||"Đang phát nhạc";
+
+	const footerPlay=document.getElementById("hl-footer-play");
+	if(footerPlay)footerPlay.textContent="🎵 Đang phát";
+const mobileMusic=document.getElementById("mobile-bottom-music");
+if(mobileMusic)mobileMusic.innerHTML="<span>🎵</span><span>Đang phát</span>";
+    }
+});
+});
+}
+      catch(error){
+        console.error("❌ WELCOME MUSIC ERROR:",error);
+        list.innerHTML="<div style=\"text-align:center;padding:20px;\">Không thể tải danh sách nhạc.</div>";
+        list.style.display="block";
+
+    }
+}
 //======================================================
 // LOAD MODULE
 //======================================================
