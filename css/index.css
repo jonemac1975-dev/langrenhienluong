@@ -3879,3 +3879,76 @@ WELCOME MUSIC
 #hl-welcome-stop:hover{
     text-decoration:underline;
 }
+
+/*==================================================
+LY CAFE KHI DANG PHAT NHAC
+==================================================*/
+
+.hl-coffee{
+    position:relative;
+    display:inline-flex;
+    align-items:flex-end;
+    justify-content:center;
+    width:24px;
+    height:25px;
+    margin-right:4px;
+    vertical-align:middle;
+}
+
+.hl-coffee-cup{
+    position:relative;
+    width:17px;
+    height:13px;
+    border:2px solid #76552d;
+    border-radius:2px 2px 7px 7px;
+    background:#d9b77a;
+}
+
+.hl-coffee-cup::after{
+    content:"";
+    position:absolute;
+    right:-7px;
+    top:2px;
+    width:6px;
+    height:7px;
+    border:2px solid #76552d;
+    border-left:0;
+    border-radius:0 6px 6px 0;
+}
+
+.hl-coffee-smoke{
+    position:absolute;
+    left:5px;
+    top:-8px;
+    width:4px;
+    height:10px;
+    border-left:2px solid rgba(118,85,45,.55);
+    border-radius:50%;
+    animation:hlCoffeeSmoke 1.8s ease-in-out infinite;
+}
+
+.hl-coffee-smoke::after{
+    content:"";
+    position:absolute;
+    left:5px;
+    top:-2px;
+    width:4px;
+    height:9px;
+    border-left:2px solid rgba(118,85,45,.4);
+    border-radius:50%;
+}
+
+@keyframes hlCoffeeSmoke{
+    0%{
+        opacity:.25;
+        transform:translateY(3px);
+    }
+    50%{
+        opacity:.8;
+        transform:translateY(-2px);
+    }
+    100%{
+        opacity:.15;
+        transform:translateY(-7px);
+    }
+}

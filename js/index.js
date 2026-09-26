@@ -165,9 +165,7 @@ list.querySelectorAll(".hl-welcome-music-item").forEach(item=>{
     const id=item.dataset.id;
     const music=items.find(([musicId])=>musicId===id)?.[1];
     if(!music)return;
-
-    console.log("🎵 CHỌN BÀI NHẠC:",music);
-
+    
     if(music.media_type==="youtube"&&music.link){
         const match=music.link.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/);
         const videoId=match?.[1];
@@ -193,9 +191,9 @@ list.querySelectorAll(".hl-welcome-music-item").forEach(item=>{
 	if(footerTitle)footerTitle.textContent=music.title||"Đang phát nhạc";
 
 	const footerPlay=document.getElementById("hl-footer-play");
-	if(footerPlay)footerPlay.textContent="🎵 Đang phát";
+if(footerPlay)footerPlay.innerHTML='<span class="hl-coffee"><span class="hl-coffee-cup"></span><span class="hl-coffee-smoke"></span></span><span>🎵 Đang phát</span>';
 const mobileMusic=document.getElementById("mobile-bottom-music");
-if(mobileMusic)mobileMusic.innerHTML="<span>🎵</span><span>Đang phát</span>";
+if(mobileMusic)mobileMusic.innerHTML='<span class="hl-coffee"><span class="hl-coffee-cup"></span><span class="hl-coffee-smoke"></span></span><span>Đang phát</span>';
     }
 });
 });
