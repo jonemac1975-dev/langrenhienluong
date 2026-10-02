@@ -1,204 +1,161 @@
+
 //======================================================
 // HIENLUONG WEBSITE
-// File : /js/admin/amthuc.js
+// File : /js/admin/danhnhan.js
 // Tối ưu: cache dữ liệu + chống đọc Firebase dư
 //======================================================
 
-import { readData } from "../../scripts/firebaseService.js";
+import {readData} from "../../scripts/firebaseService.js";
 import {showVideo,showMap,hideMedia} from "../components/floatingmedia.js";
 
 //======================================================
 
-let LIST = [];
-let CURRENT = null;
-let DATA_LOADED_AT = 0;
-let DATA_LOADING = null;
-const DATA_CACHE_TIME = 60000;
-
-//======================================================
-// INIT THUMBNAIL
-//======================================================
-
-export async function initThumbnail(){
-    await loadData();
-    if(!LIST.length){
-        return;
-    }
-    renderThumbnail();
-}
+let LIST=[];
+let CURRENT=null;
+let DATA_LOADED_AT=0;
+let DATA_LOADING=null;
+const DATA_CACHE_TIME=60000;
 
 //======================================================
 // LOAD DATA
 //======================================================
 
-async function loadData(force = false){
-    const now = Date.now();
-
-    //==================================================
-    // CACHE CÒN HẠN
-    //==================================================
-
-    if(
-        !force &&
-        DATA_LOADED_AT &&
-        (now - DATA_LOADED_AT) < DATA_CACHE_TIME
-    ){
+async function loadData(force=false){
+    const now=Date.now();
+    if(!force&&DATA_LOADED_AT&&(now-DATA_LOADED_AT)<DATA_CACHE_TIME){
         return LIST;
     }
-
-    //==================================================
-    // ĐANG LOAD
-    //==================================================
-
     if(DATA_LOADING){
         return DATA_LOADING;
     }
-
-    //==================================================
-    // LOAD FIREBASE
-    //==================================================
-
-    DATA_LOADING = (async () => {
+    DATA_LOADING=(async()=>{
         try{
-            const data = await readData("admin/danhnhan");
+            const data=await readData("admin/danhnhan");
             if(!data){
-                LIST = [];
-                CURRENT = null;
-                DATA_LOADED_AT = Date.now();
+                LIST=[];
+                CURRENT=null;
+                DATA_LOADED_AT=Date.now();
                 return LIST;
             }
-            LIST = Object.entries(data).map(([id, item]) => ({id,...item}));
-            sortData();
-            CURRENT = LIST[0] || null;
-            DATA_LOADED_AT = Date.now();
-                        return LIST;
-        }
-        catch(err){
-            console.error("❌ LOAD ẨM THỰC ERROR:",err);
-            LIST = [];
-            CURRENT = null;
-            DATA_LOADED_AT = 0;
+            LIST=Object.entries(data).map(([id,item])=>({id,...item}));
+            LIST.sort((a,b)=>(b.updated_at||0)-(a.updated_at||0));
+            CURRENT=LIST[0]||null;
+            DATA_LOADED_AT=Date.now();
             return LIST;
-        }
-        finally{
-            DATA_LOADING = null;
+        }catch(err){
+            console.error("❌ LOAD DANH NHÂN ERROR:",err);
+            LIST=[];
+            CURRENT=null;
+            DATA_LOADED_AT=0;
+            return LIST;
+        }finally{
+            DATA_LOADING=null;
         }
     })();
     return DATA_LOADING;
 }
 
 //======================================================
-// SORT DATA
+// GET LIST
 //======================================================
 
-function sortData(){
-
-    LIST.sort(
-        (a, b) => {
-            return (
-                (b.updated_at || 0) -
-                (a.updated_at || 0)
-            );
-        }
-    );
+export async function getList(){
+    await loadData();
+    return LIST;
 }
 
 //======================================================
-// RENDER THUMBNAIL
+// GET ITEM
 //======================================================
 
-function renderThumbnail(){
-    const menu = document.querySelector('.hl-menu[data-page="danhnhan"]');
-    if(!menu || !CURRENT){
+export async function renderItem(id){
+    await loadData();
+    const item=LIST.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY DANH NHÂN:",id);
         return;
     }
-    const thumb = menu.querySelector(".hl-thumb");
-    if(!thumb){
-        return;
-    }
-    thumb.innerHTML = "";
-    if(CURRENT.image){
-        const img = document.createElement("img");
-        img.src = CURRENT.image;
-        img.alt = CURRENT.title || CURRENT.name ||"Danh Nhân Hiền Lương";
-        img.loading = "lazy";
-        img.decoding = "async";
-        img.style.display = "block";
-        img.style.width = "100%";
-        img.style.height = "auto";
-        img.style.maxWidth = "100%";
-        img.style.objectFit = "contain";
-        img.style.objectPosition = "center";
-        img.style.margin = "0";
-        img.style.padding = "0";
-        thumb.appendChild(img);
-    }
+    CURRENT=item;
+    renderMain();
 }
 
-//======================================================
-// TOGGLE LIST
-//======================================================
+export async function renderItemInline(id,box){
+    await loadData();
 
-function toggleList(){
-
-    let menu;
-if(window.matchMedia("(max-width: 768px)").matches){
-    menu = document.querySelector('.mobile-menu-item[data-page="danhnhan"]');
-}else{
-    menu = document.querySelector('.hl-menu[data-page="danhnhan"]');
-}
-if(!menu){
-    console.warn("⚠️ KHÔNG TÌM THẤY DANH NHÂN");
-    return;
-}
-    if(!menu){
-        return;
-    }
-    let list = menu.querySelector(".hl-danhnhan-menu");
-
-    //==================================================
-    // ĐANG MỞ → ĐÓNG
-    //==================================================
-
-    if(list){
-        list.remove();
+    const item=LIST.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY DANH NHÂN:",id);
         return;
     }
 
-    //==================================================
-    // TẠO DANH SÁCH
-    //==================================================
+    CURRENT=item;
+    hideMedia();
 
-    list = document.createElement("div");
-    list.className = "hl-danhnhan-menu";
-    LIST.forEach(
-        item => {
-            list.innerHTML += `
-                <div
-                    class="hl-danhnhan-row"
-                    data-id="${item.id}"
-                    title="${item.name || ""}"
-                >
-                    <div class="hl-danhnhan-row-icon">
-                        👤
-                    </div>
-                    <div class="hl-danhnhan-row-title">
-                        ${item.name || ""}
-                    </div>
+    box.innerHTML=`
+        <div class="hl-danhnhan-inline-detail">
+            <button type="button" class="hl-history-inline-back">← Quay lại danh sách</button>
+
+            <h2 class="hl-danhnhan-title">${CURRENT.name||""}</h2>
+
+            ${CURRENT.image?`
+                <div class="hl-danhnhan-image">
+                    <img src="${CURRENT.image}" alt="${CURRENT.name||"Danh Nhân Hiền Lương"}" decoding="async">
                 </div>
-            `;
-        }
-    );
-    menu.appendChild(list);
-    bindListEvent();
-}
+            `:""}
 
-//======================================================
-// menuClick
-//======================================================
+            ${CURRENT.address?`
+                <div class="hl-danhnhan-address">
+                    <b>📍 Địa chỉ mộ:</b>
+                    ${CURRENT.address}
+                </div>
+            `:""}
 
-export function menuClick(){
-    toggleList();
+            ${CURRENT.map?`
+                <div class="hl-danhnhan-map">
+                    <a href="#" class="btn-map">🗺 Xem Google Maps</a>
+                </div>
+            `:""}
+
+            ${CURRENT.video?`
+                <div class="hl-danhnhan-video">
+                    <a href="#" class="btn-video">🎬 Xem Video</a>
+                </div>
+            `:""}
+
+            <div class="dn-row-tieusu">
+                <strong>📚 Tiểu sử</strong>
+                <div class="hl-danhnhan-content">
+                    ${CURRENT.content||""}
+                </div>
+            </div>
+        </div>
+    `;
+
+    const btnVideo=box.querySelector(".btn-video");
+    if(btnVideo){
+        btnVideo.onclick=function(e){
+            e.preventDefault();
+            showVideo(CURRENT.video);
+        };
+    }
+
+    const btnMap=box.querySelector(".btn-map");
+    if(btnMap){
+        btnMap.onclick=function(e){
+            e.preventDefault();
+            showMap(CURRENT.map);
+        };
+    }
+
+    const backButton=box.querySelector(".hl-history-inline-back");
+    if(backButton){
+        backButton.addEventListener("click",async function(event){
+            event.stopPropagation();
+            if(typeof window.loadDanhNhanInlineList==="function"){
+                await window.loadDanhNhanInlineList();
+            }
+        });
+    }
 }
 
 //======================================================
@@ -206,29 +163,29 @@ export function menuClick(){
 //======================================================
 
 export function renderMain(){
-    const box = document.getElementById("hl-content");
-    if(!box){
-        return;
-    }
-    const bg = document.getElementById("bg-main");
-    if(bg){
-        bg.style.display = "none";
-    }
+    const box=document.getElementById("hl-content");
+    if(!box)return;
 
-    //==================================================
-    // ĐỔI BÀI → ĐÓNG MEDIA CŨ
-    //==================================================
+    const bg=document.getElementById("bg-main");
+    if(bg)bg.style.display="none";
 
     hideMedia();
+
     if(!CURRENT){
-        box.innerHTML = `<div class="hl-empty">Chưa có dữ liệu danh nhân.</div>`;
+        box.innerHTML=`<div class="hl-empty">Chưa có dữ liệu danh nhân.</div>`;
         return;
     }
-    box.innerHTML = `
+
+    box.innerHTML=`
         <div class="hl-danhnhan">
+            <button type="button" class="hl-history-back" id="hl-danhnhan-back">
+                ← Quay lại
+            </button>
+
             <h2 class="hl-danhnhan-title">
-                ${CURRENT.name || ""}
+                ${CURRENT.name||""}
             </h2>
+
             ${
                 CURRENT.image
                 ?
@@ -236,7 +193,7 @@ export function renderMain(){
                 <div class="hl-danhnhan-image">
                     <img
                         src="${CURRENT.image}"
-                        alt="${CURRENT.name || "Danh Nhân Hiền Lương"}"
+                        alt="${CURRENT.name||"Danh Nhân Hiền Lương"}"
                         decoding="async"
                     >
                 </div>
@@ -263,14 +220,7 @@ export function renderMain(){
                 ?
                 `
                 <div class="hl-danhnhan-map">
-
-                    <a
-                        href="#"
-                        class="btn-map"
-                    >
-                        🗺 Xem Google Maps
-                    </a>
-
+                    <a href="#" class="btn-map">🗺 Xem Google Maps</a>
                 </div>
                 `
                 :
@@ -282,73 +232,60 @@ export function renderMain(){
                 ?
                 `
                 <div class="hl-danhnhan-video">
-
-                    <a
-                        href="#"
-                        class="btn-video"
-                    >
-                        🎬 Xem Video
-                    </a>
-
+                    <a href="#" class="btn-video">🎬 Xem Video</a>
                 </div>
                 `
                 :
                 ""
             }
-		<div class="dn-row-tieusu">
+
+            <div class="dn-row-tieusu">
                 <strong>📚 Tiểu sử</strong>
-            <div class="hl-danhnhan-content">
-		 ${CURRENT.content || ""}
+                <div class="hl-danhnhan-content">
+                    ${CURRENT.content||""}
+                </div>
             </div>
-
         </div>
-
     `;
 
-    //==================================================
-    // BUTTON VIDEO
-    //==================================================
-
-    const btnVideo = box.querySelector(".btn-video");
+    const btnVideo=box.querySelector(".btn-video");
     if(btnVideo){
-        btnVideo.onclick = function(e){e.preventDefault();
-        showVideo(CURRENT.video);
-            };
+        btnVideo.onclick=function(e){
+            e.preventDefault();
+            showVideo(CURRENT.video);
+        };
     }
 
-    //==================================================
-    // BUTTON MAP
-    //==================================================
-
-    const btnMap = box.querySelector(".btn-map");
+    const btnMap=box.querySelector(".btn-map");
     if(btnMap){
-        btnMap.onclick = function(e){e.preventDefault();
-        showMap(CURRENT.map);
-            };
+        btnMap.onclick=function(e){
+            e.preventDefault();
+            showMap(CURRENT.map);
+        };
     }
-}
 
-//======================================================
-// BIND LIST EVENT
-//======================================================
-
-function bindListEvent(){
-
-    document
-        .querySelectorAll(
-            ".hl-danhnhan-row"
-        )
-        .forEach(
-            row => {
-                row.onclick =
-                    function(e){
-                        e.stopPropagation();
-                        const id = this.dataset.id;
-                        CURRENT = LIST.find(item => item.id === id);
-                        document.querySelectorAll(".hl-danhnhan-row").forEach(r =>r.classList.remove("active"));
-                        this.classList.add("active");
-                        renderMain();
-                    };
+    const backButton=document.getElementById("hl-danhnhan-back");
+    if(backButton){
+        backButton.addEventListener("click",()=>{
+            hideMedia();
+            box.innerHTML="";
+            const bg=document.getElementById("bg-main");
+            if(bg)bg.style.display="";
+            const home=document.getElementById("hl-home-cards");
+            if(home){
+                home.scrollIntoView({
+                    behavior:"smooth",
+                    block:"start"
+                });
             }
-        );
+        });
+    }
+
+    requestAnimationFrame(()=>{
+        box.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    });
 }
+

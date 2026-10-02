@@ -10,6 +10,9 @@ import { renderVideo } from "../../scripts/services/videoService.js";
 //======================================================
 
 let DATA = null;
+let DATA_LOADED_AT = 0;
+let DATA_LOADING = null;
+const DATA_CACHE_TIME = 60000;
 
 //======================================================
 // INIT THUMBNAIL
@@ -24,15 +27,28 @@ export async function initThumbnail(){
 // LOAD DATA
 //======================================================
 
-async function loadData(){
-    try{
-
-        DATA = await readData("admin/gioithieu");
+async function loadData(force=false){
+    if(!force && DATA && Date.now()-DATA_LOADED_AT<DATA_CACHE_TIME){
+        return DATA;
     }
-    catch(err){
-        console.error("❌ LOAD GIỚI THIỆU ERROR:",err);
-        DATA = null;
+    if(DATA_LOADING){
+        return DATA_LOADING;
     }
+    DATA_LOADING=(async()=>{
+        try{
+            DATA=await readData("admin/gioithieu");
+            DATA_LOADED_AT=Date.now();
+        }
+        catch(err){
+            console.error("❌ LOAD GIỚI THIỆU ERROR:",err);
+            DATA=null;
+        }
+        finally{
+            DATA_LOADING=null;
+        }
+        return DATA;
+    })();
+    return DATA_LOADING;
 }
 
 //======================================================
@@ -127,8 +143,11 @@ export async function renderMain(){
     // RENDER
     //==================================================
 
-    box.innerHTML = `
-        <div class="hl-gioithieu">
+   box.innerHTML = `
+    <div class="hl-gioithieu">
+        <button type="button" class="hl-history-back" id="hl-gioithieu-back">
+            ← Quay lại
+        </button>
             ${
                 DATA.image
                 ?
@@ -153,4 +172,65 @@ export async function renderMain(){
             </div>
         </div>
     `;
+const backButton=document.getElementById("hl-gioithieu-back");
+if(backButton){
+    backButton.addEventListener("click",()=>{
+        box.innerHTML="";
+        const bg=document.getElementById("bg-main");
+        if(bg)bg.style.display="";
+        const home=document.getElementById("hl-home-cards");
+        if(home){
+            home.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+        }
+    });
+}
+
+requestAnimationFrame(()=>{
+    box.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+});
+}
+
+
+export async function renderItemInline(box){
+    if(!box)return;
+
+    await loadData();
+
+    if(!DATA){
+        box.innerHTML=`<div class="hl-empty">Chưa có dữ liệu giới thiệu.</div>`;
+        return;
+    }
+
+    const videoHtml=DATA.video?`<div class="hl-gioithieu-video">${renderVideo(DATA.video)}</div>`:"";
+
+    box.innerHTML=`
+        <div class="hl-gioithieu">
+            ${
+                DATA.image
+                ?`
+                <div class="hl-gioithieu-image">
+                    <img src="${DATA.image}" alt="Hiền Lương">
+                </div>
+                `
+                :""
+            }
+            <div class="hl-gioithieu-body">
+                <h2 class="hl-gioithieu-title">${DATA.title || ""}</h2>
+                ${videoHtml}
+                <div class="hl-gioithieu-content">${DATA.content || ""}</div>
+            </div>
+        </div>
+    `;
+}
+
+
+export async function getData(){
+    await loadData();
+    return DATA;
 }

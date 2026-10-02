@@ -95,6 +95,25 @@ if(fileInput && linkInput){
     document.getElementById("nhac-body")?.addEventListener("click",handleListAction);
 }
 
+//======================================================
+// GET LIST CHO TRANG CHỦ
+//======================================================
+
+export async function getList(){
+    try{
+        const data=await readData("admin/nhac");
+        if(!data)return [];
+        return Object.entries(data)
+            .map(([id,item])=>({id,...item}))
+            .filter(item=>item.active!==false)
+            .sort((a,b)=>(b.created_at||0)-(a.created_at||0));
+    }
+    catch(error){
+        console.error("❌ LOAD DANH SÁCH PHIM NHẠC ERROR:",error);
+        return [];
+    }
+}
+
 
 //======================================================
 // LOAD FIREBASE

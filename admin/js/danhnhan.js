@@ -105,6 +105,7 @@ async function saveData(){
     const map = document.getElementById("dn-map").value.trim();
     const video = document.getElementById("dn-video").value.trim();
     const content = getHtml("dn-editor");
+const tienhien = document.getElementById("dn-tienhien").checked;
     if(name===""){
         alert("Nhập tên Danh nhân.");
         return;
@@ -194,6 +195,7 @@ async function saveData(){
         map,
         video,
         content,
+	tienhien,
         image:imageUrl,
         image_public_id:imagePublicId,
         updated_at: Date.now()
@@ -213,6 +215,7 @@ window.editDanhNhan=function(id){
     editId=id;
     imageBase64=r.image||"";
     document.getElementById("dn-name").value=r.name||"";
+    document.getElementById("dn-tienhien").checked=!!r.tienhien;
     document.getElementById("dn-address").value=r.address||"";
     document.getElementById("dn-map").value=r.map||"";
     document.getElementById("dn-video").value=r.video||"";
@@ -316,6 +319,7 @@ function clearForm(){
     editId="";
     imageBase64="";
     document.getElementById("dn-name").value="";
+    document.getElementById("dn-tienhien").checked=false;
     document.getElementById("dn-address").value="";
     document.getElementById("dn-map").value="";
     document.getElementById("dn-video").value="";

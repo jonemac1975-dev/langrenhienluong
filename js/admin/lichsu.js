@@ -6,6 +6,7 @@
 
 import { readData } from "../../scripts/firebaseService.js";
 import { renderVideo } from "../../scripts/services/videoService.js";
+import {getLanguage,t} from "../../js/language.js";
 
 //======================================================
 
@@ -14,6 +15,11 @@ let CURRENT = null;
 let DATA_LOADED_AT = 0;
 let DATA_LOADING = null;
 const DATA_CACHE_TIME = 60000;
+
+export async function getList(){
+    await loadData();
+    return LIST;
+}
 
 //======================================================
 // INIT THUMBNAIL
@@ -236,6 +242,89 @@ export function menuClick(){
     toggleList();
 }
 
+
+//======================================================
+// RENDER ITEM - CARD
+//======================================================
+
+export async function renderItem(id){
+    await loadData();
+
+    const item = LIST.find(item => item.id === id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY LỊCH SỬ:",id);
+        return;
+    }
+
+    CURRENT = item;
+    renderMain();
+
+    const content = document.getElementById("hl-content");
+    if(content){
+        content.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    }
+}
+
+export async function renderItemInline(id,box){
+    await loadData();
+
+    const item=LIST.find(item=>item.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY LỊCH SỬ:",id);
+        return;
+    }
+
+    CURRENT=item;
+
+    const videoHtml=CURRENT.video?`
+        <div class="hl-lichsu-video">
+            ${renderVideo(CURRENT.video)}
+        </div>
+    `:"";
+
+    box.innerHTML=`
+        <div class="hl-lichsu-inline-detail">
+            <button type="button" class="hl-history-inline-back">${t("lichsu.backList")}</button>
+
+            <div class="hl-lichsu-year">${CURRENT.year||""}</div>
+
+            <h2 class="hl-lichsu-title">${CURRENT.title||""}</h2>
+
+            ${CURRENT.image?`
+    <div class="hl-lichsu-image">
+        <img src="${CURRENT.image}" alt="${CURRENT.title || t("lichsu.alt")}" decoding="async">
+    </div>
+	`:""}
+
+            ${videoHtml}
+
+            ${CURRENT.source?`
+                <div class="hl-lichsu-source">
+    		<b>${t("lichsu.source")}</b>
+    		${CURRENT.source}
+		</div>
+            `:""}
+
+            <div class="hl-lichsu-content">
+                ${CURRENT.content||""}
+            </div>
+        </div>
+    `;
+
+    const backButton=box.querySelector(".hl-history-inline-back");
+    if(backButton){
+        backButton.addEventListener("click",async function(event){
+            event.stopPropagation();
+            if(typeof window.loadHistoryInlineList==="function"){
+                await window.loadHistoryInlineList();
+            }
+        });
+    }
+}
+
 //======================================================
 // RENDER MAIN
 //======================================================
@@ -252,7 +341,7 @@ export function renderMain(){
     }
 
     if(!CURRENT){
-        box.innerHTML = `<div class="hl-empty"> Chưa có dữ liệu lịch sử.</div>`;
+        box.innerHTML = `<div class="hl-empty">${t("lichsu.empty")}</div>`;
         return;
     }
 
@@ -269,6 +358,9 @@ export function renderMain(){
 
     box.innerHTML = `
         <div class="hl-lichsu">
+            	<button type="button" class="hl-history-back" id="hl-history-back">
+   		 ${t("lichsu.back")}
+		</button>
 
             <div class="hl-lichsu-year">
                 ${CURRENT.year || ""}
@@ -279,20 +371,20 @@ export function renderMain(){
             </h2>
 
             ${
-                CURRENT.image
-                ?
-                `
-                <div class="hl-lichsu-image">
-                    <img
-                        src="${CURRENT.image}"
-                        alt="${CURRENT.title || "Lịch sử Hiền Lương"}"
-                        decoding="async"
-                    >
-                </div>
-                `
-                :
-                ""
-            }
+    CURRENT.image
+    ?
+    `
+    <div class="hl-lichsu-image">
+        <img
+            src="${CURRENT.image}"
+            alt="${CURRENT.title || t("lichsu.alt")}"
+            decoding="async"
+        >
+    </div>
+    `
+    :
+    ""
+}
 
             ${videoHtml}
 
@@ -301,9 +393,9 @@ export function renderMain(){
                 ?
                 `
                 <div class="hl-lichsu-source">
-                    <b>Nguồn tư liệu:</b>
-                    ${CURRENT.source}
-                </div>
+    		<b>${t("lichsu.source")}</b>
+    		${CURRENT.source}
+		</div>
                 `
                 :
                 ""
@@ -315,6 +407,21 @@ export function renderMain(){
 
         </div>
     `;
+const backButton=document.getElementById("hl-history-back");
+if(backButton){
+    backButton.addEventListener("click",()=>{
+        box.innerHTML="";
+        const bg=document.getElementById("bg-main");
+        if(bg)bg.style.display="";
+        const home=document.getElementById("hl-home-cards");
+        if(home){
+            home.scrollIntoView({
+                behavior:"smooth",
+                block:"start"
+            });
+        }
+    });
+}
 }
 
 

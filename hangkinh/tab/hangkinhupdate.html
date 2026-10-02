@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cập nhật hoạt động Hàng Kỉnh</title>
+<link rel="stylesheet" href="../css/hangkinh.css">
+</head>
+<body>
+
+<header class="hk-header">
+    <h1>Cập nhật hoạt động Hàng Kỉnh</h1>
+    <button type="button" id="hk-home">🏠 Home</button>
+</header>
+
+<main class="hk-container">
+
+    <section class="hk-update-form">
+
+        <div class="hk-update-title">
+            <h2>📝 Cập nhật hoạt động</h2>
+            <p id="hk-current-info"></p>
+        </div>
+
+        <div class="hk-row">
+            <label>ID</label>
+            <input id="hk-id" type="text" readonly>
+        </div>
+
+        <div class="hk-row">
+            <label>USER</label>
+            <input id="hk-user" type="text" readonly>
+        </div>
+
+        <div class="hk-row">
+            <label>Loại hoạt động</label>
+            <select id="hk-type">
+                <option value="Tin hoạt động">Tin hoạt động</option>
+                <option value="Báo cáo tài chính">Báo cáo tài chính</option>
+                <option value="Thư ngõ">Thư ngõ</option>
+            </select>
+        </div>
+
+        <div class="hk-row">
+            <label>Tiêu đề</label>
+            <input id="hk-title" type="text" placeholder="Nhập tiêu đề hoạt động">
+        </div>
+
+        <div class="hk-row hk-image-row">
+            <label>Ảnh đại diện</label>
+            <div class="hk-image-control">
+                <div class="hk-image-select">
+                    <input id="hk-image" type="file" accept="image/*">
+                    <button type="button" id="hk-image-delete">✕ Xóa ảnh</button>
+                </div>
+                <div class="hk-image-preview-wrap">
+                    <div class="hk-image-preview-title">Preview</div>
+                    <img id="hk-image-preview" class="hk-image-preview" alt="Preview">
+                </div>
+            </div>
+        </div>
+
+        <div class="hk-row hk-editor-row">
+            <label>Nội dung hoạt động</label>
+            <div class="hk-editor-wrap">
+    	<div id="hk-editor"></div>
+	</div>
+        </div>
+
+        <div class="hk-row">
+            <label>Người cập nhật</label>
+            <input id="hk-updater" type="text">
+        </div>
+
+        <div class="hk-row">
+            <label>Ngày</label>
+            <input id="hk-date" type="date">
+        </div>
+
+        <div class="hk-save-area">
+            <button type="button" id="hk-save">💾 Lưu</button>
+            <button type="button" id="hk-cancel" style="display:none">Hủy sửa</button>
+        </div>
+
+    </section>
+
+    <section class="hk-list-section">
+
+        <div class="hk-list-title">
+            <h2>📋 Danh sách các hoạt động</h2>
+            <p>ID: <strong id="hk-list-id"></strong> &nbsp; USER: <strong id="hk-list-user"></strong></p>
+        </div>
+
+        <div class="hk-table-wrap">
+            <table class="hk-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Loại hoạt động</th>
+                        <th>Ảnh</th>
+                        <th>Ngày</th>
+                        <th>Tiêu đề</th>
+                        <th>Người cập nhật</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="hk-body">
+                    <tr>
+                        <td colspan="7">Đang tải...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+</main>
+
+<script type="module" src="../js/hangkinhupdate.js"></script>
+</body>
+</html>

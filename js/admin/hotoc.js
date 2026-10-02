@@ -1,332 +1,146 @@
-//======================================================
-// HIENLUONG WEBSITE
-// File : /js/admin/hotoc.js
-// Tối ưu: cache dữ liệu + chống đọc Firebase dư
-//======================================================
-
 import {readData} from "../../scripts/firebaseService.js";
 import {showMap,hideMedia} from "../components/floatingmedia.js";
 
-//======================================================
+let LIST=[];
+let CURRENT=null;
+let DATA_LOADED_AT=0;
+let DATA_LOADING=null;
+const DATA_CACHE_TIME=60000;
 
-let LIST = [];
-let CURRENT = null;
-let DATA_LOADED_AT = 0;
-let DATA_LOADING = null;
-const DATA_CACHE_TIME = 60000;
-
-//======================================================
-// INIT THUMBNAIL
-//======================================================
-
-export async function initThumbnail(){
-    await loadData();
-    if(!LIST.length){
-        return;
-    }
-    renderThumbnail();
-}
-
-//======================================================
-// LOAD DATA
-//======================================================
-
-async function loadData(force = false){
-
-    const now = Date.now();
-    if(
-        !force &&
-        DATA_LOADED_AT &&
-        (now - DATA_LOADED_AT) < DATA_CACHE_TIME
-    ){
-        return LIST;
-    }
-    if(DATA_LOADING){
-        return DATA_LOADING;
-    }
-    DATA_LOADING = (async () => {
+async function loadData(force=false){
+    const now=Date.now();
+    if(!force&&DATA_LOADED_AT&&(now-DATA_LOADED_AT)<DATA_CACHE_TIME)return LIST;
+    if(DATA_LOADING)return DATA_LOADING;
+    DATA_LOADING=(async()=>{
         try{
-            const data = await readData( "admin/hotoc");
+            const data=await readData("admin/hotoc");
             if(!data){
-                LIST = [];
-                CURRENT = null;
-                DATA_LOADED_AT = Date.now();
+                LIST=[];
+                CURRENT=null;
+                DATA_LOADED_AT=Date.now();
                 return LIST;
             }
-            LIST =
-                Object.entries(data)
-                    .map(
-                        ([id, item]) => ({
-                            id,
-                            ...item
-                        })
-                    );
-            sortData();
-            CURRENT = LIST[0] || null;
-            DATA_LOADED_AT = Date.now();
+            LIST=Object.entries(data).map(([id,item])=>({id,...item}));
+            LIST.sort((a,b)=>(b.updated_at||0)-(a.updated_at||0));
+            CURRENT=LIST[0]||null;
+            DATA_LOADED_AT=Date.now();
             return LIST;
-        }
-        catch(err){
-            console.error("❌ LOAD HỌ TỘC ERROR:", err);
-            LIST = [];
-            CURRENT = null;
-            DATA_LOADED_AT = 0;
+        }catch(err){
+            console.error("❌ LOAD HỌ TỘC ERROR:",err);
+            LIST=[];
+            CURRENT=null;
+            DATA_LOADED_AT=0;
             return LIST;
-        }
-        finally{
-            DATA_LOADING = null;
+        }finally{
+            DATA_LOADING=null;
         }
     })();
     return DATA_LOADING;
 }
 
-//======================================================
-// SORT DATA
-//======================================================
-
-function sortData(){
-    LIST.sort(
-        (a, b) => {
-            return (
-                (b.updated_at || 0) -
-                (a.updated_at || 0)
-            );
-        }
-    );
+export async function getList(){
+    await loadData();
+    return LIST;
 }
 
-//======================================================
-// RENDER THUMBNAIL
-//======================================================
-
-function renderThumbnail(){
-
-    const menu = document.querySelector('.hl-menu[data-page="hotoc"]');
-    if(!menu || !CURRENT){
+export async function renderItem(id){
+    await loadData();
+    const item=LIST.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY HỌ TỘC:",id);
         return;
     }
-    const thumb = menu.querySelector(".hl-thumb");
-    if(!thumb){
-        return;
-    }
-    thumb.innerHTML = "";
-    if(CURRENT.image){
-        const img = document.createElement("img");
-        img.src = CURRENT.image;
-        img.alt = CURRENT.title || CURRENT.name || "Họ tộc Hiền Lương";
-        img.loading = "lazy";
-        img.decoding = "async";
-        img.style.display = "block";
-        img.style.width = "100%";
-        img.style.height = "auto";
-        img.style.maxWidth = "100%";
-        img.style.objectFit = "contain";
-        img.style.objectPosition = "center";
-        img.style.margin = "0";
-        img.style.padding = "0";
-        thumb.appendChild(img);
-    }
+    CURRENT=item;
+    renderMain();
 }
 
-//======================================================
-// TOGGLE LIST
-//======================================================
 
-function toggleList(){
-    let menu;
-if(window.matchMedia("(max-width: 768px)").matches){
-    menu = document.querySelector('.mobile-menu-item[data-page="hotoc"]');
-}else{
-    menu = document.querySelector('.hl-menu[data-page="hotoc"]');
-}
-
-if(!menu){
-    console.warn("⚠️ KHÔNG TÌM THẤY MENU HỌ TỘC");
-    return;
-}
-    if(!menu){
-        return;
-    }
-    let list = menu.querySelector(".hl-hotoc-menu");
-
-    //==================================================
-    // ĐANG MỞ THÌ ĐÓNG
-    //==================================================
-
-    if(list){
-        list.remove();
+export async function renderItemInline(id,box){
+    await loadData();
+    const item=LIST.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY HỌ TỘC:",id);
         return;
     }
 
-    //==================================================
-    // TẠO DANH SÁCH
-    //==================================================
+    CURRENT=item;
+    hideMedia();
 
-    list = document.createElement("div");
-    list.className ="hl-hotoc-menu";
-    LIST.forEach(
-        item => {
-            list.innerHTML += `
-                <div
-                    class="hl-hotoc-row"
-                    data-id="${item.id}"
-                    title="${item.name || ""}"
-                >
-                    <div class="hl-hotoc-row-icon">
-                        👪
-                    </div>
-                    <div class="hl-hotoc-row-title">
-                        ${item.name || ""}
-                    </div>
-                </div>
-            `;
-        }
-    );
-    menu.appendChild(list);
-    bindListEvent();
+    box.innerHTML=`
+        <div class="hl-hotoc-inline-detail">
+            <button type="button" class="hl-history-inline-back">← Quay lại danh sách</button>
+            <h2 class="hl-hotoc-title">${CURRENT.name||""}</h2>
+            ${CURRENT.image?`<div class="hl-hotoc-image"><img src="${CURRENT.image}" alt="${CURRENT.name||"Họ tộc Hiền Lương"}" decoding="async"></div>`:""}
+            ${CURRENT.web?`<div class="hl-hotoc-web"><b>🌐 Website gia phả:</b><a href="${CURRENT.web}" target="_blank" rel="noopener noreferrer">Xem Website</a></div>`:""}
+            ${CURRENT.map?`<div class="hl-hotoc-map"><a href="#" class="btn-map">🗺 Xem Google Maps</a></div>`:""}
+            <div class="hl-hotoc-content">${CURRENT.content||""}</div>
+        </div>`;
+
+    const btnMap=box.querySelector(".btn-map");
+    if(btnMap){
+        btnMap.onclick=function(e){
+            e.preventDefault();
+            showMap(CURRENT.map);
+        };
+    }
+
+    const backButton=box.querySelector(".hl-history-inline-back");
+    if(backButton){
+        backButton.addEventListener("click",async function(event){
+            event.stopPropagation();
+            if(typeof window.loadHoTocInlineList==="function"){
+                await window.loadHoTocInlineList();
+            }
+        });
+    }
 }
 
-//======================================================
-// menuClick
-//======================================================
-
-export function menuClick(){
-    toggleList();
-}
-
-//======================================================
-// RENDER MAIN
-//======================================================
 
 export function renderMain(){
-    const box = document.getElementById("hl-content");
-    if(!box){
-        return;
-    }
-    const bg = document.getElementById("bg-main");
-    if(bg){
-        bg.style.display = "none";
-    }
-
-    // Đổi bài thì đóng media cũ
-
+    const box=document.getElementById("hl-content");
+    if(!box)return;
+    const bg=document.getElementById("bg-main");
+    if(bg)bg.style.display="none";
     hideMedia();
+
     if(!CURRENT){
-        box.innerHTML = `<div class="hl-empty">Chưa có dữ liệu họ tộc.</div>`;
+        box.innerHTML=`<div class="hl-empty">Chưa có dữ liệu họ tộc.</div>`;
         return;
     }
-    box.innerHTML = `
+
+    box.innerHTML=`
         <div class="hl-hotoc">
-            <h2 class="hl-hotoc-title">
-                ${CURRENT.name || ""}
-            </h2>
-            ${
-                CURRENT.image
-                ?
-                `
-                <div class="hl-hotoc-image">
-                    <img
-                        src="${CURRENT.image}"
-                        alt="${CURRENT.name || "Họ tộc Hiền Lương"}"
-                        decoding="async"
-                    >
-                </div>
-                `
-                :
-                ""
-            }
-            ${
-                CURRENT.web
-                ?
-                `
-                <div class="hl-hotoc-web">
-                    <b>🌐 Website gia phả:</b>
-                    <a
-                        href="${CURRENT.web}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Xem Website
-                    </a>
+            <button type="button" class="hl-history-back" id="hl-hotoc-back">
+                ← Quay lại
+            </button>
+            <h2 class="hl-hotoc-title">${CURRENT.name||""}</h2>
+            ${CURRENT.image?`<div class="hl-hotoc-image"><img src="${CURRENT.image}" alt="${CURRENT.name||"Họ tộc Hiền Lương"}" decoding="async"></div>`:""}
+            ${CURRENT.web?`<div class="hl-hotoc-web"><b>🌐 Website gia phả:</b><a href="${CURRENT.web}" target="_blank" rel="noopener noreferrer">Xem Website</a></div>`:""}
+            ${CURRENT.map?`<div class="hl-hotoc-map"><a href="#" class="btn-map">🗺 Xem Google Maps</a></div>`:""}
+            <div class="hl-hotoc-content">${CURRENT.content||""}</div>
+        </div>`;
 
-                </div>
-                `
-                :
-                ""
-            }
-
-            ${
-                CURRENT.map
-                ?
-                `
-                <div class="hl-hotoc-map">
-
-                    <a
-                        href="#"
-                        class="btn-map"
-                    >
-                        🗺 Xem Google Maps
-                    </a>
-
-                </div>
-                `
-                :
-                ""
-            }
-
-            <div class="hl-hotoc-content">
-                ${CURRENT.content || ""}
-            </div>
-        </div>
-    `;
-
-    //==================================================
-    // BUTTON MAP
-    //==================================================
-
-    const btnMap = box.querySelector(".btn-map");
+    const btnMap=box.querySelector(".btn-map");
     if(btnMap){
-        btnMap.onclick =
-            function(e){
-                e.preventDefault();
-                showMap(
-                    CURRENT.map
-                );
-            };
+        btnMap.onclick=function(e){
+            e.preventDefault();
+            showMap(CURRENT.map);
+        };
     }
-}
 
-//======================================================
-// BIND LIST EVENT
-//======================================================
+    const backButton=document.getElementById("hl-hotoc-back");
+    if(backButton){
+        backButton.addEventListener("click",()=>{
+            hideMedia();
+            box.innerHTML="";
+            const bg=document.getElementById("bg-main");
+            if(bg)bg.style.display="";
+            const card=document.getElementById("hl-card-hotoc");
+            if(card)card.scrollIntoView({behavior:"smooth",block:"center"});
+        });
+    }
 
-function bindListEvent(){
-
-    document
-        .querySelectorAll(
-            ".hl-hotoc-row"
-        )
-        .forEach(
-            row => {
-                row.onclick =
-                    function(e){
-                        e.stopPropagation();
-                        const id = this.dataset.id;
-                        CURRENT = LIST.find(item =>item.id === id);
-                        document
-                            .querySelectorAll(
-                                ".hl-hotoc-row"
-                            )
-                            .forEach(
-                                r =>
-                                    r.classList.remove(
-                                        "active"
-                                    )
-                            );
-
-                        this.classList.add("active");
-                        renderMain();
-                    };
-            }
-        );
+    requestAnimationFrame(()=>{
+        box.scrollIntoView({behavior:"smooth",block:"start"});
+    });
 }

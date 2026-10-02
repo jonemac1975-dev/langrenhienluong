@@ -22,7 +22,7 @@ export async function initThumbnail(){
             return;
         }
 
-        thumb.innerHTML = `<div class="tv-thumb-text">👥 DS thành viên </div>`;
+//        thumb.innerHTML = `<div class="tv-thumb-text">👥 DS thành viên </div>`;
     });
 }
 
@@ -140,6 +140,127 @@ function renderList(box, customers){
     `;
 }
 
+export async function renderListInline(box){
+    if(!box)return;
+    box.innerHTML=`<div class="thanhvien-loading">Đang tải danh sách thành viên...</div>`;
+
+    try{
+        const customers=await readData("customers");
+        const members=Object.entries(customers || {})
+            .map(([uid,customer])=>{
+                const profile=customer?.profile || {};
+                return {
+                    uid,
+                    fullname:profile.fullname || "",
+                    nationality:profile.nationality || "",
+                    address:profile.address || "",
+                    avatar:profile.avatar || "",
+                    status:profile.status || "pending"
+                };
+            })
+            .filter(member=>member.status==="approved"&&member.fullname);
+
+        if(!members.length){
+            box.innerHTML=`<div class="thanhvien-empty">Chưa có thành viên chính thức.</div>`;
+            return;
+        }
+
+        box.innerHTML=`
+            <div class="thanhvien-page">
+                <div class="thanhvien-box">
+                    <h2>👥 DANH SÁCH THÀNH VIÊN</h2>
+                    <div class="thanhvien-list">
+                        ${members.map(member=>{
+                            const avatar=member.avatar || "../../images/avatar-default.png";
+                            return `
+                                <div class="thanhvien-item">
+                                    <div class="thanhvien-avatar">
+                                        <img src="${escapeHtml(avatar)}" alt="Ảnh thành viên">
+                                    </div>
+                                    <div class="thanhvien-info">
+                                        <div class="thanhvien-name">${escapeHtml(member.fullname)}</div>
+                                        <div class="thanhvien-nationality">🌐 ${escapeHtml(member.address || "Chưa cập nhật")} ${escapeHtml(member.nationality || "Chưa cập nhật")}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join("")}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    catch(err){
+        console.error("❌ LOAD THÀNH VIÊN INLINE LIST ERROR:",err);
+        box.innerHTML=`<div class="thanhvien-error">Không thể tải danh sách thành viên.</div>`;
+    }
+}
+
+//======================================================
+// RENDER INLINE
+//======================================================
+
+export async function renderItemInline(id,box){
+    if(!box)return;
+    try{
+        const customers=await readData("customers");
+        const members=Object.entries(customers || {})
+            .map(([uid,customer])=>{
+                const profile=customer?.profile || {};
+                return {
+                    uid,
+                    fullname:profile.fullname || "",
+                    nationality:profile.nationality || "",
+                    address:profile.address || "",
+                    avatar:profile.avatar || "",
+                    status:profile.status || "pending"
+                };
+            })
+            .filter(member=>member.status==="approved"&&member.fullname);
+
+        box.innerHTML=`
+            <div class="thanhvien-page">
+                <div class="thanhvien-box">
+                    <button type="button" class="thanhvien-back">← Quay lại danh sách</button>
+                    <h2>👥 DANH SÁCH THÀNH VIÊN</h2>
+                    ${members.length?`
+                        <div class="thanhvien-list">
+                            ${members.map(member=>{
+                                const avatar=member.avatar || "../../images/avatar-default.png";
+                                return `
+                                    <div class="thanhvien-item">
+                                        <div class="thanhvien-avatar">
+                                            <img src="${escapeHtml(avatar)}" alt="Ảnh thành viên">
+                                        </div>
+                                        <div class="thanhvien-info">
+                                            <div class="thanhvien-name">${escapeHtml(member.fullname)}</div>
+                                            <div class="thanhvien-nationality">🌐 ${escapeHtml(member.address || "Chưa cập nhật")} ${escapeHtml(member.nationality || "Chưa cập nhật")}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join("")}
+                        </div>
+                    `:`
+                        <div class="thanhvien-empty">Chưa có thành viên chính thức.</div>
+                    `}
+                </div>
+            </div>
+        `;
+
+        const back=box.querySelector(".thanhvien-back");
+        if(back){
+            back.addEventListener("click",async function(event){
+                event.stopPropagation();
+                if(typeof window.loadThanhVienInlineList==="function"){
+                    await window.loadThanhVienInlineList();
+                }
+            });
+        }
+    }
+    catch(err){
+        console.error("❌ LOAD THÀNH VIÊN INLINE ERROR:",err);
+        box.innerHTML=`<div class="thanhvien-error">Không thể tải danh sách thành viên.</div>`;
+    }
+}
 
 //======================================================
 // ESCAPE HTML

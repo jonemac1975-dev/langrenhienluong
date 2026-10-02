@@ -198,6 +198,51 @@ async function loadData(force = false){
     return DATA_LOADING;
 }
 
+export async function renderItemInline(id,box){
+    await loadData();
+    const item=LIST.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY BÀI VIẾT:",id);
+        return;
+    }
+
+    const image=item.image?`
+        <div class="bv-index-post-image">
+            <img src="${escapeHtml(item.image)}" alt="Ảnh bài viết" decoding="async">
+        </div>
+    `:"";
+
+    const video=item.clip?`
+        <div class="bv-index-post-clip">
+            ${renderVideo(item.clip)}
+        </div>
+    `:"";
+
+    box.innerHTML=`
+        <div class="bv-index-post">
+            <button type="button" class="bv-index-back">← Quay lại danh sách</button>
+            <div class="bv-index-post-title">${escapeHtml(item.caption||"Bài viết cá nhân")}</div>
+            <div class="bv-index-post-meta">
+                👤 Người viết : <strong>${escapeHtml(item.fullname)}</strong>
+                <br>
+                📅 Ngày : ${formatDate(item.created_at)}
+            </div>
+            ${item.content?`<div class="bv-index-post-content">${item.content}</div>`:""}
+            ${image}
+            ${video}
+        </div>
+    `;
+
+    const back=box.querySelector(".bv-index-back");
+    if(back){
+        back.addEventListener("click",async function(event){
+            event.stopPropagation();
+            if(typeof window.loadBaiVietInlineList==="function"){
+                await window.loadBaiVietInlineList();
+            }
+        });
+    }
+}
 
 //======================================================
 // RENDER MAIN
@@ -272,73 +317,67 @@ function renderList(){
         return;
     }
     box.innerHTML =
-        LIST
-            .map(
-                item => {
-                    const date = formatDate(item.created_at);
-                    return `
-                        <article
-                            class="bv-index-item"
-                            data-id="${escapeHtml(item.id)}">
-                            <div
-                                class="bv-index-avatar">
-                                ${
-                                    item.image
-                                        ?
-                                        `
-                                        <img
-                                            src="${escapeHtml(item.image)}"
-                                            alt="Ảnh bài viết"
-                                            loading="lazy"
-                                            decoding="async">
-                                        `
-                                        :
-                                        `
-                                        <div class="bv-index-no-image">
-                                            ✍️
-                                        </div>
-                                        `
-                                }
-                            </div>
-                            <div
-                                class="bv-index-info">
-                                <div
-                                    class="bv-index-caption">
-                                    ${
-                                        escapeHtml(
-                                            item.caption ||
-                                            "Bài viết cá nhân"
-                                        )
-                                    }
-                                </div>
+    LIST
+        .map(item => {
+            const date = formatDate(item.created_at);
+            const image = item.image
+                ? `
+                    <div class="bv-index-avatar">
+                        <img
+                            src="${escapeHtml(item.image)}"
+                            alt="Ảnh bài viết"
+                            loading="lazy"
+                            decoding="async">
+                    </div>
+                `
+                : `
+                    <div class="bv-index-avatar bv-index-no-image">
+                        ✍️
+                    </div>
+                `;
 
-                                <div
-                                    class="bv-index-author">
-                                    👤
-                                    ${escapeHtml(
+            return `
+                <article
+                    class="bv-index-item"
+                    data-id="${escapeHtml(item.id)}">
+
+                    <div class="bv-index-info">
+
+                        <div class="bv-index-caption">
+                            ${escapeHtml(
+                                item.caption ||
+                                "Bài viết cá nhân"
+                            )}
+                        </div>
+
+                        <div class="bv-index-meta">
+
+                            ${image}
+
+                            <div class="bv-index-meta-text">
+
+                                <div class="bv-index-author">
+                                    👤 ${escapeHtml(
                                         item.fullname
                                     )}
-
                                 </div>
 
-                                <div
-                                    class="bv-index-date">
-
+                                <div class="bv-index-date">
                                     📅 ${date}
-
                                 </div>
 
                             </div>
 
-                        </article>
+                        </div>
 
-                    `;
+                    </div>
 
-                }
-            )
-            .join("");
+                </article>
+            `;
+        })
+        .join("");
 
-    bindListEvents();
+bindListEvents();
 
 }
 
@@ -546,34 +585,51 @@ function showList(){
     list?.scrollIntoView({behavior: "smooth",block: "start"});
 }
 
-//======================================================
-// FORMAT DATE
-//======================================================
-
 function formatDate(timestamp){
-
-    if(!timestamp){
-        return "";
-    }
-    const date = new Date(Number(timestamp));
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
-
-        return "";
-    }
-
-    return date.toLocaleDateString(
-        "vi-VN",
-        {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-        }
-    );
+if(!timestamp)return "";
+const date=new Date(Number(timestamp));
+if(Number.isNaN(date.getTime()))return "";
+return date.toLocaleDateString("vi-VN",{day:"2-digit",month:"2-digit",year:"numeric"});
 }
+
+
+export async function getList(){
+await loadData();
+return LIST;
+}
+
+export async function renderItem(id){
+await loadData();
+const item=LIST.find(x=>x.id===id);
+if(!item){
+console.warn("⚠️ KHÔNG TÌM THẤY BÀI VIẾT:",id);
+return;
+}
+const box=document.getElementById("hl-content");
+if(!box)return;
+const bg=document.getElementById("bg-main");
+if(bg)bg.style.display="none";
+box.innerHTML=`         <div class="bv-index-post">             <button type="button" class="bv-index-back" id="bv-index-back">← Quay lại</button>             <div class="bv-index-post-title">${escapeHtml(item.caption||"Bài viết cá nhân")}</div>             <div class="bv-index-post-meta">
+                👤 Người viết :                 <strong>${escapeHtml(item.fullname)}</strong>                 <br>
+                📅 Ngày : ${formatDate(item.created_at)}             </div>
+            ${item.content?`<div class="bv-index-post-content">${item.content}</div>`:""}
+            ${item.image?`<div class="bv-index-post-image"><img src="${escapeHtml(item.image)}" alt="Ảnh bài viết" decoding="async"></div>`:""}
+            ${item.clip?`<div class="bv-index-post-clip">${renderVideo(item.clip)}</div>`:""}         </div>`;
+const back=document.getElementById("bv-index-back");
+if(back){
+back.addEventListener("click",()=>{
+box.innerHTML="";
+const bg=document.getElementById("bg-main");
+if(bg)bg.style.display="";
+const card=document.getElementById("hl-card-baiviet");
+if(card)card.scrollIntoView({behavior:"smooth",block:"center"});
+});
+}
+requestAnimationFrame(()=>{
+box.scrollIntoView({behavior:"smooth",block:"start"});
+});
+}
+
 
 
 //======================================================

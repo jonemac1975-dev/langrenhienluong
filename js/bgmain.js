@@ -368,72 +368,34 @@ function preloadNext() {
     preloadImage(nextSrc);
 }
 
-//======================================================
-// NEXT SLIDE
-//======================================================
-
-async function nextSlide() {
-
-    if (
-        IMAGES.length < 2
-    ) {
+function nextSlide() {
+    if(IMAGES.length < 2){
         return;
     }
-    let next = current + 1;
-    if (
-        next >= IMAGES.length
-    ) {
 
+    let next = current + 1;
+    if(next >= IMAGES.length){
         next = 0;
     }
+
     const nextSrc = IMAGES[next];
 
-    //==================================================
-    // LẤY ẢNH ĐÃ PRELOAD
-    //==================================================
+    preloadImage(nextSrc).then(function(loadedImage){
+        if(!loadedImage){
+            console.warn("Không tải được:",nextSrc);
+            return;
+        }
 
-    const loadedImage = await preloadImage(nextSrc);
-    if (!loadedImage) {
-        console.warn("Không tải được:",nextSrc);
-        return;
-    }
+        back.style.backgroundImage = 'url("' + nextSrc + '")';
 
-    //==================================================
-    // HIỆN ẢNH MỚI
-    //==================================================
+back.classList.add("active");
+front.classList.remove("active");
 
-    back.style.backgroundImage ='url("' + nextSrc + '")';
-    back.classList.add("active");
-    front.classList.remove("active");
+        const temp = front;
+        front = back;
+        back = temp;
+        current = next;
 
-    //==================================================
-    // ĐỔI LỚP
-    //==================================================
-
-    const temp = front;
-    front = back;
-    back = temp;
-    current = next;
-
-    //==================================================
-    // XÓA ẢNH CŨ KHỎI CACHE PRELOAD
-    // KHÔNG XÓA ẢNH ĐANG HIỂN THỊ
-    //==================================================
-
-    const previousIndex = current - 1 >= 0 ? current - 1 : IMAGES.length - 1;
-    const previousSrc = IMAGES[previousIndex];
-    if (
-        previousSrc !== nextSrc
-    ) {
-
-        PRELOADED_IMAGES.delete(
-            previousSrc
-        );
-    }
-
-    //==================================================
-    // PRELOAD ẢNH TIẾP THEO
-    //==================================================
-
-    preloadNext();
+        preloadNext();
+    });
 }

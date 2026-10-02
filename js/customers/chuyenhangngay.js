@@ -37,14 +37,9 @@ async function loadData(force = false){
 
     const now = Date.now();
 
-    if(
-        !force &&
-        DATA_LOADED_AT &&
-        DATA.length >= 0 &&
-        (now - DATA_LOADED_AT) < DATA_CACHE_TIME
-    ){
-        return DATA;
-    }
+    if(!force&&DATA_LOADED_AT&&(now-DATA_LOADED_AT)<DATA_CACHE_TIME){
+    return DATA;
+}
 
     if(DATA_LOADING){
         return DATA_LOADING;
@@ -421,23 +416,29 @@ function renderListItem(item,index){
         <article
             class="chn-item"
             data-id="${escapeHTML(item.id)}">
-            ${image}
 
             <div class="chn-list-info">
                 <h3 class="chn-title">
                     ${escapeHTML(item.title)}
                 </h3>
 
-                <div class="chn-author">
-                    👤 ${escapeHTML(item.fullname)}
-                </div>
+                <div class="chn-meta">
+                    ${image}
 
-                <div class="chn-date">
-                    📅 ${escapeHTML(
-                        formatDate(item)
-                    )}
+                    <div class="chn-meta-text">
+                        <div class="chn-author">
+                            👤 ${escapeHTML(item.fullname)}
+                        </div>
+
+                        <div class="chn-date">
+                            📅 ${escapeHTML(
+                                formatDate(item)
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </article>
     `;
 }
@@ -498,9 +499,9 @@ function renderDetail(item){
                 </div>
             </div>
             ${image}
-            <div class="chn-detail-content">
-                ${item.content || ""}
-            </div>
+            <div class="chn-detail-content" style="color:var(--hl-text,#333);">
+   	 ${item.content || ""}
+	</div>
 
             ${
                 video
@@ -519,15 +520,81 @@ function renderDetail(item){
     // BACK
     //==================================================
 
-    const back = box.querySelector(".chn-back");
+    const back=box.querySelector(".chn-back");
+if(back){
+    back.addEventListener("click",()=>{
+        CURRENT_ITEM=null;
+	renderList();
+    });
+}
+}
+
+export async function getList(){
+    await loadData();
+    return DATA;
+}
+
+
+
+export async function renderItem(id){
+    await loadData();
+    const item=DATA.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY CHUYỆN HÀNG NGÀY:",id);
+        return;
+    }
+    CURRENT_ITEM=item;
+    const bg=document.getElementById("bg-main");
+    if(bg)bg.style.display="none";
+    renderDetail(item);
+    const box=getContentBox();
+    if(box){
+        requestAnimationFrame(()=>{
+            box.scrollIntoView({behavior:"smooth",block:"start"});
+        });
+    }
+}
+
+export async function renderItemInline(id,box){
+    await loadData();
+    const item=DATA.find(x=>x.id===id);
+    if(!item){
+        console.warn("⚠️ KHÔNG TÌM THẤY CHUYỆN HÀNG NGÀY:",id);
+        return;
+    }
+
+    CURRENT_ITEM=item;
+
+    const image=item.image?`
+        <div class="chn-detail-image">
+            <img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.title)}" decoding="async">
+        </div>
+    `:"";
+
+    const video=renderVideo(item.clip);
+
+    box.innerHTML=`
+        <article class="chn-detail">
+            <button class="chn-back" type="button">← Quay lại danh sách</button>
+            <div class="chn-detail-header">
+                <h2>📰 ${escapeHTML(item.title)}</h2>
+                <div class="chn-detail-author">Người viết : <strong>${escapeHTML(item.fullname)}</strong></div>
+                <div class="chn-detail-date">Ngày : ${escapeHTML(formatDate(item))}</div>
+            </div>
+            ${image}
+            <div class="chn-detail-content">${item.content||""}</div>
+            ${video?`<div class="chn-detail-video">${video}</div>`:""}
+        </article>
+    `;
+
+    const back=box.querySelector(".chn-back");
     if(back){
-        back.addEventListener(
-            "click",
-            () => {
-                CURRENT_ITEM = null;
-                renderList();
+        back.addEventListener("click",async function(event){
+            event.stopPropagation();
+            if(typeof window.loadChuyenHangNgayInlineList==="function"){
+                await window.loadChuyenHangNgayInlineList();
             }
-        );
+        });
     }
 }
 
