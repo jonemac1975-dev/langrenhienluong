@@ -322,13 +322,16 @@ const LANGUAGES={
 };
 
 export function getLanguage(){
-    return localStorage.getItem("hl-language")||"vi";
+    return "vi";
 }
 
 export function setLanguage(lang){
-    if(lang!=="vi"&&lang!=="en")return;
-    localStorage.setItem("hl-language",lang);
+    return;
 }
+
+const currentLanguage=getLanguage();
+document.documentElement.lang=currentLanguage;
+document.documentElement.dataset.language=currentLanguage;
 
 export function t(key){
     const lang=getLanguage();

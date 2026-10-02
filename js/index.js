@@ -1903,11 +1903,11 @@ function bindNewNavigation(){
 	const langButtons=document.querySelectorAll(".hl-lang-btn");
 
 function applyLanguage(){
-console.log("🌐 APPLY LANGUAGE:",getLanguage());
-    const lang=getLanguage();
-    langButtons.forEach(btn=>{
-        btn.classList.toggle("active",btn.dataset.lang===lang);
-    });
+
+    const lang=document.documentElement.lang||"vi";
+langButtons.forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.lang===lang);
+});
     const subtitle=document.querySelector(".hl-title h3");
     if(subtitle)subtitle.textContent=t("header.subtitle");
     const marquee=document.querySelector(".hl-marquee marquee");
@@ -2218,17 +2218,17 @@ langButtons.forEach(button=>{
         event.stopPropagation();
         const lang=this.dataset.lang;
         localStorage.setItem("hl-language",lang);
-        applyLanguage();
+        langButtons.forEach(btn=>btn.classList.toggle("active",btn===this));
         const select=document.querySelector(".goog-te-combo");
         if(select){
             select.value=lang;
             select.dispatchEvent(new Event("change",{bubbles:true}));
         }
-        console.log("🌐 LANGUAGE:",lang);
+
     });
 });
 
-applyLanguage();
+//applyLanguage();
 
 	const vinhDanhList=document.querySelector(".hl-vinhdanh-list");
 	if(vinhDanhList){
